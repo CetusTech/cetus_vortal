@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<h:outputScript>
+		function handleView(xhr, status, args) {
+			if (args.validationFailed) {
+				jQuery('#dialogAdd').effect("shake", {
+					times : 4
+				}, 10);
+			} else {
+				confirmation.show();
+			}
+		}
+	</h:outputScript>
+	<h:form id="formAdd_user" prependId="false">
+		<p:message for="submitButton_Add_user" id="msgAdd" />
+		<h:panelGrid id="grid_user" columns="3" cellpadding="4" cellspacing="4">
+
+			<p:outputLabel value="#{msg.identity}" for="column1_Add_user" />
+			<p:inputText id="column1_Add_user" required="true" value="#{userManagedBean.addObject.identificacion}"
+				requiredMessage="#{msg.field_requiered}">
+				<f:validateLength minimum="8" maximum="10" />
+			</p:inputText>
+			<p:message for="column1_Add_user" display="icon" />
+
+			<p:outputLabel value="#{msg.login}" for="column2_Add_user" />
+			<p:inputText id="column2_Add_user" required="true" value="#{userManagedBean.addObject.login}"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message for="column2_Add_user" display="icon" />
+
+			<p:outputLabel for="column3_Add_user" value="#{msg.password}" />
+			<p:password id="column3_Add_user" value="#{userManagedBean.addObject.password}" match="column4_Add_user"
+				feedback="true" promptLabel="#{msg.low}" weakLabel="#{msg.means}" goodLabel="#{msg.high}"
+				strongLabel="#{msg.excellent}" validatorMessage="#{msg.error_password_diferent}" label="#{msg.password}"
+				requiredMessage="#{msg.field_requiered}" required="true" />
+			<p:message for="column3_Add_user" display="icon" />
+
+
+			<p:outputLabel for="column4_Add_user" value="#{msg.repet_password}" />
+			<p:password id="column4_Add_user" feedback="true" promptLabel="#{msg.low}" weakLabel="#{msg.means}"
+				goodLabel="#{msg.high}" strongLabel="#{msg.excellent}" requiredMessage="#{msg.field_requiered}"
+				value="#{userManagedBean.addObject.password}" label="#{msg.repet_password}" required="true" />
+			<p:message for="column4_Add_user" display="icon" />
+
+
+
+			<p:outputLabel value="#{msg.description}" for="column5_Add_user" />
+			<p:inputText id="column5_Add_user" required="true" value="#{userManagedBean.addObject.descripcion}"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message for="column5_Add_user" display="icon" />
+
+			<p:outputLabel for="column6_Add_email" value="#{msg.email}" />
+			<p:inputText id="column6_Add_email" required="true" value="#{userManagedBean.addObject.email}"
+				requiredMessage="#{msg.field_requiered}">
+				<f:validator validatorId="emailValidator" for="column6_Add_email" />
+			</p:inputText>
+			<p:message for="column6_Add_email" display="icon" />
+
+			<p:outputLabel for="column6_Add_phone" value="#{msg.phone}" />
+			<p:inputText id="column6_Add_phone" required="false" value="#{userManagedBean.addObject.phone}"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message for="column6_Add_phone" display="icon" />
+
+
+			<p:outputLabel for="column6_Add_address" value="#{msg.address}" />
+			<p:inputText id="column6_Add_address" required="false" value="#{userManagedBean.addObject.address}"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message for="column6_Add_address" display="icon" />
+
+
+			<f:facet name="footer">
+				<center>
+					<p:commandButton async="true" id="submitButton_Add_user" value="#{msg.accept}" binding="#{userManagedBean.btnSave}"
+						oncomplete="handleView(xhr, status, args)" process="@none" icon="ui-icon-disk" />
+				</center>
+			</f:facet>
+		</h:panelGrid>
+
+
+		<p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.add}"
+			severity="alert" widgetVar="confirmation">
+			<center>
+				<p:commandButton id="confirmRol" value="#{msg.accept}"
+					update=":formContenido grid_user msgAdd :formContenido:contenido grid_user"
+					oncomplete="confirmation.hide(); handleAddRow(xhr, status, args)" actionListener="#{userManagedBean.add}"
+					process="@form" />
+				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="confirmation.hide();" type="button" />
+			</center>
+		</p:confirmDialog>
+
+
+	</h:form>
+
+</ui:composition>

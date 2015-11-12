@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<h:form id="formAdd" prependId="false" enctype="multipart/form-data">
+		<p:message for="submitButton2" id="msgAdd" />
+		<h:panelGrid id="grid" columns="3">
+
+			<p:outputLabel for="column1_Add" value="#{msg.user}" />
+			<p:selectOneMenu id="column1_Add" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{permissionManagedBean.addObject.tbUserW.id}">
+				<f:selectItem itemLabel="#{msg.select_register_user}" display="icon" />
+				<f:selectItems value="#{permissionManagedBean.listUser}" />
+			</p:selectOneMenu>
+			<p:message for="column1_Add" display="icon" />
+
+			<p:outputLabel for="column2_Add" value="#{msg.app}" />
+			<p:selectOneMenu id="column2_Add" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{permissionManagedBean.idApplication}">
+				<f:selectItem itemLabel="#{msg.select_register_applicaation}" display="icon" />
+				<f:selectItems value="#{permissionManagedBean.listAplicacion}" />
+				<p:ajax update="column3_Add" process="@this" listener="#{permissionManagedBean.changeApplication}" />
+			</p:selectOneMenu>
+			<p:message for="column2_Add" display="icon" />
+
+			<p:outputLabel for="column3_Add" value="#{msg.service}" />
+			<p:selectOneMenu id="column3_Add" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{permissionManagedBean.addObject.tbService.id}">
+				<f:selectItems value="#{permissionManagedBean.listService}" />
+			</p:selectOneMenu>
+			<p:message for="column3_Add" display="icon" />
+
+
+			<f:facet name="footer">
+				<center>
+					<p:commandButton async="true" id="submitButton2" value="#{msg.accept}" oncomplete="handleDialogAdd(xhr, status, args)"
+						binding="#{permissionManagedBean.btnSave}" process="@form" action="#{permissionManagedBean.loadData}"
+						icon="ui-icon-disk" update=":formContenido:men grid" />
+				</center>
+			</f:facet>
+		</h:panelGrid>
+
+		<p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.add}"
+			severity="alert" widgetVar="confirmation">
+			<center>
+				<p:commandButton id="confirmRol" value="#{msg.accept}"
+					update=":formContenido:men :formContenido:list :dialog :formConfirm :dialogAdd grid msgAdd"
+					oncomplete="confirmation.hide(); handleAddRow(xhr, status, args)" actionListener="#{permissionManagedBean.add}"
+					process="@this" />
+				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="confirmation.hide();" type="button" />
+			</center>
+		</p:confirmDialog>
+
+
+	</h:form>
+
+</ui:composition>

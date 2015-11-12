@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+  <f:loadBundle var="msg" basename="Message_es" />
+  <h:form>
+
+    <h:panelGrid columns="3" border="0" columnClasses="column_5,column_75,column_20" styleClass="panelH"
+      style="padding-top: 0px;  height: 80px;width: 100%; background:##{portalManagedBean.aplicacion.colorRgb} !important">
+      
+      
+      <p:graphicImage value="#{logoStreamer.fileContent}" width="84"  height="84"/>
+      
+      
+      <h:outputLabel value="#{portalManagedBean.aplicacion.nombre}" styleClass="letra_aplicacion" />
+      
+      <p:toolbarGroup align="right" style="width:100%">
+        <h:panelGrid columns="2" width="100%" border="0" columnClasses="column1_h,column2_h">
+          <h:outputText styleClass="letra_login" style="margin-top:-20px"
+            value="#{msg.welcome_user} #{portalManagedBean.principal.userGeneralDTO.user.login}" />
+          <h:graphicImage value="/resources/images/user.png" id="userData" width="80" height="80" />
+        </h:panelGrid>
+      </p:toolbarGroup>
+      
+    </h:panelGrid>
+
+    <p:overlayPanel for="userData" hideEffect="fade" appendToBody="true" dynamic="true">
+      <h:panelGrid columns="2" border="0" width="100%" cellpadding="5" style="border-style:none" cellspacing="5">
+        <h:graphicImage value="/resources/images/edit_male_user_32.png" width="32" height="32" />
+        <h:outputLink id="modifyAccount" value="javascript:void(0)" onclick="modPassDialg.show();" icon="ui-icon-person"
+          styleClass="linkTitulo" update=":modPass" type="button">
+
+          <h:outputLabel value="#{msg.modify_password}" />
+        </h:outputLink>
+        <h:graphicImage value="/resources/images/change_key.png" width="32" height="32" />
+        <h:outputLink id="modifyPass" value="javascript:void(0)" onclick="modAccountDialg.show();" icon="ui-icon-person"
+          styleClass="linkTitulo" update=":modAccount" type="button">
+
+          <h:outputLabel value="#{msg.modidy_account}" />
+        </h:outputLink>
+        <p:graphicImage value="/resources/images/button-power.png" width="32" height="32" />
+        <p:commandLink id="logut" value="#{msg.exit}" styleClass="linkTitulo" icon="ui-icon-extlink"
+          action="#{loginManagedBean.logout}">
+
+        </p:commandLink>
+      </h:panelGrid>
+    </p:overlayPanel>
+
+
+  </h:form>
+
+
+
+</ui:composition>

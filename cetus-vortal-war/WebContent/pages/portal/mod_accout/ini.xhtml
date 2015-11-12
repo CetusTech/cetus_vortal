@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:loadBundle var="msg" basename="Message_es" />
+<h:head>
+	<h:outputStylesheet library="css" name="estilo.css" />
+	<h:outputScript library="js" name="common.js" />
+</h:head>
+<h:body>
+
+	<h:form id="formConfirmModAccount" prependId="false">
+		<p:confirmDialog id="confirmDialogAccount" message="#{msg.confirm_operation}" appendToBody="true"
+			header="#{msg.update}" severity="alert" widgetVar="confirmationAccount">
+			<center>
+				<p:commandButton id="confirmAccount" value="#{msg.yes}"
+					actionListener="#{modifyAccountManagedBean.storeChangedProfile}" binding="#{modifyAccountManagedBean.btnConfirm}"
+					update=":formAccountMod:msgConfirmDialogAccount :formAccountMod"
+					oncomplete="confirmationAccount.hide(); modAccountDialg.hide()" process="@this" />
+				<p:commandButton id="declineno" value="#{msg.no}" onclick="confirmationAccount.hide()" type="button" />
+			</center>
+		</p:confirmDialog>
+	</h:form>
+
+
+	<h:form id="formAccountMod">
+		<p:message for="btnSaveAccountMod" id="accountModMsg" showDetail="true" />
+		<p:growl id="msgConfirmDialogAccount" showDetail="true" />
+		<h:panelGrid columns="3">
+			<p:outputLabel for="login" value="#{msg.login}" styleClass="resaltar_negro" />
+			<p:inputText value="#{modifyAccountManagedBean.usuario.login}" id="login" disabled="true" style="width: 200px" />
+			<p:message for="login" id="loginMsg" />
+
+			<p:outputLabel for="email" value="#{msg.email}" styleClass="resaltar_negro" id="lblEmail" />
+			<p:inputText value="#{modifyAccountManagedBean.usuario.email}" id="email" required="true" style="width: 200px"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message for="email" id="emailMsg" />
+
+			<p:outputLabel for="identificacion" value="#{msg.identity}" styleClass="resaltar_negro" />
+			<p:inputText value="#{modifyAccountManagedBean.usuario.identificacion}" id="identificacion" disabled="true"
+				style="width: 200px" />
+			<p:message for="identificacion" id="identificacionMsg" />
+
+			<p:outputLabel for="address" value="#{msg.address}" styleClass="resaltar_negro" />
+			<p:inputText value="#{modifyAccountManagedBean.usuario.address}" id="address" style="width: 200px" />
+			<p:message for="address" id="addressMsg" />
+
+			<p:outputLabel for="phone" value="#{msg.phone}" styleClass="resaltar_negro" />
+			<p:inputText value="#{modifyAccountManagedBean.usuario.phone}" id="phone" style="width: 200px" />
+			<p:message for="phone" id="phoneMsg" />
+
+		</h:panelGrid>
+		<h:panelGroup layout="block">
+			<center>
+				<p:commandButton value="#{msg.save}" update="btnSaveAccountMod accountModMsg emailMsg phoneMsg lblEmail"
+					process="@form" id="btnSaveAccountMod" oncomplete="handleCompleteAccountMod(xhr, status, args)"
+					binding="#{modifyAccountManagedBean.btnSave}" action="#{modifyAccountManagedBean.validateFormModAccount}" />
+			</center>
+		</h:panelGroup>
+	</h:form>
+</h:body>
+</html>

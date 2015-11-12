@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<p:panelGrid id="display" columns="2" cellpadding="4">
+
+		<h:outputText value="#{msg.user}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{serviceManagedBean.selectedObject.name}" />
+
+		<h:outputText value="#{msg.wsdl}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{serviceManagedBean.selectedObject.wsdl}" />
+		
+		<h:outputText value="#{msg.app}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{serviceManagedBean.selectedObject.tbAplicacion.nombre}" />
+
+		<h:outputText value="#{msg.status}:" styleClass="resaltar_negro" />
+		<h:graphicImage name="checkmark.png" title="ACTIVO" rendered='#{serviceManagedBean.selectedObject.status == 1}'
+			library="images" />
+		<h:graphicImage name="delete.png" title="INACTIVO" rendered='#{serviceManagedBean.selectedObject.status == 0}'
+			library="images" />
+
+		<h:outputText value="#{msg.create_user}:" styleClass="resaltar_negro"/>
+		<h:outputText value="#{serviceManagedBean.selectedObject.userCreation}" />
+
+		<h:outputText value="#{msg.create_date}:" styleClass="resaltar_negro"/>
+		<h:outputText value="#{serviceManagedBean.selectedObject.dateCreation}" />
+
+		<h:outputText value="#{msg.user_update}:" styleClass="resaltar_negro"/>
+		<h:outputText value="#{serviceManagedBean.selectedObject.userUpdate}" />
+
+		<h:outputText value="#{msg.date_update}:" styleClass="resaltar_negro"/>
+		<h:outputText value="#{serviceManagedBean.selectedObject.dateUpdate}" />
+
+	</p:panelGrid>
+</ui:composition>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<p:panelGrid columns="2" cellpadding="4">
+
+		<h:outputText value="#{msg.name}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.nombre}" />
+
+		<h:outputText value="#{msg.description}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.descripcion}" />
+
+		<h:outputText value="#{msg.url_menu}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.url}" />
+
+		<h:outputText value="#{msg.acronym}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.acronimo}" />
+
+		<h:outputText value="#{msg.create_user}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.usuarioCreacion}" />
+
+
+		<h:outputText value="#{msg.app}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.tbAplicationServlet.tbAplicacion.nombre}" />
+
+		<h:outputText value="#{msg.servlet}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.tbAplicationServlet.tbServlet.name}" />
+
+		<h:outputText value="#{msg.menu_padre}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.tbMenu.nombre}" />
+
+
+
+
+		<h:outputText value="#{msg.create_date}:" />
+		<h:outputText value="#{menuManagedBean.selectedObject.fechaCreacion}" />
+	</p:panelGrid>
+
+</ui:composition>

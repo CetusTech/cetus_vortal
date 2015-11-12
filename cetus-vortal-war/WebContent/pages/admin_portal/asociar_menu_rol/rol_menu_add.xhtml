@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<center>
+		<p:messages globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true" id="msgGlobal" />
+		<h:form id="formFilter" prependId="false">
+			<p:panel header="#{msg.filter}" id="pnlFilter" style="width:80%">
+				<h:panelGrid columns="2" width="100%">
+					<h:panelGrid columns="6" cellspacing="5" cellpadding="5" border="0">
+						<p:outputLabel value="#{msg.app}" for="app" />
+						<p:selectOneMenu id="app" value="#{rolMenuManagedBean.idApp}" required="true"
+							requiredMessage="#{msg.field_requiered}">
+							<f:selectItems value="#{rolMenuManagedBean.listSelectItemAplicacion}" var="itemApp" itemLabel="#{itemApp.label}"
+								itemValue="#{itemApp.value}" />
+							<p:ajax listener="#{rolMenuManagedBean.handleChangeApplication}" />
+						</p:selectOneMenu>
+						<p:message for="app" display="icon" showDetail="true" id="msgApp" />
+						<p:outputLabel value="#{msg.rol}" for="rol" />
+						<p:selectOneMenu required="true" requiredMessage="#{msg.field_requiered}" id="rol"
+							value="#{rolMenuManagedBean.idRolSelected}">
+							<f:selectItem itemLabel="#{msg.select_register_rol}" />
+							<f:selectItems value="#{rolMenuManagedBean.listSelectItemRol}" />
+						</p:selectOneMenu>
+						<p:message for="rol" display="icon" showDetail="true" id="msgRol" />
+					</h:panelGrid>
+					<h:panelGrid border="0" cellspacing="5" cellpadding="5">
+						<p:commandButton process="@form" value="#{msg.btn_search}" icon="ui-icon-search"
+							update="msgApp msgRol :formContenido:pickList :formContenido:formFilter:rol :formContenido:formFilter:pnlFilter"
+							action="#{rolMenuManagedBean.filterMenuByAppAndRol}" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+		<br />
+
+		<p:panel style="width:80%">
+			<p:pickList id="pickList" iconOnly="true" effect="puff" addAllLabel="#{msg.add_all}" addLabel="#{msg.add}"
+				converter="menuPickListConverter" moveTopLabel="#{msg.move_first}" moveUpLabel="#{msg.move_up_one}"
+				moveBottomLabel="#{msg.move_last}" moveDownLabel="#{msg.move_one_below}" removeAllLabel="#{msg.remove_all}"
+				removeLabel="#{msg.delete}" showSourceControls="true" showTargetControls="true"
+				style="width:50%;border-color: inherit;border-style: none;" value="#{rolMenuManagedBean.productEnabled}" var="obj"
+				itemLabel="#{obj}" itemValue="#{obj}">
+				<f:facet name="sourceCaption">
+					<h:outputText value="#{msg.menu_enabled}" />
+				</f:facet>
+				<f:facet name="targetCaption">
+					<h:outputText value="#{msg.menu_disabled}" />
+				</f:facet>
+
+				<p:column>
+					<h:outputLabel value="#{obj.nombre}" styleClass="desresaltar_black" />
+				</p:column>
+
+			</p:pickList>
+			<p:message for="pickList" id="msgpickList" />
+			<br />
+			<p:commandButton async="true" id="submitButtonProduct_Add" value="#{msg.save}"
+				process="@this :formContenido:pickList" action="#{rolMenuManagedBean.save}" icon="ui-icon-disk" />
+
+			<p:commandButton value="#{msg.btn_clean}"
+				update=":formContenido:pickList :formContenido:formFilter:app :formContenido:formFilter:rol" process="@none"
+				action="#{rolMenuManagedBean.limpiarCampos}" icon="ui-icon-circle-close" />
+		</p:panel>
+	</center>
+
+
+</ui:composition>

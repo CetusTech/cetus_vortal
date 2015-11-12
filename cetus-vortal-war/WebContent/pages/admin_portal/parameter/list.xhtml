@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<p:contextMenu for="list">
+		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search" oncomplete="viewDialog.show()"
+			action="#{parameterManagedBean.loadSelected}" />
+	</p:contextMenu>
+
+	<p:dataTable id="list" var="object" paginator="true" rows="10" rowStyleClass="#{index mod 2 == 0 ? null : 'row-color-2'}"
+		rowIndexVar="index" paginatorPosition="bottom" editable="true" rowsPerPageTemplate="#{msg.filter_datatable}"
+		currentPageReportTemplate="{currentPage} de {totalPages}"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		value="#{parameterManagedBean.listRegister}" rowKey="#{object.id}" selection="#{parameterManagedBean.selectedObject}"
+		resizableColumns="false" selectionMode="single" draggableColumns="true" emptyMessage="#{msg.empty_register}">
+
+		<f:facet name="header">
+			<h:outputLabel value="#{msg.list_register}" />
+		</f:facet>
+
+		<p:column sortBy="#{object.abreviatura}" filterBy="#{object.abreviatura}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.name}" />
+			</f:facet>
+			<h:outputText value="#{object.abreviatura}" />
+		</p:column>
+
+		<p:column sortBy="#{object.valor}" filterBy="#{object.valor}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.value}" />
+			</f:facet>
+			<h:outputText value="#{object.valor}" />
+		</p:column>
+
+		<p:column sortBy="#{object.tbComponent.name}" filterBy="#{object.tbComponent.name}"
+			filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.component}" />
+			</f:facet>
+			<h:outputText value="#{object.tbComponent.name}" />
+		</p:column>
+
+		<f:facet name="footer">
+			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+				update=":formAdd:grid" />
+
+			<p:commandButton id="updateButton" icon="ui-icon-pencil" title="#{msg.update}" process="@form" update=":dialogUpdate"
+				action="#{parameterManagedBean.loadUpdate}" oncomplete="handleSelectedRow(xhr, status, args)" value="#{msg.update}" />
+		</f:facet>
+
+	</p:dataTable>
+
+
+</ui:composition>

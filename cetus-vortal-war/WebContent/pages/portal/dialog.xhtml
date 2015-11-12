@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<p:dialog id="modPass" header="#{msg.modify_pass}" widgetVar="modPassDialg" showEffect="clip" hideEffect="fold"
+		style="width:100%; height:100%" maximizable="false" resizable="false" appendToBody="true" modal="true">
+		<ui:include src="/pages/portal/mod_pass/ini.xhtml" />
+	</p:dialog>
+
+	<p:dialog id="modAccount" header="#{msg.modidy_account}" widgetVar="modAccountDialg" showEffect="clip"
+		maximizable="false" resizable="false" hideEffect="fold" appendToBody="true" style="width:100%; height:100%"
+		modal="true">
+		<ui:include src="/pages/portal/mod_accout/ini.xhtml" />
+	</p:dialog>
+
+</ui:composition>

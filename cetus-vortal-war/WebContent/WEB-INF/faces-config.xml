@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+ <managed-bean>
+  <managed-bean-name>loginManagedBean</managed-bean-name>
+  <managed-bean-class>co.com.cetus.portal.web.bean.LoginManagedBean</managed-bean-class>
+  <managed-bean-scope>request</managed-bean-scope>
+  <managed-property>
+   <property-name>gp</property-name>
+   <value>#{guestPreferences}</value>
+  </managed-property>
+ </managed-bean>
+ <application>
+  <locale-config>
+   <default-locale>es</default-locale>
+   <supported-locale>es</supported-locale>
+  </locale-config>
+  <resource-bundle>
+   <base-name>Message_es</base-name>
+   <var>msg</var>
+  </resource-bundle>
+ </application>
+</faces-config>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <f:loadBundle var="msg" basename="Message_es" />
+
+  <p:panelGrid id="display" columns="2" cellpadding="4">
+
+    <h:outputText value="#{msg.id}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.id}" />
+
+    <h:outputText value="#{msg.name}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.name}" />
+
+    <h:outputText value="#{msg.description}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.description}" />
+
+
+    <h:outputText value="#{msg.app}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.tbAplicacion.descripcion}" />
+
+    <h:outputText value="#{msg.create_user}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.userCreation}" />
+
+    <h:outputText value="#{msg.create_date}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.dateCreation}" />
+
+    <h:outputText value="#{msg.user_update}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.userUpdate}" />
+
+    <h:outputText value="#{msg.date_update}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{componentManagedBean.selectedObject.dateUpdate}" />
+
+  </p:panelGrid>
+</ui:composition>

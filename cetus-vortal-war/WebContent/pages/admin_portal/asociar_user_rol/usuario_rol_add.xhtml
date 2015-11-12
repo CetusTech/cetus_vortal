@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<p:messages id="msgGen" globalOnly="true" autoUpdate="true" showDetail="true" showSummary="true" />
+	<center>
+		<h:panelGrid columns="1" id="grid_Add" border="0">
+			<h:panelGrid columns="3" style="text-align: center" width="50%">
+				<p:outputLabel value="#{msg.user}" for="usuario" />
+				<p:selectOneMenu required="true" id="usuario" requiredMessage="#{msg.field_requiered}" style="width:250px"
+					value="#{usuarioRolManagedBean.idUserSelected}">
+					<f:selectItem itemLabel="#{msg.select_register_user}" />
+					<f:selectItems value="#{usuarioRolManagedBean.listSelectItemUser}" />
+					<p:ajax update="pnl usuario pickList msgUser" listener="#{usuarioRolManagedBean.handleRolChange}" process="@form" />
+				</p:selectOneMenu>
+				<p:message for="usuario" display="icon" id="msgUser" />
+			</h:panelGrid>
+			<p:outputPanel autoUpdate="true" id="pnl">
+				<p:pickList id="pickList" iconOnly="true" effect="puff" addAllLabel="#{msg.add_all}" addLabel="#{msg.add}"
+					converter="RolPickListConverter" moveTopLabel="#{msg.move_first}" moveUpLabel="#{msg.move_up_one}"
+					moveBottomLabel="#{msg.move_last}" moveDownLabel="#{msg.move_one_below}" removeAllLabel="#{msg.remove_all}"
+					removeLabel="#{msg.delete}" showSourceControls="true" showTargetControls="true"
+					style="width:60%;border-color: inherit;border-style: none;" value="#{usuarioRolManagedBean.productEnabled}"
+					var="obj" itemLabel="#{obj}" itemValue="#{obj}">
+					<f:facet name="sourceCaption">
+						<h:outputText value="#{msg.menu_enabled}" />
+					</f:facet>
+					<f:facet name="targetCaption">
+						<h:outputText value="#{msg.menu_disabled}" />
+					</f:facet>
+
+					<p:column style="width:70%">
+						<h:outputLabel value="#{obj.descripcion}" styleClass="desresaltar_black" />
+					</p:column>
+
+				</p:pickList>
+			</p:outputPanel>
+		</h:panelGrid>
+
+
+
+		<p:commandButton async="true" id="submitButtonProduct_Add" value="#{msg.save}" process="@form"
+			action="#{usuarioRolManagedBean.saveUsuarioRol}" icon="ui-icon-disk" update=":formContenido:contenido msgGen" />
+	</center>
+
+
+</ui:composition>

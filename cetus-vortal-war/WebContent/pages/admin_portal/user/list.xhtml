@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+
+	<p:contextMenu for="list">
+		<p:menuitem value="#{msg.view}" update=":dialog" icon="ui-icon-search" oncomplete="carDialog.show()" />
+		<p:menuitem value="#{msg.delete}" update="list" icon="ui-icon-close" oncomplete="confirmDialogDelete.show()" />
+	</p:contextMenu>
+
+	<p:dataTable var="object" paginator="true" rows="10" id="list"
+		rowStyleClass="#{index mod 2 == 0 ? null : 'row-color-2'}" rowIndexVar="index" paginatorPosition="bottom"
+		editable="true"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		value="#{userManagedBean.listRegister}" rowKey="#{object.id}" selection="#{userManagedBean.selectedObject}"
+		emptyMessage="#{msg.not_empty}" rowsPerPageTemplate="#{msg.filter_datatable}"
+		currentPageReportTemplate="{currentPage} de {totalPages}" resizableColumns="false" selectionMode="single"
+		draggableColumns="true">
+
+		<p:ajax event="rowEdit" listener="#{userManagedBean.editEvent}" update=":formContenido:men" />
+
+		<f:facet name="header">
+			<h:outputLabel value="#{msg.list_register}" />
+		</f:facet>
+
+		<p:column sortBy="#{object.login}" filterBy="#{object.login}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.login}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.login}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="true" requiredMessage="#{msg.field_requiered}" value="#{object.login}" style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.identificacion}" filterBy="#{object.identificacion}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.identity}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.identificacion}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="true" requiredMessage="#{msg.field_requiered}" value="#{object.identificacion}"
+						style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.status}" filterBy="#{object.status}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.status}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<center>
+						<h:graphicImage name="checkmark.png" title="ACTIVO" rendered='#{object.status == 1}' library="images" />
+						<h:graphicImage name="delete.png" title="INACTIVO" rendered='#{object.status == 0}' library="images" />
+					</center>
+				</f:facet>
+				<f:facet name="input">
+
+					<p:selectBooleanButton value="#{userManagedBean.status}" onLabel="#{msg.active}" offLabel="#{msg.inactive}"
+						onIcon="ui-icon-check" offIcon="ui-icon-close">
+
+					</p:selectBooleanButton>
+
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+		<p:column sortBy="#{object.descripcion}" filterBy="#{object.descripcion}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.description}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.descripcion}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="true" requiredMessage="#{msg.field_requiered}" value="#{object.descripcion}"
+						style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.email}" filterBy="#{object.email}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.email}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.email}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="true" requiredMessage="#{msg.field_requiered}" value="#{object.email}" style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+
+		<p:column sortBy="#{object.address}" filterBy="#{object.address}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.address}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.address}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="false" requiredMessage="#{msg.field_requiered}" value="#{object.address}" style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.phone}" filterBy="#{object.address}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.phone}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.phone}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="false" requiredMessage="#{msg.field_requiered}" value="#{object.phone}" style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column headerText="Options" style="width:50px">
+			<p:rowEditor />
+		</p:column>
+
+		<f:facet name="footer">
+			<p:commandButton id="addButton" value="#{msg.add}" update=":formAdd_user" icon="ui-icon-circle-plus"
+				oncomplete="add.show()" />
+		</f:facet>
+	</p:dataTable>
+</ui:composition>

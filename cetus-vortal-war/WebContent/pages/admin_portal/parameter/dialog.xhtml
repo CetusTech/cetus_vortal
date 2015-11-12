@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<h:outputScript library="js" name="common.js" />
+	<p:dialog header="#{msg.detalled}" widgetVar="viewDialog" resizable="false" showEffect="clip" hideEffect="fold" id="dialog"
+		modal="true">
+		<ui:include src="#{msg.url_parameter_view}" />
+	</p:dialog>
+
+	<h:form id="formConfirm" prependId="false">
+		<p:confirmDialog id="dialogDelete" appendToBody="true" message="#{msg.confirm_delete}" header="#{msg.delete_register}"
+			severity="alert" widgetVar="confirmDialogDelete">
+			<center>
+				<p:commandButton id="confirm" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
+					oncomplete="confirmDialogDelete.hide()" process="@this" action="#{parameterManagedBean.delete}" />
+				<p:commandButton id="decline" value="#{msg.cancel}" onclick="confirmDialogDelete.hide()" type="button" />
+			</center>
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="formConfirmUpdate" prependId="false">
+		<p:confirmDialog id="dialogConfirmUpdate" appendToBody="true" message="#{msg.confirm_mod}" header="#{msg.update}"
+			severity="alert" widgetVar="confirmDialogUpdate">
+			<center>
+				<p:commandButton id="confirmUpdate" value="#{msg.accept}" update=":formContenido:contenido"
+					oncomplete="confirmDialogUpdate.hide();update.hide()" process="@this" action="#{parameterManagedBean.update}" />
+				<p:commandButton id="declineUpdate" value="#{msg.cancel}" onclick="confirmDialogUpdate.hide()" type="button" />
+			</center>
+		</p:confirmDialog>
+	</h:form>
+
+
+	<p:dialog id="dialogAdd" modal="true" appendToBody="true" header="#{msg.add_register}" widgetVar="add" resizable="false"
+		showEffect="clip" hideEffect="fold">
+		<ui:include src="#{msg.url_parameter_add}" />
+	</p:dialog>
+
+	<p:dialog id="dialogUpdate" modal="true" appendToBody="true" draggable="true" header="#{msg.update}" widgetVar="update"
+		resizable="false" showEffect="clip" hideEffect="fold">
+		<ui:include src="#{msg.url_parameter_update}" />
+	</p:dialog>
+
+</ui:composition>

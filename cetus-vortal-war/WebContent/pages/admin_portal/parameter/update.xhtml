@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+
+	<h:outputScript>
+		function handleLoginRequestUpdate(xhr, status, args) {
+			if (args.validationFailed || !args.lSuccessfull) {
+				jQuery('#dialogUpdate').effect("shake", {
+					times : 4
+				}, 10);
+			} else {
+				confirmDialogUpdate.show();
+			}
+		}
+	</h:outputScript>
+
+	<h:form id="formUpdate_Menu" prependId="false" enctype="multipart/form-data">
+		<p:message id="msgErrorUpdate" for="submitButton_Update_Menu" />
+		<h:panelGrid id="grid_update" columns="3">
+
+			<p:outputLabel for="column1_Upd" value="#{msg.name}" />
+			<p:inputText id="column1_Upd" required="true" value="#{parameterManagedBean.selectedObject.abreviatura}" style="width:250px"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message for="column1_Upd" display="icon" />
+
+			<p:outputLabel for="column4_Upd" value="#{msg.value}" />
+			<p:inputTextarea id="column4_Upd" required="true" requiredMessage="#{msg.field_requiered}" cols="80" rows="5"
+				maxlength="3999" value="#{parameterManagedBean.selectedObject.valor}" />
+			<p:message for="column4_Upd" display="icon" />
+
+			<p:outputLabel for="column3_Upd" value="#{msg.component}" />
+			<p:selectOneMenu id="column3_Upd" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{parameterManagedBean.selectedObject.tbComponent.id}">
+				<f:selectItems value="#{parameterManagedBean.listComponent}" />
+			</p:selectOneMenu>
+			<p:message for="column3_Upd" display="icon" />
+
+			<p:outputLabel for="column5_Upd" value="#{msg.type}" />
+			<p:selectOneMenu id="column5_Upd" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{parameterManagedBean.selectedObject.tipoParametro}">
+				<f:selectItems value="#{parameterManagedBean.listType}" />
+			</p:selectOneMenu>
+			<p:message for="column5_Upd" display="icon" />
+
+			<p:outputLabel for="column7_Upd" value="#{msg.status}" />
+			<p:selectOneMenu id="column7_Upd" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{parameterManagedBean.selectedObject.estado}">
+				<f:selectItems value="#{parameterManagedBean.listStatus}" />
+			</p:selectOneMenu>
+			<p:message for="column7_Upd" display="icon" />
+			
+			<p:outputLabel for="column6_Upd" value="#{msg.value}" />
+			<p:inputTextarea id="column6_Upd" required="true" requiredMessage="#{msg.field_requiered}" cols="80" rows="3"
+				maxlength="100" value="#{parameterManagedBean.selectedObject.descripcion}" />
+			<p:message for="column6_Upd" display="icon" />
+			
+
+			<f:facet name="footer">
+				<center>
+					<p:commandButton id="submitButton_Update_Menu" value="#{msg.accept}" async="true" 
+						oncomplete="handleLoginRequestUpdate(xhr, status, args)" process="@form"
+						action="#{parameterManagedBean.validateUpdate}" icon="ui-icon-disk"
+						update=":formContenido:contenido grid_update msgErrorUpdate" />
+				</center>
+			</f:facet>
+		</h:panelGrid>
+
+	</h:form>
+
+</ui:composition>

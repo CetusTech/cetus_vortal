@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<p:panelGrid columns="2" cellpadding="4">
+
+		<h:outputText value="#{msg.identity}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.identificacion}" />
+
+		<h:outputText value="#{msg.login}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.login}" />
+
+		<h:outputText value="#{msg.status}:" styleClass="resaltar_negro" />
+		<h:graphicImage name="checkmark.png" title="ACTIVO" rendered='#{userManagedBean.selectedObject.status == 1}'
+			library="images" />
+		<h:graphicImage name="delete.png" title="INACTIVO" rendered='#{userManagedBean.selectedObject.status == 0}'
+			library="images" />
+
+
+		<h:outputText value="#{msg.description}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.descripcion}" />
+
+		<h:outputText value="#{msg.email}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.email}" />
+
+		<h:outputText value="#{msg.address}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.address}" />
+
+		<h:outputText value="#{msg.phone}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.phone}" />
+
+		<h:outputText value="#{msg.create_user}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.usuarioCreacion}" />
+
+
+		<h:outputText value="#{msg.create_date}:" styleClass="resaltar_negro" />
+		<h:outputText value="#{userManagedBean.selectedObject.fechaCreacion}" />
+
+	</p:panelGrid>
+
+</ui:composition>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.0"
+ xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+ <display-name>cetus</display-name>
+ <context-param>
+  <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+  <param-value>true</param-value>
+ </context-param>
+ <context-param>
+  <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+  <param-value>6Lc7v8wSAAAAAEqse65gy1khZQ66j4QmD1It_H_0</param-value>
+ </context-param>
+ <context-param>
+  <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+  <param-value>6Lc7v8wSAAAAAPWkTu5F5YGzTgAwY2ci3azU3CxB</param-value>
+ </context-param>
+ <context-param>
+  <param-name>primefaces.THEME</param-name>
+  <param-value>#{guestPreferences.theme}</param-value>
+ </context-param>
+ <!-- FILTROS PARA CARGA DE IMAGENES EN BASE DE DATOS -->
+ <filter>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name>
+  <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+ </filter>
+ <filter-mapping>
+  <filter-name>PrimeFaces FileUpload Filter</filter-name>
+  <servlet-name>Faces Servlet</servlet-name>
+ </filter-mapping>
+ <!-- FIN DE CONFIGURACION PARA CARGA DE IMAGES -->
+ <servlet>
+  <servlet-name>Home</servlet-name>
+  <servlet-class>co.com.cetus.portal.web.servlet.Home</servlet-class>
+ </servlet>
+ <servlet>
+  <servlet-name>Faces Servlet</servlet-name>
+  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+  <load-on-startup>1</load-on-startup>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>Faces Servlet</servlet-name>
+  <url-pattern>*.xhtml</url-pattern>
+ </servlet-mapping>
+ <session-config>
+  <session-timeout>30</session-timeout>
+ </session-config>
+ <mime-mapping>
+  <extension>jpg</extension>
+  <mime-type>image/jpeg</mime-type>
+ </mime-mapping>
+ <mime-mapping>
+  <extension>jpeg</extension>
+  <mime-type>image/jpeg</mime-type>
+ </mime-mapping>
+ <mime-mapping>
+  <extension>javascript</extension>
+  <mime-type>text/javascript</mime-type>
+ </mime-mapping>
+ <mime-mapping>
+  <extension>css</extension>
+  <mime-type>text/css</mime-type>
+ </mime-mapping>
+ <welcome-file-list>
+  <welcome-file>index.xhtml</welcome-file>
+ </welcome-file-list>
+ <error-page>
+  <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+  <location>/public/error.html</location>
+ </error-page>
+ <error-page>
+  <error-code>400</error-code>
+  <location>/pages/errors/error_400.xhtml</location>
+ </error-page>
+ <error-page>
+  <error-code>404</error-code>
+  <location>/pages/errors/error_404.xhtml</location>
+ </error-page>
+ <error-page>
+  <error-code>500</error-code>
+  <location>/pages/errors/error_500.xhtml</location>
+ </error-page>
+ <error-page>
+  <error-code>403</error-code>
+  <location>/pages/errors/error_403.xhtml</location>
+ </error-page>
+ <security-constraint>
+  <web-resource-collection>
+   <web-resource-name>pages</web-resource-name>
+   <url-pattern>/pages/*</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+   <description>Todos los roles</description>
+   <role-name>admin</role-name>
+  </auth-constraint>
+ </security-constraint>
+ <security-constraint>
+  <web-resource-collection>
+   <web-resource-name>index</web-resource-name>
+   <url-pattern>/index.xhtml</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+   <description>Todos los roles</description>
+   <role-name>admin</role-name>
+  </auth-constraint>
+ </security-constraint>
+ <login-config>
+  <auth-method>FORM</auth-method>
+  <realm-name>JAASRealm</realm-name>
+  <form-login-config>
+   <form-login-page>/public/login.xhtml</form-login-page>
+   <form-error-page>/public/error.html</form-error-page>
+  </form-login-config>
+ </login-config>
+</web-app>

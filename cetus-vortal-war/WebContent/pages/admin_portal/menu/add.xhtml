@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <f:loadBundle var="msg" basename="Message_es" />
+  <h:form id="formAdd_Menu" prependId="false">
+    <p:messages for="errorNegocio" autoUpdate="true" id="msgError" showDetail="true" />
+    <p:panel>
+      <h:panelGrid id="grid_Menu" columns="3">
+
+        <p:outputLabel for="column1_Add_Menu" value="#{msg.name}" />
+        <p:inputText id="column1_Add_Menu" required="true" value="#{menuManagedBean.addObject.nombre}" maxlength="44"
+          size="30" requiredMessage="#{msg.field_requiered}" />
+
+        <p:message id="column1_Add_Menu_msg" for="column1_Add_Menu" display="icon" />
+
+        <p:outputLabel for="column2_Add_Menu" value="#{msg.description}" />
+        <p:inputTextarea id="column2_Add_Menu" rows="5" cols="30" maxlength="200"
+          value="#{menuManagedBean.addObject.descripcion}">
+          <f:validateLength maximum="200" />
+        </p:inputTextarea>
+        <p:message id="column2_Add_Menu_msg" for="column2_Add_Menu" display="icon" />
+
+        <p:outputLabel for="column3_Add_Menu" value="#{msg.url_menu}" />
+        <p:inputText id="column3_Add_Menu" required="true" size="30" value="#{menuManagedBean.addObject.url}"
+          title="Ejemplo: /page/admin/ini.xthml" requiredMessage="#{msg.field_requiered}">
+
+          <p:tooltip for="column3_Add_Menu" showEvent="focus" hideEvent="blur" />
+        </p:inputText>
+        <p:message id="column3_Add_Menu_msg" for="column3_Add_Menu" display="icon" />
+
+
+        <p:outputLabel for="column4_Add_Menu" value="#{msg.acronym}" />
+        <p:inputText id="column4_Add_Menu" required="true" maxlength="8" onchange="conMayusculas(this);"
+          onkeyup="conMayusculas(this);" value="#{menuManagedBean.addObject.acronimo}"
+          requiredMessage="#{msg.field_requiered}">
+          <f:validateRegex pattern="[A-Z]*" />
+          <f:validateLength minimum="6" maximum="8" />
+        </p:inputText>
+        <p:message id="column4_Add_Menu_msg" for="column4_Add_Menu" display="icon" />
+
+        <p:outputLabel for="column5_Add_Menu" value="#{msg.app}" />
+        <p:selectOneMenu id="column5_Add_Menu" required="true" requiredMessage="#{msg.field_requiered}"
+          converter="applicationConvert" value="#{menuManagedBean.addObject.tbAplicationServlet.tbAplicacion}">
+          <f:selectItems value="#{menuManagedBean.listRegisterApplication}" var="aplicacion"
+            itemLabel="#{aplicacion.nombre}" />
+          <p:ajax update="column6_Add_Menu,column7_Add_Menu"
+            listener="#{menuManagedBean.handleChangeApplicationComboBoxServlet}" />
+        </p:selectOneMenu>
+        <p:message for="column5_Add_Menu" display="icon" />
+
+        <p:outputLabel for="column6_Add_Menu" value="#{msg.servlet}" />
+        <p:selectOneMenu id="column6_Add_Menu" value="#{menuManagedBean.addObject.tbAplicationServlet.id}"
+          required="true" requiredMessage="#{msg.field_requiered}">
+          <f:selectItems value="#{menuManagedBean.listSelectItemApplicationServlet}" var="servlet"
+            itemLabel="#{servlet.label}" display="icon" />
+          <p:ajax update="column7_Add_Menu" listener="#{menuManagedBean.handleChangeServletComboBox}" />
+        </p:selectOneMenu>
+        <p:message for="column6_Add_Menu" display="icon" />
+
+        <p:outputLabel for="column7_Add_Menu" value="#{msg.menu_padre}" />
+        <p:selectOneMenu id="column7_Add_Menu" value="#{menuManagedBean.idMenuPadre}">
+          <f:selectItems value="#{menuManagedBean.listSelectItemMenu}" var="menu" itemLabel="#{menu.label}"
+            display="icon" />
+        </p:selectOneMenu>
+        <p:message for="column7_Add_Menu" display="icon" />
+      </h:panelGrid>
+
+      <f:facet name="footer">
+        <center>
+          <p:commandButton async="true" id="submitButton_Add_Menu" value="#{msg.accept}"
+            oncomplete="handleDialogAdd(xhr, status, args)" process="@form" icon="ui-icon-disk"
+            action="#{menuManagedBean.validateAdd}" update=":formContenido:contenido grid_Menu msgError" />
+        </center>
+      </f:facet>
+    </p:panel>
+
+  </h:form>
+
+</ui:composition>

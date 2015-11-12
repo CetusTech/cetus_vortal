@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+
+	<h:outputScript>
+		function handleLoginRequestUpdate(xhr, status, args) {
+			if (args.validationFailed || !args.lSuccessfull) {
+				jQuery('#dialogUpdate').effect("shake", {
+					times : 4
+				}, 10);
+			} else {
+				confirmDialogUpdate.show();
+			}
+		}
+	</h:outputScript>
+
+	<h:form id="formUpdate_Menu" prependId="false" enctype="multipart/form-data">
+		<p:message id="msgErrorUpdate" for="submitButton_Update_Menu" />
+		<h:panelGrid id="grid_update" columns="3">
+
+			<p:outputLabel for="column1_Update" value="#{msg.user}" />
+			<p:selectOneMenu id="column1_Update" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{permissionManagedBean.selectedObject.tbUserW.id}">
+				<f:selectItems value="#{permissionManagedBean.listUser}" />
+			</p:selectOneMenu>
+			<p:message for="column1_Update" display="icon" />
+
+			<p:outputLabel for="column2_Update" value="#{msg.app}" />
+			<p:selectOneMenu id="column2_Update" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{permissionManagedBean.selectedObject.tbService.tbAplicacion.id}">
+				<f:selectItems value="#{permissionManagedBean.listAplicacion}" />
+				<p:ajax update="column3_Update" process="@this" listener="#{permissionManagedBean.changeApplicationUpdate}" />
+			</p:selectOneMenu>
+			<p:message for="column2_Update" display="icon" />
+
+			<p:outputLabel for="column3_Update" value="#{msg.service}" />
+			<p:selectOneMenu id="column3_Update" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{permissionManagedBean.selectedObject.tbService.id}">
+				<f:selectItems value="#{permissionManagedBean.listService}" />
+			</p:selectOneMenu>
+			<p:message for="column3_Update" display="icon" />
+
+
+			<f:facet name="footer">
+				<center>
+					<p:commandButton id="submitButton_Update_Menu" value="#{msg.accept}" async="true" 
+						oncomplete="handleLoginRequestUpdate(xhr, status, args)" process="@form"
+						action="#{permissionManagedBean.validateUpdate}" icon="ui-icon-disk"
+						update=":formContenido:contenido grid_update msgErrorUpdate" />
+				</center>
+			</f:facet>
+		</h:panelGrid>
+
+	</h:form>
+
+</ui:composition>

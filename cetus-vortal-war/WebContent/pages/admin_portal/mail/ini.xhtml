@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:loadBundle var="msg" basename="Message_es" />
+<h:head>
+	<h:outputStylesheet library="css" name="estilo.css" />
+	<h:outputScript library="js" name="common.js" />
+</h:head>
+<h:body>
+	<h:form id="formContenido">
+		<p:messages autoUpdate="true" id="msg" showDetail="true" />
+		<p:panel header="#{msg.template_mail}">
+			<p:selectOneMenu id="template" value="#{mailTemplateManagedBean.idParam}">
+				<f:selectItems value="#{mailTemplateManagedBean.listTemplates}" />
+				<p:ajax update="edit" listener="#{mailTemplateManagedBean.handleChangeTemplate}" />
+			</p:selectOneMenu>
+		</p:panel>
+
+		<p:outputPanel autoUpdate="true" id="pnlEdit">
+			<h:panelGrid id="edit">
+				<p:editor id="editor" value="#{mailTemplateManagedBean.html}" width="600" />
+			</h:panelGrid>
+			<h:panelGrid columns="2" style="margin-top:10px">
+				<p:commandButton id="submitButton" value="#{msg.save}" update="msg" icon="ui-icon-disk"
+					action="#{mailTemplateManagedBean.save}" />
+				<p:commandButton id="clearButton" update="formContenido" value="#{msg.btn_clean}"
+					action="#{mailTemplateManagedBean.limpiar}" icon="ui-icon-close" />
+			</h:panelGrid>
+		</p:outputPanel>
+	</h:form>
+</h:body>
+</html>

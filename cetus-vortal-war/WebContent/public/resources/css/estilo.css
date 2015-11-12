@@ -1,0 +1,129 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	font-size: 10px;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	color: black;
+}
+
+.label {
+	cursor: pointer;
+	display: block;
+	float: left;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 28px;
+	margin-bottom: 5px;
+	width: 120px;
+}
+
+.column1 {
+	width: 25%;
+	padding-top: 0px;
+	margin: 20px;
+	vertical-align: top;
+}
+
+.column2 {
+	vertical-align: top;
+	width: 75%;
+	padding-top: 0px;
+	margin: 20px;
+}
+
+.contenido {
+	overflow: auto;
+	height: 450px;
+}
+
+.tree {
+	padding-top: 0px;
+	margin-top: 0px;
+}
+
+#imagen {
+	width: 25%;
+	padding-top: 0px;
+	margin: 20px;
+	vertical-align: top
+}
+
+.welcome {
+	margin: 50px 150px 0px 100px;
+	background-color: transparent;
+}
+
+.fondo_cabecera {
+	background-image: url("/cetus-vortal-war/resources/images/line1.png");
+	background-repeat: repeat-x;
+	width: 100%;
+	height: 50px;
+	padding-top: 0px;
+}
+
+.fondo_pie_pagina {
+	background-image: url("/cetus-vortal-war/resources/images/line2.png");
+	background-repeat: repeat-x;
+	width: 100%;
+	height: 61px;
+	padding-top: 0px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.column_cab_1 {
+	width: 7%;
+	vertical-align: top;
+}
+
+.column_cab_2 {
+	width: 80%;
+	text-align: left;
+}
+
+.column_cab_3 {
+	width: 13%;
+	text-align: left;
+}
+
+.resaltar {
+	font-weight: bold;
+	font-size: 15px;
+	color: white;
+}
+
+.resaltar_negro {
+	font-weight: bold !important;
+	font-size: 15px !important;
+	color: black !important;
+}
+
+.linkTitulo {
+	color: red;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.linkTitulo:hover {
+	color: white;
+	font-weight: bold;
+	text-decoration: underline;
+	font-size: 12px;
+}
+
+.letra_aplicacion {
+	font-size: 26px;
+	color: white;
+	text-shadow: 5px 5px 5px #000000;
+	color: white;
+}
+
+.columnas-login {
+	border-radius: 15px !important;
+	border-top-left-radius: 400px 200px;
+}

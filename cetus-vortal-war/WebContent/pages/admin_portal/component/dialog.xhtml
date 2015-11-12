@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<h:outputScript>
+		function handleReeloadSelected(xhr, status, args) {
+			if (args.lSuccessfull) {
+				confirmDialogReload.show();
+			}
+		}
+	</h:outputScript>
+
+	<h:outputScript library="js" name="common.js" />
+	<p:dialog header="#{msg.detalled}" widgetVar="viewDialog" resizable="false" showEffect="clip" hideEffect="fold"
+		id="dialog" modal="true">
+		<ui:include src="#{msg.url_component_view}" />
+	</p:dialog>
+
+	<h:form id="formConfirm" prependId="false">
+		<p:confirmDialog id="dialogDelete" appendToBody="true" message="#{msg.confirm_delete}" header="#{msg.delete_register}"
+			severity="alert" widgetVar="confirmDialogDelete">
+			<center>
+				<p:commandButton id="confirm" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
+					oncomplete="confirmDialogDelete.hide()" process="@this" action="#{componentManagedBean.delete}" />
+				<p:commandButton id="decline" value="#{msg.cancel}" onclick="confirmDialogDelete.hide()" type="button" />
+			</center>
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="formConfirmReload" prependId="false">
+		<p:confirmDialog id="dialogReload" appendToBody="true" message="#{msg.confirm_reload_parameter}" header="#{msg.reload_parameter}"
+			severity="alert" widgetVar="confirmDialogReload">
+			<center>
+				<p:commandButton id="confirmReload" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
+					oncomplete="confirmDialogReload.hide()" process="@this" action="#{componentManagedBean.reloadParameter}" />
+				<p:commandButton id="declineReload" value="#{msg.cancel}" onclick="confirmDialogReload.hide()" type="button" />
+			</center>
+		</p:confirmDialog>
+	</h:form>
+
+	<p:dialog id="dialogAdd" modal="true" appendToBody="true" header="#{msg.add_register}" widgetVar="add"
+		resizable="false" showEffect="clip" hideEffect="fold">
+		<ui:include src="#{msg.url_component_add}" />
+	</p:dialog>
+
+</ui:composition>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<h:form id="formAdd" prependId="false" enctype="multipart/form-data">
+		<p:message for="submitButton2" id="msgAdd" />
+		<h:panelGrid id="grid" columns="3">
+
+			<p:outputLabel for="column1_Add" value="#{msg.name}" />
+			<p:inputText id="column1_Add" required="true" value="#{parameterManagedBean.addObject.abreviatura}" style="width:250px"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message for="column1_Add" display="icon" />
+
+			<p:outputLabel for="column4_Add" value="#{msg.value}" />
+			<p:inputTextarea id="column4_Add" required="true" requiredMessage="#{msg.field_requiered}" cols="80" rows="5"
+				maxlength="3999" value="#{parameterManagedBean.addObject.valor}" />
+			<p:message for="column4_Add" display="icon" />
+
+			<p:outputLabel for="column3_Add" value="#{msg.component}" />
+			<p:selectOneMenu id="column3_Add" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{parameterManagedBean.addObject.tbComponent.id}">
+				<f:selectItems value="#{parameterManagedBean.listComponent}" />
+			</p:selectOneMenu>
+			<p:message for="column3_Add" display="icon" />
+
+			<p:outputLabel for="column5_Add" value="#{msg.type}" />
+			<p:selectOneMenu id="column5_Add" required="true" requiredMessage="#{msg.field_requiered}"
+				value="#{parameterManagedBean.addObject.tipoParametro}">
+				<f:selectItems value="#{parameterManagedBean.listType}" />
+			</p:selectOneMenu>
+			<p:message for="column5_Add" display="icon" />
+
+
+			<p:outputLabel for="column6_Add" value="#{msg.description}" />
+			<p:inputTextarea id="column6_Add" required="true" requiredMessage="#{msg.field_requiered}" cols="80" rows="3"
+				maxlength="100" value="#{parameterManagedBean.addObject.descripcion}" />
+			<p:message for="column6_Add" display="icon" />
+
+
+			<f:facet name="footer">
+				<center>
+					<p:commandButton async="true" id="submitButton2" value="#{msg.accept}" oncomplete="handleDialogAdd(xhr, status, args)"
+						binding="#{parameterManagedBean.btnSave}" process="@form" action="#{parameterManagedBean.loadData}" icon="ui-icon-disk"
+						update="msgAdd grid" />
+						
+				</center>
+			</f:facet>
+		</h:panelGrid>
+
+		<p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.add}"
+			severity="alert" widgetVar="confirmation">
+			<center>
+				<p:commandButton id="confirmRol" value="#{msg.accept}"
+					update=":formContenido:men :formContenido:list :dialog :formConfirm :dialogAdd grid msgAdd confirmDialog"
+					oncomplete="confirmation.hide(); handleAddRow(xhr, status, args)" action="#{parameterManagedBean.add}"
+					process="@this" />
+				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="confirmation.hide();" type="button" />
+			</center>
+		</p:confirmDialog>
+
+
+	</h:form>
+
+</ui:composition>

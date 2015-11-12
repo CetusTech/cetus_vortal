@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <f:loadBundle var="msg" basename="Message_es" />
+
+  <h:outputScript>
+		function handleLoginRequestUpdate(xhr, status, args) {
+			if (args.validationFailed || !args.lSuccessfull) {
+				jQuery('#dialogUpdate').effect("shake", {
+					times : 4
+				}, 10);
+			} else {
+				confirmDialogUpdate.show();
+			}
+		}
+</h:outputScript>
+  <h:form id="formUpdate_Menu" prependId="false">
+    <p:message id="msgErrorUpdate" for="submitButton_Update_Menu" />
+    <br />
+    <p:panel>
+      <h:panelGrid id="grid_MenuUpdate" columns="3">
+        <h:outputLabel for="column1_Update_Menu" value="#{msg.name}" />
+        <p:inputText id="column1_Update_Menu" required="true" value="#{menuManagedBean.selectedObject.nombre}"
+          maxlength="44" size="30" requiredMessage="#{msg.field_requiered}" />
+        <p:message id="column1_Update_Menu_msg" for="column1_Update_Menu" />
+        <h:outputLabel for="column2_Update_Menu" value="#{msg.description}" />
+        <p:inputTextarea id="column2_Update_Menu" rows="5" cols="30" maxlength="200"
+          value="#{menuManagedBean.selectedObject.descripcion}">
+          <f:validateLength maximum="200" />
+        </p:inputTextarea>
+        <p:message id="column2_Update_Menu_msg" for="column2_Update_Menu" />
+
+        <h:outputLabel for="column3_Update_Menu" value="#{msg.url_menu}" />
+        <p:inputText id="column3_Update_Menu" required="true" size="30" value="#{menuManagedBean.selectedObject.url}"
+          title="Ejemplo: /page/admin/ini.xthml" requiredMessage="#{msg.field_requiered}">
+
+          <p:tooltip for="column3_Update_Menu" showEvent="focus" hideEvent="blur" />
+        </p:inputText>
+        <p:message id="column3_Update_Menu_msg" for="column3_Update_Menu" />
+
+
+        <h:outputLabel for="column4_Update_Menu" value="#{msg.acronym}" />
+        <p:inputText id="column4_Update_Menu" required="true" maxlength="8" onchange="conMayusculas(this);"
+          onkeyup="conMayusculas(this);" value="#{menuManagedBean.selectedObject.acronimo}"
+          requiredMessage="#{msg.field_requiered}">
+          <f:validateRegex pattern="[A-Z]*" />
+          <f:validateLength minimum="6" maximum="8" />
+        </p:inputText>
+        <p:message id="column4_Update_Menu_msg" for="column4_Update_Menu" />
+
+        <h:outputLabel for="column5_Update_Menu" value="#{msg.app}" />
+        <p:selectOneMenu id="column5_Update_Menu" required="true" requiredMessage="#{msg.field_requiered}"
+          converter="applicationConvert" value="#{menuManagedBean.selectedObject.tbAplicationServlet.tbAplicacion}">
+          <f:selectItems value="#{menuManagedBean.listRegisterApplication}" var="aplicacion"
+            itemLabel="#{aplicacion.nombre}" />
+          <p:ajax update="column6_Update_Menu,column7_Update_Menu"
+            listener="#{menuManagedBean.handleChangeApplicationServletUpdateComboBox}" />
+        </p:selectOneMenu>
+        <p:message for="column5_Update_Menu" />
+
+        <h:outputLabel for="column6_Update_Menu" value="#{msg.servlet}" />
+        <p:selectOneMenu id="column6_Update_Menu" value="#{menuManagedBean.selectedObject.tbAplicationServlet.id}">
+          <f:selectItems value="#{menuManagedBean.listSelectItemApplicationServlet}" var="servlet"
+            itemLabel="#{servlet.label}" itemValue="#{servlet.value}" />
+          <p:ajax update="column7_Update_Menu" listener="#{menuManagedBean.handleChangeServletComboBoxUpdate}" />
+        </p:selectOneMenu>
+        <p:message for="column6_Update_Menu" />
+
+        <h:outputLabel for="column7_Update_Menu" value="#{msg.menu_padre}" />
+        <p:selectOneMenu id="column7_Update_Menu" value="#{menuManagedBean.idMenuPadre}">
+          <f:selectItems value="#{menuManagedBean.listSelectItemMenu}" var="menu" itemLabel="#{menu.label}"
+            itemValue="#{menu.value}" />
+        </p:selectOneMenu>
+        <p:message for="column7_Update_Menu" />
+      </h:panelGrid>
+
+      <f:facet name="footer">
+        <center>
+          <p:commandButton id="submitButton_Update_Menu" value="#{msg.accept}" async="true"
+            oncomplete="handleLoginRequestUpdate(xhr, status, args)" process="@form"
+            action="#{menuManagedBean.validateUpdate}" icon="ui-icon-disk"
+            update=":formContenido:contenido grid_MenuUpdate msgErrorUpdate" />
+        </center>
+      </f:facet>
+    </p:panel>
+
+  </h:form>
+
+</ui:composition>

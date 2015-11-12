@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<p:contextMenu for="list">
+		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search"
+			oncomplete="viewDialog.show()" action="#{applicationManagedBean.loadSelected}" />
+		<p:menuitem value="#{msg.delete}" update="list :formContenido:men" icon="ui-icon-close"
+			oncomplete="confirmDialogDelete.show()" action="#{applicationManagedBean.loadSelected}" />
+	</p:contextMenu>
+
+	<p:dataTable id="list" var="object" paginator="true" rows="5"
+		rowStyleClass="#{index mod 2 == 0 ? null : 'row-color-2'}" rowIndexVar="index" paginatorPosition="bottom"
+		editable="true" rowsPerPageTemplate="#{msg.filter_datatable}"
+		currentPageReportTemplate="{currentPage} de {totalPages}"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		value="#{applicationManagedBean.listRegister}" rowKey="#{object.id}"
+		selection="#{applicationManagedBean.selectedObject}" resizableColumns="false" selectionMode="single"
+		draggableColumns="true" emptyMessage="#{msg.empty_register}">
+
+		<p:ajax event="rowEdit" listener="#{applicationManagedBean.editEvent}" update="list :formContenido:men" />
+
+		<f:facet name="header">
+			<h:outputLabel value="#{msg.list_register}" />
+		</f:facet>
+
+		<p:column sortBy="#{object.nombre}" filterBy="#{object.nombre}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.name}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.nombre}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="true" requiredMessage="#{msg.name_required}" value="#{object.nombre}" style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.descripcion}" filterBy="#{object.descripcion}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.description}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.descripcion}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputTextarea value="#{object.descripcion}" style="width:100%" cols="20" rows="6" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.tbTipoEstilo.nombre}" filterBy="#{object.tbTipoEstilo.nombre}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.style}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.tbTipoEstilo.nombre}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:selectOneMenu value="#{applicationManagedBean.estilo}" required="true" requiredMessage="#{msg.estilo_required}"
+						converter="tipoEstiloConverter" panelStyle="width:150px; position: absolute !important" effect="fade" var="p"
+						style="width:160px" filter="false" filterMatchMode="startsWith">
+						<f:selectItem itemLabel="#{msg.select_register_style}" itemValue="" />
+						<f:selectItems value="#{applicationManagedBean.listTipoEstilo}" var="estilos" itemLabel="#{estilos.nombre}"
+							itemValue="#{estilos}" />
+						<p:column>
+							<p:graphicImage value="/resources/images/themes/#{p.imagen}" width="24" height="24" />
+						</p:column>
+
+						<p:column>
+							<h:outputLabel value="#{p.nombre}" />
+						</p:column>
+					</p:selectOneMenu>
+
+
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.urlServer}" filterBy="#{object.urlServer}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.url_server_app}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.urlServer}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText value="#{object.urlServer}" style="width:100%" required="false"
+						requiredMessage="La ruta es Obligatoria" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="#{msg.color}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.colorRgb}" style="background-color:##{object.colorRgb}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:colorPicker id="color" value="#{object.colorRgb}" required="true" requiredMessage="#{msg.color_required}" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="#{msg.logo}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.logo != null ? 'SI' : 'NO'}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:commandButton value="..." onclick="dialogFileUpload.show();" />
+					<p:dialog widgetVar="dialogFileUpload" id="dialogFileUpload" appendToBody="true" modal="true" height="100"
+						width="300" maximizable="false" header="#{msg.select_logo}" resizable="false">
+						<h:form enctype="multipart/form-data">
+							<p:fileUpload id="logo" fileUploadListener="#{applicationManagedBean.handleFileUpload}" auto="true"
+								allowTypes="/(\.|\/)(png)$/" sizeLimit="100000" invalidFileMessage="#{msg.invalidFileMessage}"
+								invalidSizeMessage="#{msg.invalidSizeMessage}" label="#{msg.choose}" oncomplete="dialogFileUpload.hide();" />
+						</h:form>
+					</p:dialog>
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="#{msg.image_body}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.imagenCuerpo != null ? 'SI' : 'NO'}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:commandButton value="..." onclick="dialogFileUploadImage.show();" />
+					<p:dialog widgetVar="dialogFileUploadImage" id="dialogFileUploadImage" appendToBody="true" modal="true"
+						height="100" width="300" maximizable="false" header="#{msg.select_image}" resizable="false">
+						<h:form enctype="multipart/form-data">
+							<p:fileUpload id="image" fileUploadListener="#{applicationManagedBean.handleFileUploadImageBody}" auto="true"
+								allowTypes="/(\.|\/)(jpe?g|png)$/" sizeLimit="1000000" invalidFileMessage="#{msg.invalidFileMessage}"
+								invalidSizeMessage="#{msg.invalidSizeMessage}" label="#{msg.choose}" oncomplete="dialogFileUploadImage.hide();" />
+						</h:form>
+					</p:dialog>
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+
+
+		<p:column headerText="#{msg.update}" style="width:50px">
+			<p:rowEditor />
+		</p:column>
+
+		<f:facet name="footer">
+			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+				update=":formAdd:grid" />
+		</f:facet>
+
+	</p:dataTable>
+
+
+</ui:composition>

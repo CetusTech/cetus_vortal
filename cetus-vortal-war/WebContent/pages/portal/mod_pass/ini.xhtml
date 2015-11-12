@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<h:form id="formConfirmModPass" prependId="false">
+		<p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.update}"
+			severity="alert" widgetVar="confirmation">
+			<center>
+				<p:commandButton id="confirm" value="#{msg.yes}" actionListener="#{modifyPasswordManagedBean.storeNewPassword}"
+					binding="#{modifyPasswordManagedBean.btnConfirm}"
+					update=":formContenido1:msgConfirmDialog :formContenido1:contenido1"
+					oncomplete="confirmation.hide();modPassDialg.hide()" process="@this" />
+				<p:commandButton id="decline" value="#{msg.no}" onclick="confirmation.hide()" type="button" />
+			</center>
+		</p:confirmDialog>
+	</h:form>
+
+	<h:form id="formContenido1" prependId="false">
+		<p:message for="btnSaveUpdPass" id="msgUpdatePass" showDetail="true" />
+		<p:growl id="msgConfirmDialog" showDetail="true" />
+		<p:outputPanel id="contenido1" autoUpdate="false">
+			<h:panelGrid columns="3" styleClass="column_100" columnClasses="columna_etiqueta,columna_cajas">
+				<p:outputLabel for="passOld" value="#{msg.pass_old}" styleClass="resaltar_negro" />
+				<p:password required="true" value="#{modifyPasswordManagedBean.passwordActual}" id="passOld"
+					requiredMessage="#{msg.field_requiered}" />
+				<p:message for="passOld" id="passOldMsg" />
+
+				<p:outputLabel for="pass" styleClass="resaltar_negro" value="#{msg.pass_new}" />
+				<p:password value="#{modifyPasswordManagedBean.password}" id="pass" requiredMessage="#{msg.field_requiered}"
+					validatorMessage="#{msg.error_password_diferent}" goodLabel="#{msg.lbl_good}" promptLabel="#{msg.lbl_prompt}"
+					weakLabel="#{msg.lbl_weak}" strongLabel="#{msg.lbl_strong}" feedback="true" inline="true" match="conf"
+					required="true" />
+				<p:message for="pass" id="passMsg" />
+
+				<p:outputLabel for="conf" styleClass="resaltar_negro" value="#{msg.pass_confirm}" />
+				<p:password value="#{modifyPasswordManagedBean.confirm}" id="conf" requiredMessage="#{msg.field_requiered}"
+					goodLabel="#{msg.lbl_good}" promptLabel="#{msg.lbl_prompt}" weakLabel="#{msg.lbl_weak}"
+					strongLabel="#{msg.lbl_strong}" feedback="true" inline="true" required="true" />
+				<p:message for="conf" id="confirmMsg" />
+
+			</h:panelGrid>
+
+			<h:panelGroup layout="block">
+				<center>
+					<p:commandButton value="#{msg.save}" update="msgUpdatePass passOldMsg passMsg confirmMsg" process="@form"
+						id="btnSaveUpdPass" oncomplete="handleCompleteAdd(xhr, status, args)"
+						binding="#{modifyPasswordManagedBean.btnSave}" action="#{modifyPasswordManagedBean.validateFormModPass}" />
+				</center>
+			</h:panelGroup>
+		</p:outputPanel>
+	</h:form>
+
+</ui:composition>

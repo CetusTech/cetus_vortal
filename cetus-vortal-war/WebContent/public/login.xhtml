@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+<f:loadBundle var="msg" basename="Message_es" />
+
+<h:head>
+
+  <title>#{msg.page_init_session}</title>
+  <h:outputStylesheet library="css" name="login.css" />
+  <h:outputStylesheet library="css" name="login-box.css" />
+  <h:outputScript library="js" name="common.js" />
+  <link rel="SHORTCUT ICON" href="public/resources/images/favicon.ico" type="image/x-icon" />
+  <script language="JavaScript" type="text/javascript">
+	//Establecer el foco de un campo inicial
+  function setFocus() {
+	  var campo = document.forms['j_security_check']['j_security_check:username'];
+	  campo.focus();
+	     
+  }
+//Esstablecer el foco por id del campo
+  function setFocusInput(id) {
+	  var campo = document.forms['j_security_check'][id];
+	  campo.focus();
+	     
+  }
+</script>
+</h:head>
+<h:body onload="setFocus();">
+
+  <h:form id="j_security_check">
+    <div style="padding: 100px 0 0 250px;">
+      <div id="login-box">
+        <h:outputText value="#{msg.init_session}" styleClass="label" />
+        <br /> <br />
+        <hr />
+        <h:outputText value="#{msg.msg_init_session}" styleClass="label_msg" />
+        <br /> <br />
+        <h:panelGrid columns="3" cellpadding="5" cellspacing="5" border="0" width="100%">
+          <p:outputPanel rendered="#{!loginManagedBean.flagApp}" style="width: 100%" autoUpdate="true">
+            <h:outputLabel value="#{msg.app}" />
+          </p:outputPanel>
+          <p:outputPanel rendered="#{!loginManagedBean.flagApp}" style="width: 100%" autoUpdate="true">
+            <h:panelGrid columnClasses="column_login_label,column_login_input,column_login_error" style="width: 100%"
+              columns="3" border="0">
+
+              <p:selectOneMenu styleClass="combo" id="itemAppSelected" required="true"
+                requiredMessage="#{msg.field_requiered}" value="#{loginManagedBean.aplicacion}"
+                converter="applicationConvert">
+                <f:selectItem itemLabel="#{msg.select_app}" itemValue="" />
+                <f:selectItems value="#{loginManagedBean.listApp}" var="app" itemLabel="#{app.nombre}" />
+              </p:selectOneMenu>
+
+
+            </h:panelGrid>
+          </p:outputPanel>
+          <p:outputPanel rendered="#{!loginManagedBean.flagApp}" style="width: 100%" autoUpdate="true">
+
+            <p:message for="itemAppSelected" showDetail="false" display="icon" showSummary="false" />
+
+
+          </p:outputPanel>
+          <h:outputLabel value="#{msg.user}" />
+          <p:inputText styleClass="form-login inputText" id="username" required="true"
+            requiredMessage="#{msg.field_requiered}" value="#{loginManagedBean.user}" label="#{msg.user}" />
+
+
+          <p:message for="username" showDetail="false" showSummary="false" display="icon" />
+
+          <h:outputLabel value="#{msg.password}" />
+
+
+          <p:password styleClass="form-login inputText" id="password" requiredMessage="#{msg.field_requiered}"
+            value="#{loginManagedBean.password}" feedback="false" required="true" label="#{msg.password}" />
+          <p:message for="password" showDetail="false" showSummary="false" display="icon" />
+          <f:facet name="footer">
+
+
+
+            <p:commandButton value="Enviar" styleClass="buttonCss3" style="top: 10px;" id="boton" immediate="false"
+              async="false" ajax="false" action="#{loginManagedBean.login}" />
+
+          </f:facet>
+        </h:panelGrid>
+        <p:messages autoUpdate="true" globalOnly="true" showDetail="true" showSummary="true" />
+      </div>
+
+    </div>
+
+    <input type="hidden" name="j_password" />
+    <input type="hidden" name="j_username" />
+  </h:form>
+
+
+
+
+</h:body>
+</html>
+
+<!--  onblur="setFocusInput('j_security_check:boton')"-->
+
+<!-- onmouseout="setFocusInput('j_security_check:boton')" -->

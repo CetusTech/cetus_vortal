@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+	<h:form id="formAdd" prependId="false" enctype="multipart/form-data">
+		<p:message for="submitButton2" id="msgAdd" />
+		<h:panelGrid id="grid" columns="3">
+			<p:outputLabel for="column1_Add" value="#{msg.name}" />
+			<p:inputText id="column1_Add" required="true" value="#{componentManagedBean.addObject.name}" style="width:250px"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message id="column1_Add_msg" for="column1_Add" display="icon" />
+
+			<p:outputLabel for="column2_Add" value="#{msg.description}" />
+			<p:inputText id="column2_Add" required="true" value="#{componentManagedBean.addObject.description}" style="width:250px"
+				requiredMessage="#{msg.field_requiered}" />
+			<p:message id="column2_Add_msg" for="column2_Add" display="icon" />
+
+			<f:facet name="footer">
+				<center>
+					<p:commandButton async="true" id="submitButton2" value="#{msg.accept}" oncomplete="handleDialogAdd(xhr, status, args)"
+						binding="#{componentManagedBean.btnSave}" process="@form" action="#{componentManagedBean.loadData}" icon="ui-icon-disk"
+						update=":formContenido:men grid" />
+				</center>
+			</f:facet>
+		</h:panelGrid>
+
+		<p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.add}"
+			severity="alert" widgetVar="confirmation">
+			<center>
+				<p:commandButton id="confirmRol" value="#{msg.accept}"
+					update=":formContenido:men :formContenido:list :dialog :formConfirm :dialogAdd grid msgAdd"
+					oncomplete="confirmation.hide(); handleAddRow(xhr, status, args)" actionListener="#{componentManagedBean.add}"
+					process="@this" />
+				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="confirmation.hide();" type="button" />
+			</center>
+		</p:confirmDialog>
+
+
+	</h:form>
+
+</ui:composition>

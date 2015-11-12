@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="cetus-vortal-jpa"
+		transaction-type="JTA">
+		<jta-data-source>java:jboss/datasources/CetusVortalDS</jta-data-source>
+		<class>co.com.cetus.vortal.jpa.entity.Aplicacion</class>
+		<class>co.com.cetus.vortal.jpa.entity.AplicationServlet</class>
+		<class>co.com.cetus.vortal.jpa.entity.Component</class>
+		<class>co.com.cetus.vortal.jpa.entity.Menu</class>
+		<class>co.com.cetus.vortal.jpa.entity.Parametro</class>
+		<class>co.com.cetus.vortal.jpa.entity.Permission</class>
+		<class>co.com.cetus.vortal.jpa.entity.Rol</class>
+		<class>co.com.cetus.vortal.jpa.entity.RolMenu</class>
+		<class>co.com.cetus.vortal.jpa.entity.Service</class>
+		<class>co.com.cetus.vortal.jpa.entity.Servlet</class>
+		<class>co.com.cetus.vortal.jpa.entity.TipoEstilo</class>
+		<class>co.com.cetus.vortal.jpa.entity.UserW</class>
+		<class>co.com.cetus.vortal.jpa.entity.Usuario</class>
+		<class>co.com.cetus.vortal.jpa.entity.UsuarioRol</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+</persistence>

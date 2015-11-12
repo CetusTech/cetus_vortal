@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+	<f:loadBundle var="msg" basename="Message_es" />
+
+	<p:contextMenu for="list">
+		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search" oncomplete="viewDialog.show()"
+			action="#{componentManagedBean.loadSelected}" />
+		
+	</p:contextMenu>
+
+	<p:dataTable id="list" var="object" paginator="true" rows="5" rowStyleClass="#{index mod 2 == 0 ? null : 'row-color-2'}"
+		rowIndexVar="index" paginatorPosition="bottom" editable="true" rowsPerPageTemplate="#{msg.filter_datatable}"
+		currentPageReportTemplate="{currentPage} de {totalPages}"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		value="#{componentManagedBean.listRegister}" rowKey="#{object.id}" selection="#{componentManagedBean.selectedObject}"
+		resizableColumns="false" selectionMode="single" draggableColumns="true" emptyMessage="#{msg.empty_register}">
+
+		<p:ajax event="rowEdit" listener="#{componentManagedBean.editEvent}" update="list :formContenido:men" />
+
+		<f:facet name="header">
+			<h:outputLabel value="#{msg.list_register}" />
+		</f:facet>
+
+		<p:column sortBy="#{object.name}" filterBy="#{object.name}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.name}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.name}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="true" requiredMessage="#{msg.field_requiered}" value="#{object.name}" style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column sortBy="#{object.description}" filterBy="#{object.description}" filterMatchMode="contains">
+			<f:facet name="header">
+				<h:outputText value="#{msg.description}" />
+			</f:facet>
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{object.description}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText required="true" requiredMessage="#{msg.field_requiered}" value="#{object.description}" style="width:100%" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column headerText="#{msg.update}" style="width:50px">
+			<p:rowEditor />
+		</p:column>
+
+		<f:facet name="footer">
+			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+				update=":formAdd:grid" />
+
+			<p:commandButton id="reload_parameter" value="#{msg.reload_parameter}" icon="ui-icon-refresh" update=":formConfirmReload:dialogReload"
+				action="#{componentManagedBean.reloadComponent}" oncomplete="handleReeloadSelected(xhr, status, args)" process="@form" />
+				
+		</f:facet>
+
+	</p:dataTable>
+
+
+</ui:composition>
