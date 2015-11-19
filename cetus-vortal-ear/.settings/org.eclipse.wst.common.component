@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="cetus-vortal-ear">
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/" source-path="/EarContent/lib"/>
         <dependent-module archiveName="cetus-vortal-jpa.jar" deploy-path="/lib" handle="module:/resource/cetus-vortal-jpa/cetus-vortal-jpa">
             <dependency-type>uses</dependency-type>
         </dependent-module>
