@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ValidPermissionService {
 
-    @XmlElement(namespace = "http://service.ejb.portal.cetus.com.co/")
+  @XmlElement(name = "validPermServiceRequestDTO")
     protected ValidPermServiceRequestDTO validPermServiceRequestDTO;
 
     /**
