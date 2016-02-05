@@ -4,7 +4,7 @@
   <module>
     <web>
       <web-uri>cetus-vortal-war.war</web-uri>
-      <context-root>cetus-vortal-war</context-root>
+      <context-root>cetus</context-root>
     </web>
   </module>
   <module>
