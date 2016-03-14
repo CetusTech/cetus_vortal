@@ -1,35 +1,33 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 <f:loadBundle var="msg" basename="Message_es" />
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title><h:outputText value="#{msg.title_application}" /></title>
-	<h:outputStylesheet library="css" name="estilo.css" />
-	<h:outputScript library="js" name="common.js" />
-	<link rel="SHORTCUT ICON" href="public/resources/images/favicon.ico" type="image/x-icon" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title><h:outputText value="#{msg.title_application}" /></title>
+  <h:outputStylesheet library="css" name="estilo.css" />
+  <h:outputScript library="js" name="common.js" />
 </h:head>
 
-<h:body onload="Javascript:history.go(1);" onunload="Javascript:history.go(1);">
-	<p:layout fullPage="true">
-		<p:layoutUnit position="north" resizable="false" style="padding-top: 0px;" closable="false" collapsible="false">
-			<ui:insert name="top" />
-		</p:layoutUnit>
+<h:body>
+
+  <p:layout fullPage="true">
+    <p:layoutUnit position="north" resizable="false" closable="false" collapsible="false" styleClass="header_style"> 
+      <ui:insert name="top" />
+    </p:layoutUnit>
+    <p:layoutUnit position="west" size="300" header="#{msg.functionalities}" resizable="true" minSize="250"
+      maxSize="350" closable="false" collapsible="true">
+      <ui:insert name="left" />
+    </p:layoutUnit>
+
+    <p:layoutUnit position="center" id="pnlCenterVortal" styleClass="center_lay">
+      <ui:insert name="content" />
+    </p:layoutUnit>
 
 
-		<p:layoutUnit position="west" size="300" header="#{msg.functionalities}" resizable="true" closable="false"
-			collapsible="true">
-			<ui:insert name="left" />
-		</p:layoutUnit>
-
-		<p:layoutUnit position="center" size="400">
-			<ui:insert name="content" />
-		</p:layoutUnit>
-
-	</p:layout>
+  </p:layout>
 
 </h:body>
 

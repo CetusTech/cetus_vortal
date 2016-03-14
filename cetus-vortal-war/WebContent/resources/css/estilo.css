@@ -104,8 +104,14 @@ body {
 	vertical-align: top;
 }
 
+.column_25 {
+	width: 25%;
+	vertical-align: top;
+	text-align: left;
+}
+
 .column_30 {
-	width: 30%;
+	width: 30% !important;
 	vertical-align: top;
 }
 
@@ -140,8 +146,11 @@ body {
 }
 
 .column_90 {
-	width: 90%;
+	width: 90% !important;
+	height: 600px !important;
+	background-color: green !important;
 	vertical-align: top;
+	background-color: green !important;
 }
 
 .column_cab_3 {
@@ -168,7 +177,7 @@ body {
 	color: black !important;
 	font-weight: bold;
 	text-decoration: none;
-	font-size: 12px;	
+	font-size: 12px;
 }
 
 .linkTitulo:hover {
@@ -199,12 +208,12 @@ body {
 	text-shadow: 3px 3px 3px #000000;
 	font-family: Georgia, serif;
 	color: white;
-	padding-top: 100px !important;
+	padding-top: 70px !important;
 	position: absolute;
-	margin-top: -80px;
+	margin-top: -60px;
 }
 
-.letra_login{
+.letra_login {
 	text-shadow: 3px 3px 3px #000000;
 	font-family: Georgia, serif;
 	color: white;
@@ -270,4 +279,22 @@ body {
 	background: url("folder-close-icon.png.xhtml?ln=images") !important;
 	height: 24px !important;
 	width: 24px !important;
+}
+
+.header_style {
+	color: red;
+	background-color: red !important;
+	height: 70px !important;
+}
+
+.ui-layout-unit .ui-layout-unit-content {
+	height: 100% !important;
+}
+
+.ui-layout-unit {
+	padding: 0.0em;
+}
+
+.center_lay {
+	top: 100px;
 }

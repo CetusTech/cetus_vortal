@@ -3,26 +3,23 @@
   xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
   <f:loadBundle var="msg" basename="Message_es" />
   <h:form>
+    <h:panelGrid columns="3" border="0" columnClasses="column_5,column_70,column_25" styleClass="panelH"
+      style="padding-top: 0px;  height: 70px;width: 100%; background:##{portalManagedBean.aplicacion.colorRgb} !important">
 
-    <h:panelGrid columns="3" border="0" columnClasses="column_5,column_75,column_20" styleClass="panelH"
-      style="padding-top: 0px;  height: 80px;width: 100%; background:##{portalManagedBean.aplicacion.colorRgb} !important">
-      
-      
-      <p:graphicImage value="#{logoStreamer.fileContent}" width="84"  height="84"/>
-      
-      
+
+      <p:graphicImage value="#{logoStreamer.fileContent}" width="60" height="60" />
+
       <h:outputLabel value="#{portalManagedBean.aplicacion.nombre}" styleClass="letra_aplicacion" />
-      
+
       <p:toolbarGroup align="right" style="width:100%">
         <h:panelGrid columns="2" width="100%" border="0" columnClasses="column1_h,column2_h">
-          <h:outputText styleClass="letra_login" style="margin-top:-20px"
+          <h:outputText styleClass="letra_login" style="margin-top:-10px"
             value="#{msg.welcome_user} #{portalManagedBean.principal.userGeneralDTO.user.login}" />
-          <h:graphicImage value="/resources/images/user.png" id="userData" width="80" height="80" />
+          <h:graphicImage value="/resources/images/user.png" id="userData" width="50" height="50" />
         </h:panelGrid>
       </p:toolbarGroup>
-      
-    </h:panelGrid>
 
+    </h:panelGrid>
     <p:overlayPanel for="userData" hideEffect="fade" appendToBody="true" dynamic="true">
       <h:panelGrid columns="2" border="0" width="100%" cellpadding="5" style="border-style:none" cellspacing="5">
         <h:graphicImage value="/resources/images/edit_male_user_32.png" width="32" height="32" />
@@ -44,7 +41,6 @@
         </p:commandLink>
       </h:panelGrid>
     </p:overlayPanel>
-
 
   </h:form>
 
