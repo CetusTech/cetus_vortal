@@ -13,13 +13,16 @@ import co.com.cetus.vortal.jpa.entity.Parametro;
  */
 public class AppConstants {
   
-  public static PropertiesLoader          properties           = PropertiesLoader.getInstance();
-  
-  public static int                       ID_APPLICATION_CETUS = Integer.parseInt( properties.getProperty( "ID_APPLICATION_CETUS_VORTAL" ) );
-  public static int                       ID_COMPONENT_CETUS   = Integer.parseInt( properties.getProperty( "ID_COMPONENT_CETUS_VORTAL" ) );
-  
-  public static HashMap< String, String > parameter            = null;
-  
+  public static PropertiesLoader          properties                  = PropertiesLoader.getInstance();
+                                                                      
+  public static int                       ID_APPLICATION_CETUS        = Integer.parseInt( properties.getProperty( "ID_APPLICATION_CETUS_VORTAL" ) );
+  public static int                       ID_COMPONENT_CETUS          = Integer.parseInt( properties.getProperty( "ID_COMPONENT_CETUS_VORTAL" ) );
+  public static String                    WSDL_CETUS_MESSAGE_SERVICE  = properties.getProperty( "WSDL_CETUS_MESSAGE_SERVICE" );
+  public static String                    USER_WS_MESSAGE_SERVICE     = properties.getProperty( "USER_WS_MESSAGE_SERVICE" );
+  public static String                    PASSWORD_WS_MESSAGE_SERVICE = properties.getProperty( "PASSWORD_WS_MESSAGE_SERVICE" );
+                                                                      
+  public static HashMap< String, String > parameter                   = null;
+                                                                      
   /**
    * </p> Load parameter. </p>
    *

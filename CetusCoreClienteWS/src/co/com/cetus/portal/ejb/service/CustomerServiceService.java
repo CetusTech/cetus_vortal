@@ -30,7 +30,7 @@ public class CustomerServiceService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:9099/cetus-vortal-ejb/CustomerService?wsdl");
+            url = new URL("http://localhost:8080/cetus-vortal-ejb/CustomerService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -56,6 +56,8 @@ public class CustomerServiceService
 
     public CustomerServiceService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
+        System.out.println( "URL QUE ESTA LLEGANDO :: " + wsdlLocation );
+
     }
 
     public CustomerServiceService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {

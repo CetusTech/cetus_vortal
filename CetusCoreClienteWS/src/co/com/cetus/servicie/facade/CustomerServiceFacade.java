@@ -33,16 +33,16 @@ public class CustomerServiceFacade {
   
   /** The url services agarthi. */
   private URL                    urlServicesAgarthi;
-  
+                                 
   /** The service. */
   private CustomerServiceService service                      = null;
-  
+                                                              
   /** The port. */
   private CustomerService        port                         = null;
-  
+                                                              
   /** The Constant CETUS_CUSTOMER_SERVICE_QNAME. */
   private final static QName     CETUS_CUSTOMER_SERVICE_QNAME = new QName( "http://service.ejb.portal.cetus.com.co/", "CustomerServiceService" );
-  
+                                                              
   /**
    * </p> Instancia un nuevo customer service facade. </p>
    *
@@ -53,10 +53,13 @@ public class CustomerServiceFacade {
   public CustomerServiceFacade ( URL pUrlServicesAgarthi ) {
     try {
       urlServicesAgarthi = pUrlServicesAgarthi;
+      System.out.println( "URL QUE ESTA LLEGANDO :: " + urlServicesAgarthi );
+      
       if ( urlServicesAgarthi != null ) {
         service = new CustomerServiceService( urlServicesAgarthi, CETUS_CUSTOMER_SERVICE_QNAME );
       } else {
         //WSDL por defecto
+        System.out.println( "INSTANCIANDO SERVICIO DE CAJA" );
         service = new CustomerServiceService();
       }
       port = service.getCustomerServicePort();

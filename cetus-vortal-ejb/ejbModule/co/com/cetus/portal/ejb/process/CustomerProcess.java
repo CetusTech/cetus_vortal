@@ -35,6 +35,7 @@ import co.com.cetus.common.exception.ValidatorException;
 import co.com.cetus.common.mail.SendMail;
 import co.com.cetus.common.util.Converter;
 import co.com.cetus.common.util.UtilCommon;
+import co.com.cetus.portal.ejb.runnables.ThereadMailLocal;
 import co.com.cetus.portal.ejb.util.ConstantBussines;
 import co.com.cetus.portal.ejb.util.Util;
 import co.com.cetus.portal.ejb.validator.CetusValidator;
@@ -71,17 +72,17 @@ public class CustomerProcess {
   /** The general process. */
   @EJB ( name = "cetus-vortal-ear/GeneralProcess/local" )
   private GeneralProcessLocal generalProcess;
-  
+                              
   /** The portal process. */
   @EJB ( name = "cetus-vortal-ear/PortalProcess/local" )
   private PortalProcessLocal  portalProcess;
-  
+                              
   @PersistenceContext ( unitName = "cetus-vortal-jpa" )
   private EntityManager       em;
-  
+                              
   /** The converter. */
   private Converter           converter;
-  
+                              
   /**
    * </p> Inits the. </p>
    *
@@ -113,6 +114,10 @@ public class CustomerProcess {
     Rol rol = null;
     String roles = null;
     List< String > lista = null;
+    String[] parameters = null;
+    String lParamSUBJECT = null;
+    ThereadMailLocal mail = null;
+    Thread hilo1 = null;
     try {
       response = new CreateUserResponseDTO();
       //con el idapp se debe validar que esta aplicacion tenga permiso de consumir el servicio de CREARUSUARIO
@@ -134,6 +139,7 @@ public class CustomerProcess {
       //converter.convertDtoToEntity( userDto, usuario );
       usuario.setStatus( ConstantBussines.ACTIVO );
       lEntityT = generalProcess.create( usuario );
+      
       if ( lEntityT != null ) {
         if ( createUserRequestDTO.getRol() != null ) {
           roles = createUserRequestDTO.getRol();
@@ -158,9 +164,15 @@ public class CustomerProcess {
         response.setUsuarioDTO( userDto );
         try {
           Util.CETUS_CORE.info( "PREPARADO PARA ENVIAR EL MAIL AL " + userDto.getEmail() );
-          this.sendEmail( userDto.getLogin(), passwordTemp, userDto.getEmail(), ConstantBussines.OP_CREATE );
+          parameters = new String[2];
+          parameters[0] = userDto.getLogin();
+          parameters[1] = passwordTemp;
+          lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_CREATE_USER );
+          mail = new ThereadMailLocal( lParamSUBJECT, usuario.getEmail(), null, ConstantBussines.Parameter.HTML_EMAIL_NEW_USER, parameters );
+          hilo1 = new Thread( mail );
+          hilo1.start();
         } catch ( Exception e ) {
-          e.printStackTrace();
+          Util.CETUS_CORE.error( "Error ::> " + e.getMessage(), e );
         }
       } else {
         response = new CreateUserResponseDTO();
@@ -190,10 +202,12 @@ public class CustomerProcess {
     ResponseWSDTO lResponseWSDTO = null;
     UsuarioDTO userDto = null;
     Usuario usuario = null;
+    ThereadMailLocal mail = null;
+    Thread hilo1 = null;
     try {
       if ( deleteUserRequestDTO.getIdUsuario() == 0 ) throw new ValidatorException( "El Id del usuario a eliminar es obligatorio.",
                                                                                     CetusValidator.class.getSimpleName() );
-      
+                                                                                    
       loginNullEmpty( deleteUserRequestDTO.getLogin() );
       usuario = new Usuario();
       usuario.setId( deleteUserRequestDTO.getIdUsuario() );
@@ -205,7 +219,23 @@ public class CustomerProcess {
         portalProcess.removerUserRolByUser( usuario.getId() );
         generalProcess.remove( usuario );
         lResponseWSDTO = createMessageSUCCESS_WS();
-        this.sendEmail( usuario.getLogin(), null, usuario.getEmail(), ConstantBussines.OP_DELETE );
+        
+        //Enviar correo 
+        
+        String[] parameters = null;
+        String lParamSUBJECT = null;
+        
+        try {
+          parameters = new String[1];
+          parameters[0] = usuario.getLogin();
+          lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_DELETE_USER );
+          mail = new ThereadMailLocal( lParamSUBJECT, usuario.getEmail(), null, ConstantBussines.Parameter.HTML_EMAIL_DELETE_USER, parameters );
+          hilo1 = new Thread( mail );
+          hilo1.start();
+        } catch ( Exception e ) {
+          Util.CETUS_CORE.error( "Error ::> " + e.getMessage(), e );
+        }
+        
       } else {
         lResponseWSDTO = createMessageNORESULT_WS();
       }
@@ -237,6 +267,8 @@ public class CustomerProcess {
     Rol rol = null;
     String roles = null;
     List< String > lista = null;
+    ThereadMailLocal mail = null;
+    Thread hilo1 = null;
     try {
       CetusValidator.usuarioDTONull( updateUserRequestDTO.getUsuarioDTO() );
       userDto = updateUserRequestDTO.getUsuarioDTO();
@@ -275,7 +307,19 @@ public class CustomerProcess {
       }
       
       lResponseWSDTO = createMessageSUCCESS_WS();
-      this.sendEmail( userDto.getLogin(), null, userDto.getEmail(), ConstantBussines.OP_UPDATE );
+      //Enviar correo 
+      String[] parameters = null;
+      String lParamSUBJECT = null;
+      try {
+        parameters = new String[1];
+        parameters[0] = usuario.getLogin();
+        lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_UPDATE_USER );
+        mail = new ThereadMailLocal( lParamSUBJECT, usuario.getEmail(), null, ConstantBussines.Parameter.HTML_EMAIL_UPDATE_USER, parameters );
+        hilo1 = new Thread( mail );
+        hilo1.start();
+      } catch ( Exception e ) {
+        Util.CETUS_CORE.error( "Error ::> " + e.getMessage(), e );
+      }
       
     } catch ( ValidatorException ve ) {
       lResponseWSDTO = createMessageWRONG_PARAMETERS_WS();
@@ -372,7 +416,7 @@ public class CustomerProcess {
             Util.CETUS_CORE.info( "El mensaje HTML no contiene los parametros necesarios {0}" );
           }
           break;
-        
+          
         default:
           break;
       }
@@ -455,7 +499,7 @@ public class CustomerProcess {
       
       Util.CETUS_CORE.info( "findParameter [NameComponent=" + findParameterRequestDTO.getNameComponent() + ", IdApplication="
                             + findParameterRequestDTO.getIdApplication() + "]" );
-      
+                            
       query = em.createNamedQuery( "Parametro.QueryParamByComponentApp", Parametro.class );
       query.setParameter( "nameComponent", findParameterRequestDTO.getNameComponent() );
       query.setParameter( "idAppication", findParameterRequestDTO.getIdApplication() );
