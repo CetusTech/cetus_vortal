@@ -2,27 +2,26 @@ package co.com.cetus.portal.web.util;
 
 import org.apache.log4j.Logger;
 
-
 public interface ConstantView {
   
   // Nombre del servicio del EJB Bean
-  String               ERROR                  = "ERROR:";
-  String               SUCCESS_FULL           = "EXITO:";
-  String               NAME_BUNDLE_VIEW       = "Message_es";
-  String               SEPARATOR              = "_";
-  String               ACTIVO                 = "1";
-  String               INACTIVO               = "0";
-  String               TYPE_TEMPLATE          = "T";
-  String               APLICATION_ID          = "aplicacion_id";
-  String               BARRA_INCLINADA        = "/";
+  String                         ERROR                  = "ERROR:";
+  String                         SUCCESS_FULL           = "EXITO:";
+  String                         NAME_BUNDLE_VIEW       = "Message_es";
+  String                         SEPARATOR              = "_";
+  String                         ACTIVO                 = "1";
+  String                         INACTIVO               = "0";
+  String                         TYPE_TEMPLATE          = "T";
+  String                         APLICATION_ID          = "aplicacion_id";
+  String                         BARRA_INCLINADA        = "/";
   // Paquete Java donde esta el archivo de propiedades con la informacion para
   // ubicar el ejb remotamente
   
-  public static Logger log                    = Logger.getLogger( "CetusVortalLog" );
-  
+  public static Logger           log                    = Logger.getLogger( "CetusVortalLog" );
+                                                        
   public static PropertiesLoader properties             = PropertiesLoader.getInstance();
   String                         CONTEXT_SERVICE_REMOTE = properties.getProperty( "CONTEXT_CETUS_CORE", "" );
-  
+                                                        
   public interface ViewPage {
     String PAGE_WELCOME              = "pages/portal/welcome.xhtml";
     String SUBJECT_CREATE_USER_CETUS = "SUBJECT_CREATE_USER_CETUS";
@@ -76,26 +75,24 @@ public interface ConstantView {
     String USER_PROPERTIES_NEGOCIO        = "USER";
     String NAME_PROPERTIES_NEGOCIO        = "NAME";
     String ID_PROPERTIES_NEGOCIO          = "ID";
-    
+                                          
   }
   
   public interface Parameter {
-    String ID_APLICATION_AGARTHI       = "ID_APLICATION_AGARTHI";
-    String ID_APLICATION_CETUS         = properties.getProperty( "ID_APPLICATION_CETUS_VORTAL", "1" );
-    String ID_COMPONENT_CETUS_VORTAL   = properties.getProperty( "ID_COMPONENT_CETUS_VORTAL", "1" );
-    String WSDL_AGARTHI_SERVICE        = "WSDL_AGARTHI_SERVICE";
-    String USER_WS_AGARTHI_SERVICE     = "USER_WS_AGARTHI_SERVICE";
-    String PASSWORD_WS_AGARTHI_SERVICE = "PASSWORD_WS_AGARTHI_SERVICE";
-    String SMTP_HOST                   = "SMTP_HOST";
-    String SMPT_PORT                   = "SMPT_PORT";
-    String SMTP_PASS                   = "SMTP_PASS";
-    String SMTP_FROM                   = "SMTP_FROM";
-    String SMTP_USERNAME               = "SMTP_USERNAME";
-    String SUBJECT_CREATE_USER         = "SUBJECT_CREATE_USER";
-    String HTML_EMAIL_NEW_USER         = "HTML_EMAIL_NEW_USER";
-    String SUBJECT_UPDATE_USER         = "SUBJECT_UPDATE_USER";
-    String HTML_EMAIL_UPDATE_USER      = "HTML_EMAIL_UPDATE_USER";
-    String SUBJECT_DELETE_USER         = "SUBJECT_DELETE_USER";
-    String HTML_EMAIL_DELETE_USER      = "HTML_EMAIL_DELETE_USER";
+    String ID_APLICATION_AGARTHI      = "ID_APLICATION_AGARTHI";
+    String ID_APLICATION_CETUS        = properties.getProperty( "ID_APPLICATION_CETUS_VORTAL", "1" );
+    String ID_COMPONENT_CETUS_VORTAL  = properties.getProperty( "ID_COMPONENT_CETUS_VORTAL", "1" );
+    String SMTP_HOST                  = "SMTP_HOST";
+    String SMPT_PORT                  = "SMPT_PORT";
+    String SMTP_PASS                  = "SMTP_PASS";
+    String SMTP_FROM                  = "SMTP_FROM";
+    String SMTP_USERNAME              = "SMTP_USERNAME";
+    String SUBJECT_CREATE_USER        = "SUBJECT_CREATE_USER";
+    String HTML_EMAIL_NEW_USER        = "HTML_EMAIL_NEW_USER";
+    String SUBJECT_UPDATE_USER        = "SUBJECT_UPDATE_USER";
+    String HTML_EMAIL_UPDATE_USER     = "HTML_EMAIL_UPDATE_USER";
+    String SUBJECT_DELETE_USER        = "SUBJECT_DELETE_USER";
+    String HTML_EMAIL_DELETE_USER     = "HTML_EMAIL_DELETE_USER";
+    String COMPONENT_CETUS_VORTAL     = "cetus-vortal-ejb";
   }
 }

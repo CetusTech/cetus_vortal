@@ -210,4 +210,6 @@ public interface PortalServiceLocal {
   public String getValueParameter ( String name ) throws ServiceException;
   
   public boolean reloadParameter ( int pIdApp, int idComponent ) throws ServiceException;
+  
+  public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ServiceException;
 }

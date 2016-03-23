@@ -382,5 +382,16 @@ public class PortalService implements PortalServiceRemote, PortalServiceLocal {
                                                                                                   ConstantBussines.Internalizacion.PORTAL_SERVICE ), e.getDelegate() );
     }
   }
+
+  @WebMethod ( exclude = true )
+  @Override
+  public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ServiceException {
+    try {
+      return portalProcess.reloadParameterComponent( pIdApp, idComponent,nameComponent );
+    } catch ( ProcessException e ) {
+      throw new ServiceException( e.getMessage(), e.getStackTrace().toString(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO,
+                                                                                                  ConstantBussines.Internalizacion.PORTAL_SERVICE ), e.getDelegate() );
+    }
+  }
   
 }

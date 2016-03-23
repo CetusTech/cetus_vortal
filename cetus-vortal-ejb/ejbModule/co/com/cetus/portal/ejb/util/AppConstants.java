@@ -20,6 +20,9 @@ public class AppConstants {
   public static String                    WSDL_CETUS_MESSAGE_SERVICE  = properties.getProperty( "WSDL_CETUS_MESSAGE_SERVICE" );
   public static String                    USER_WS_MESSAGE_SERVICE     = properties.getProperty( "USER_WS_MESSAGE_SERVICE" );
   public static String                    PASSWORD_WS_MESSAGE_SERVICE = properties.getProperty( "PASSWORD_WS_MESSAGE_SERVICE" );
+  public static String                    COMPONENT_CMS               = "CetusMessageServiceEJB";
+  public static String                    COMPONENT_CETUS_CONTROL     = "CetusControlEJB";
+  public static String                    WSDL_CETUS_CONTROL          = properties.getProperty( "WSDL_CETUS_CONTROL" );
                                                                       
   public static HashMap< String, String > parameter                   = null;
                                                                       

@@ -12,6 +12,16 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import co.com.cetus.common.dto.LoginDTO;
+import co.com.cetus.common.dto.ParameterDTO;
+import co.com.cetus.common.dto.ResponseWSDTO;
+import co.com.cetus.common.exception.ProcessException;
+import co.com.cetus.common.util.ConstantCommon;
+import co.com.cetus.common.util.Converter;
+import co.com.cetus.common.util.UtilCommon;
+import co.com.cetus.messageservice.ejb.service.ReloadParameterRequestDTO;
+import co.com.cetus.portal.ejb.delegate.CetusControlDelegate;
+import co.com.cetus.portal.ejb.delegate.CetusMessageServiceDelegate;
 import co.com.cetus.portal.ejb.util.AppConstants;
 import co.com.cetus.portal.ejb.util.ConstantBussines;
 import co.com.cetus.portal.ejb.util.Util;
@@ -31,12 +41,6 @@ import co.com.cetus.vortal.jpa.entity.RolMenu;
 import co.com.cetus.vortal.jpa.entity.Service;
 import co.com.cetus.vortal.jpa.entity.Usuario;
 import co.com.cetus.vortal.jpa.entity.UsuarioRol;
-import co.com.cetus.common.dto.LoginDTO;
-import co.com.cetus.common.dto.ResponseWSDTO;
-import co.com.cetus.common.exception.ProcessException;
-import co.com.cetus.common.util.ConstantCommon;
-import co.com.cetus.common.util.Converter;
-import co.com.cetus.common.util.UtilCommon;
 
 /**
  * The Class PortalProcess.
@@ -50,10 +54,10 @@ public class PortalProcess implements PortalProcessLocal {
   /** The em. */
   @PersistenceContext ( unitName = "cetus-vortal-jpa" )
   private EntityManager em;
-  
+                        
   /** The converter. */
   private Converter     converter;
-  
+                        
   /**
    * </p> Inits the. </p>
    *
@@ -160,7 +164,8 @@ public class PortalProcess implements PortalProcessLocal {
       return query.getResultList();
       
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
   }
@@ -177,7 +182,8 @@ public class PortalProcess implements PortalProcessLocal {
       query.setParameter( "idApp", pIdApp );
       return query.executeUpdate();
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
   }
   
@@ -203,7 +209,8 @@ public class PortalProcess implements PortalProcessLocal {
       }
       return listMenu;
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
   }
   
@@ -218,7 +225,8 @@ public class PortalProcess implements PortalProcessLocal {
       query.setParameter( "user", pIdUser );
       return query.executeUpdate();
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
   }
   
@@ -243,7 +251,8 @@ public class PortalProcess implements PortalProcessLocal {
       }
       return listRol;
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
   }
@@ -278,7 +287,8 @@ public class PortalProcess implements PortalProcessLocal {
       return null;
       
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
   }
@@ -302,7 +312,8 @@ public class PortalProcess implements PortalProcessLocal {
         response.setDataResponseXML( UtilCommon.toXML( lUsuarioDTO ) );
       }
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     return response;
   }
@@ -325,7 +336,8 @@ public class PortalProcess implements PortalProcessLocal {
       }
       
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     return false;
   }
@@ -347,7 +359,8 @@ public class PortalProcess implements PortalProcessLocal {
       }
       
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     return false;
   }
@@ -516,9 +529,11 @@ public class PortalProcess implements PortalProcessLocal {
       }
       
     } catch ( NoResultException e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
     return list;
@@ -539,9 +554,11 @@ public class PortalProcess implements PortalProcessLocal {
       }
       
     } catch ( NoResultException e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
     return usuario;
@@ -562,9 +579,11 @@ public class PortalProcess implements PortalProcessLocal {
       }
       
     } catch ( NoResultException e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
     return list;
@@ -591,9 +610,11 @@ public class PortalProcess implements PortalProcessLocal {
       }
       
     } catch ( NoResultException e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
     return list;
@@ -621,9 +642,11 @@ public class PortalProcess implements PortalProcessLocal {
       list = query.getResultList();
       
     } catch ( NoResultException e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     
     return list;
@@ -650,7 +673,8 @@ public class PortalProcess implements PortalProcessLocal {
       value = AppConstants.getParameter( name );
       
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     return value;
   }
@@ -675,7 +699,8 @@ public class PortalProcess implements PortalProcessLocal {
       }
       result = AppConstants.loadParameter( list );
     } catch ( Exception e ) {
-      throw new ProcessException( e.getMessage(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
     }
     return result;
   }
@@ -716,6 +741,82 @@ public class PortalProcess implements PortalProcessLocal {
     }
     
     return responseWSDTO;
+  }
+  
+  /**
+   * </p> Reload parameter component. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @param pIdApp the p id app
+   * @param idComponent the id component
+   * @param nameComponent the name component
+   * @return true, si el proceso fue exitoso
+   * @throws ProcessException the process exception
+   * @since cetus-vortal-ejb (23/03/2016)
+   */
+  public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ProcessException {
+    List< Parametro > list = null;
+    boolean result = false;
+    ParameterDTO parameterDTO = null;
+    List< ParameterDTO > params = null;
+    try {
+      list = findAllParameterByCompApp( pIdApp, idComponent );
+      if ( list == null ) {
+        list = new ArrayList< Parametro >();
+      }
+      params = new ArrayList<ParameterDTO>();
+      for ( Parametro parametro: list ) {
+        parameterDTO = new ParameterDTO( parametro.getAbreviatura(), parametro.getValor() );
+        params.add( parameterDTO );
+      }
+      
+      Util.CETUS_CORE.info( "pIdApp=" + pIdApp + ", idComponent=" + idComponent + ", nameComponent=" + nameComponent );
+      
+      if ( nameComponent != null && nameComponent.equals( AppConstants.COMPONENT_CMS ) ) {
+        CetusMessageServiceDelegate delegate = new CetusMessageServiceDelegate( AppConstants.WSDL_CETUS_MESSAGE_SERVICE );
+        
+        ReloadParameterRequestDTO parameterRequestDTO = new ReloadParameterRequestDTO();
+        parameterRequestDTO.setUser( AppConstants.USER_WS_MESSAGE_SERVICE );
+        parameterRequestDTO.setPassword( AppConstants.PASSWORD_WS_MESSAGE_SERVICE );
+        parameterRequestDTO.setComponent( nameComponent );
+        parameterRequestDTO.setListParameter( UtilCommon.toXML( params ) );
+        
+        co.com.cetus.messageservice.ejb.service.ResponseWSDTO responseWSDTO = delegate.reloadParameter( parameterRequestDTO );
+        
+        Util.CETUS_CORE.info( "responseWSDTO :: " + responseWSDTO.toString() );
+        
+        if ( responseWSDTO != null && responseWSDTO.getCode() != null && responseWSDTO.getType() != null
+             && responseWSDTO.getCode().equals( ConstantCommon.WSResponse.CODE_ONE )
+             && responseWSDTO.getType().equals( ConstantCommon.WSResponse.TYPE_SUCCESS ) ) {
+          result = true;
+        }
+        
+      } else if ( nameComponent != null && nameComponent.equals( AppConstants.COMPONENT_CETUS_CONTROL ) ) {
+        CetusControlDelegate delegate = new CetusControlDelegate( AppConstants.WSDL_CETUS_CONTROL );
+        
+        co.com.cetus.cetuscontrol.ejb.service.ReloadParameterRequestDTO parameterRequestDTO = new co.com.cetus.cetuscontrol.ejb.service.ReloadParameterRequestDTO();
+        parameterRequestDTO.setUser( AppConstants.USER_WS_MESSAGE_SERVICE );
+        parameterRequestDTO.setPassword( AppConstants.PASSWORD_WS_MESSAGE_SERVICE );
+        parameterRequestDTO.setComponent( nameComponent );
+        parameterRequestDTO.setListParameter( UtilCommon.toXML( params ) );
+        
+        co.com.cetus.cetuscontrol.ejb.service.ResponseWSDTO responseWSDTO = delegate.reloadParameter( parameterRequestDTO );
+        Util.CETUS_CORE.info( "responseWSDTO :: " + responseWSDTO.toString() );
+        
+        if ( responseWSDTO != null && responseWSDTO.getCode() != null && responseWSDTO.getType() != null
+             && responseWSDTO.getCode().equals( ConstantCommon.WSResponse.CODE_ONE )
+             && responseWSDTO.getType().equals( ConstantCommon.WSResponse.TYPE_SUCCESS ) ) {
+          result = true;
+        }
+      } else {
+        Util.CETUS_CORE.info( "El componente no esta configurado para la recarga de parametros" );
+      }
+      
+    } catch ( Exception e ) {
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+    }
+    return result;
   }
   
 }

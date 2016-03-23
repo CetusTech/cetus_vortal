@@ -513,4 +513,12 @@ public class GeneralDelegate {
     }
   }
   
+  public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws Exception {
+    try {
+      return portalService.reloadParameterComponent( pIdApp, idComponent, nameComponent );
+    } catch ( ServiceException e ) {
+      throw new Exception( e.getMessage() );
+    }
+  }
+  
 }

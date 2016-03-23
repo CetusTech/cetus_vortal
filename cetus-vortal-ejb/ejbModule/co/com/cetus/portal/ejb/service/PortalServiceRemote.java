@@ -255,4 +255,6 @@ public interface PortalServiceRemote {
   
   public < E > ResponseWSDTO handleChangeApplicationComboBoxServlet ( int pIdApp ) throws ServiceException;
   
+  public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ServiceException;
+  
 }

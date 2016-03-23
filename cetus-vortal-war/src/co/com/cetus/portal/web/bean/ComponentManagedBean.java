@@ -1,6 +1,5 @@
 package co.com.cetus.portal.web.bean;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +11,10 @@ import javax.faces.component.UIComponent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
-import co.com.cetus.common.dto.ParameterDTO;
 import co.com.cetus.portal.web.util.ConstantView;
 import co.com.cetus.portal.web.util.Util;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
-import co.com.cetus.vortal.jpa.entity.Parametro;
 
 @ManagedBean
 @RequestScoped
@@ -29,9 +26,9 @@ public class ComponentManagedBean extends GeneralManagedBean {
   private UIComponent       btnSave          = null;
   private boolean           status;
   private int               idApplication;
-  
+                            
   private static final long serialVersionUID = -814452095367034877L;
-  
+                                             
   public ComponentManagedBean () {
     addObject = new Component();
     addObject.setTbAplicacion( new Aplicacion() );
@@ -47,7 +44,8 @@ public class ComponentManagedBean extends GeneralManagedBean {
       this.listRegister = this.delegate.findAllComponentByApplication( idApplication );
       
     } catch ( Exception e ) {
-      addMessageError( null, ConstantView.ERROR, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_GENERAL ) + "\n" + e.getMessage() );
+      addMessageError( null, ConstantView.ERROR,
+                       Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_GENERAL ) + "\n" + e.getMessage() );
       Util.CETUS_WAR.error( e.getMessage(), e );
     }
   }
@@ -74,15 +72,18 @@ public class ComponentManagedBean extends GeneralManagedBean {
         if ( this.delegate.create( addObject ) != null ) {
           this.initElement();
           lSuccessfull = true;
-          addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_INSERT ), ConstantView.SUCCESS_FULL );
+          addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_INSERT ),
+                          ConstantView.SUCCESS_FULL );
           cleanObjectSession( "addObject" );
         }
       } else {
-        addMessageError( btnSave.getClientId(), Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_INPUT_PARAM ), ConstantView.ERROR );
+        addMessageError( btnSave.getClientId(), Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_INPUT_PARAM ),
+                         ConstantView.ERROR );
       }
       context.addCallbackParam( "lSuccessfull", lSuccessfull );
     } catch ( Exception e ) {
-      addMessageError( btnSave.getClientId(), Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_INSERT_REGISTER ), ConstantView.ERROR );
+      addMessageError( btnSave.getClientId(), Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_INSERT_REGISTER ),
+                       ConstantView.ERROR );
       Util.CETUS_WAR.error( e.getMessage(), e );
     }
     return null;
@@ -105,13 +106,16 @@ public class ComponentManagedBean extends GeneralManagedBean {
       if ( selectedObject != null ) {
         if ( this.delegate.remove( selectedObject ) ) {
           this.initElement();
-          addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_DELETE ), ConstantView.SUCCESS_FULL );
+          addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_DELETE ),
+                          ConstantView.SUCCESS_FULL );
         }
       } else {
-        addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_OBJECT_NULL ), ConstantView.ERROR );
+        addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_OBJECT_NULL ),
+                         ConstantView.ERROR );
       }
     } catch ( Exception e ) {
-      addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_DELETE_REGISTER ), ConstantView.ERROR );
+      addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_DELETE_REGISTER ),
+                       ConstantView.ERROR );
       Util.CETUS_WAR.error( e.getMessage(), e );
     }
     return null;
@@ -131,12 +135,14 @@ public class ComponentManagedBean extends GeneralManagedBean {
         if ( this.delegate.edit( selectedObject ) ) {
           this.initElement();
           lSuccessfull = true;
-          addMessageInfo( null, ConstantView.SUCCESS_FULL, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_UPDATE ) );
+          addMessageInfo( null, ConstantView.SUCCESS_FULL,
+                          Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_UPDATE ) );
           cleanObjectSession( "selectedObject" );
         }
       }
     } catch ( Exception e ) {
-      addMessageError( null, ConstantView.ERROR, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_UPDATE_REGISTER ) );
+      addMessageError( null, ConstantView.ERROR,
+                       Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_UPDATE_REGISTER ) );
       Util.CETUS_WAR.error( e.getMessage(), e );
     }
     context.addCallbackParam( "lSuccessfull", lSuccessfull );
@@ -158,14 +164,16 @@ public class ComponentManagedBean extends GeneralManagedBean {
           this.initElement();
           lSuccessfull = true;
           addMessageInfo( null,
-                          Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_UPDATE ), ConstantView.SUCCESS_FULL );
+                          Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_UPDATE ),
+                          ConstantView.SUCCESS_FULL );
           context.addCallbackParam( "lSuccessfull", lSuccessfull );
         }
       } else {
         addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SELECT_APP ), ConstantView.ERROR );
       }
     } catch ( Exception e ) {
-      addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_UPDATE_REGISTER ), ConstantView.ERROR );
+      addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_UPDATE_REGISTER ),
+                       ConstantView.ERROR );
       Util.CETUS_WAR.error( e.getMessage(), e );
     }
     
@@ -179,54 +187,19 @@ public class ComponentManagedBean extends GeneralManagedBean {
    * @since cetus-vortal-war (6/10/2013)
    */
   public String reloadParameter () {
-    List< Parametro > listParameter = null;
-    String wsdlAgarthi = null;
-    List< ParameterDTO > listParameterDTO = null;
     try {
       selectedObject = ( Component ) getObjectSession( "selectedObject" );
       if ( selectedObject != null && selectedObject.getId() > 0 ) {
-        String idCetus = ConstantView.Parameter.ID_APLICATION_CETUS;
-        if ( idCetus != null && idCetus.equals( String.valueOf( selectedObject.getTbAplicacion().getId() ) ) ) {
+        if ( selectedObject.getName().equals( ConstantView.Parameter.COMPONENT_CETUS_VORTAL ) ) {
           if ( delegate.reloadParameter( selectedObject.getTbAplicacion().getId(), selectedObject.getId() ) ) {
             addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_COMPONENT_RELOAD ), null );
           } else {
             addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_RELOAD_PARAMETER ), null );
           }
         } else {
-          String idAgarthi = delegate.getValueParameter( ConstantView.Parameter.ID_APLICATION_AGARTHI );
-          
-          // Se debe agregar un if por cada aplicacion que exista en CETUS VORTAL para poder realizar el reload de parametros
-          if ( idAgarthi != null && idAgarthi.equals( String.valueOf( selectedObject.getTbAplicacion().getId() ) ) ) {
-            listParameter = delegate.findAllParameterByCompApp( selectedObject.getTbAplicacion().getId(), selectedObject.getId() );
-            if ( listParameter != null && listParameter.size() > 0 ) {
-              wsdlAgarthi = delegate.getValueParameter( ConstantView.Parameter.WSDL_AGARTHI_SERVICE );
-              Util.CETUS_WAR.info( "wsdlAgarthi ::> " + wsdlAgarthi );
-              
-              //AgarthiClientWSFacade agarthiClientWSFacade = new AgarthiClientWSFacade( new URL( wsdlAgarthi ) );
-              
-              //ReloadParameterRequestDTO reloadParameterRequestDTO = new ReloadParameterRequestDTO();
-              ParameterDTO parameterDTO = null;
-              listParameterDTO = new ArrayList< ParameterDTO >();
-              for ( Parametro parametro: listParameter ) {
-                parameterDTO = new ParameterDTO( parametro.getAbreviatura(), parametro.getValor() );
-                listParameterDTO.add( parameterDTO );
-              }
-//              reloadParameterRequestDTO.setComponent( selectedObject.getName() );
-//              reloadParameterRequestDTO.setUser( delegate.getValueParameter( ConstantView.Parameter.USER_WS_AGARTHI_SERVICE ) );
-//              reloadParameterRequestDTO.setPassword( delegate.getValueParameter( ConstantView.Parameter.PASSWORD_WS_AGARTHI_SERVICE ) );
-//              String listStr = UtilCommon.toXML( listParameterDTO );
-//              reloadParameterRequestDTO.setListParameter( listStr );
-//              ResponseWSDTO responseWSDTO = agarthiClientWSFacade.reloadParameter( reloadParameterRequestDTO );
-//              if ( responseWSDTO != null && responseWSDTO.getCode().equals( ConstantCommon.WSResponse.CODE_ONE ) ) {
-//                addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_COMPONENT_RELOAD ),
-//                                null );
-//              } else {
-//                addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_RELOAD_PARAMETER ), null );
-//              }
-            }
-          } else {
-            addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.NO_CONFIGURED_COMPONENT ), null );
-          }
+          Util.CETUS_WAR.info( "Se envia peticion para recargar los parametros del componente seleccionado " + selectedObject.getName() );
+          boolean result = delegate.reloadParameterComponent( selectedObject.getTbAplicacion().getId(), selectedObject.getId(), selectedObject.getName() );
+          Util.CETUS_WAR.info( "resultado de la recarga de los parametros del componente seleccionado " + selectedObject.getName() + ", resul= " + result );
         }
       } else {
         addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SELECTED_COMPONENT_RELOAD ), null );
@@ -237,7 +210,7 @@ public class ComponentManagedBean extends GeneralManagedBean {
     }
     return null;
   }
-
+  
   /**
    * </p> Reload component. </p>
    *
