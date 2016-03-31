@@ -1,5 +1,6 @@
 package co.com.cetus.portal.web.bean;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,11 @@ import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import co.com.cetus.common.encriptor.Encriptor;
+import co.com.cetus.common.encriptor.EncriptorFactory;
+import co.com.cetus.common.encriptor.EncriptorType;
+import co.com.cetus.common.util.ConstantCommon;
+import co.com.cetus.common.util.UtilCommon;
 import co.com.cetus.portal.web.security.UsuarioPortalPrincipal;
 import co.com.cetus.portal.web.util.ConstantView;
 import co.com.cetus.portal.web.util.Util;
@@ -298,6 +304,8 @@ public class PortalManagedBean extends GeneralManagedBean {
     AplicationServlet aplicationServlet = null;
     Servlet servlet = null;
     StringBuffer urlPage = null;
+    String token = null;
+    StringBuilder params = null;
     try {
       menu = ( Menu ) event.getTreeNode().getData();
       menu = this.delegate.find( Menu.class, menu.getId() );
@@ -311,15 +319,30 @@ public class PortalManagedBean extends GeneralManagedBean {
             if ( aplicacion != null && aplicacion.getUrlServer() != null && validarUsuario() ) {
               
               if ( servlet.getParameter().contains( "?" ) ) {
-                // Si contiene un $ significa que la aplicacion recibe parametros de entrar hasta este momento se identifico que las aplicaciones que necesiten parametros deben ser los siguieente
-                // app -> Este parametro identifica el id de la aplicacion origen user -> Usuario que se encuentra logueado acronym -> Acronimo de la funcionalidad que realiza la
-                // accion url -> Url de la funcionalidad en la aplicacion destino se deve validar que la cadena urlserver este bien estructurada
-                if ( servlet.getParameter().contains( "app" ) && servlet.getParameter().contains( "user" ) && servlet.getParameter().contains( "acronym" )
-                     && servlet.getParameter().contains( "url" ) ) {
-                  // Validado
+                // los parametros que se enviaran son los siguientes
+                // parameters -> Este parametro identifica la cadena de parametros separados por | (encriptado)
+                // token -> identificador aleatorio (encriptado)                
+                
+                if ( servlet.getParameter().contains( "parameters" ) && servlet.getParameter().contains( "token" ) ) {
+                  
+                  token = UtilCommon.getRandomUUID(16);
+                  Encriptor encriptor = EncriptorFactory.createEncriptor( EncriptorType.AES128 );
+                  
+                  params = new StringBuilder();
+                  params.append( aplicacion.getId() );
+                  params.append( ConstantCommon.PARAMETRES_SEPARATOR );
+                  params.append( getPrincipal().getUserGeneralDTO().getUser().getLogin() );
+                  params.append( ConstantCommon.PARAMETRES_SEPARATOR );
+                  params.append( menu.getAcronimo() );
+                  params.append( ConstantCommon.PARAMETRES_SEPARATOR );
+                  params.append( menu.getUrl() );
+                  
+                  Util.CETUS_WAR.debug( "params ----> " + params.toString() );
+                                    
                   parameters = servlet.getParameter();
-                  parameters = parameters.replace( "$1", String.valueOf( aplicacion.getId() ) ).replace( "$2", getPrincipal().getUserGeneralDTO().getUser().getLogin() )
-                                         .replace( "$3", menu.getAcronimo() ).replace( "$4", menu.getUrl() );
+                  parameters = parameters.replace( "$1", URLEncoder.encode(encriptor.getValueEncripted( params.toString(), token ), "UTF-8") );
+                  parameters = parameters.replace( "$2", URLEncoder.encode( encriptor.getValueEncripted( token, null ), "UTF-8") );
+                  
                   
                   //Concatenar la url del servidor de la aplicacion el nombre del contexto y los parametros del servlet
                   urlPage = new StringBuffer();
@@ -328,7 +351,7 @@ public class PortalManagedBean extends GeneralManagedBean {
                   urlPage.append( servlet.getName() );
                   urlPage.append( parameters );
                   
-                  Util.CETUS_WAR.info( "URL DEL MENU ----> " + urlPage.toString() );
+                  Util.CETUS_WAR.debug( "URL DEL MENU ----> " + urlPage.toString() );
                   
                   //Establecer la pagina que debe pintar
                   this.page = urlPage.toString();
