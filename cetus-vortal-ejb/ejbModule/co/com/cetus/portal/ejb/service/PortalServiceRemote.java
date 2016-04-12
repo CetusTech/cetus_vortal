@@ -4,16 +4,17 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import co.com.cetus.common.dto.AttributeDTO;
+import co.com.cetus.common.dto.LoginDTO;
+import co.com.cetus.common.dto.ResponseWSDTO;
+import co.com.cetus.common.exception.ServiceException;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
 import co.com.cetus.vortal.jpa.entity.Service;
-import co.com.cetus.common.dto.AttributeDTO;
-import co.com.cetus.common.dto.LoginDTO;
-import co.com.cetus.common.dto.ResponseWSDTO;
-import co.com.cetus.common.exception.ServiceException;
+import co.com.cetus.vortal.jpa.entity.Usuario;
 
 /**
  * The Interface CetusServiceRemote.
@@ -256,5 +257,7 @@ public interface PortalServiceRemote {
   public < E > ResponseWSDTO handleChangeApplicationComboBoxServlet ( int pIdApp ) throws ServiceException;
   
   public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ServiceException;
+
+  public boolean createUser ( Usuario user ) throws ServiceException;
   
 }

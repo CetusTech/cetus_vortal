@@ -10,6 +10,7 @@ import javax.ejb.Local;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Service;
+import co.com.cetus.vortal.jpa.entity.Usuario;
 import co.com.cetus.common.dto.AttributeDTO;
 import co.com.cetus.common.dto.ResponseWSDTO;
 import co.com.cetus.common.exception.ServiceException;
@@ -212,4 +213,6 @@ public interface PortalServiceLocal {
   public boolean reloadParameter ( int pIdApp, int idComponent ) throws ServiceException;
   
   public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ServiceException;
+  
+  public boolean createUser ( Usuario user ) throws ServiceException;
 }

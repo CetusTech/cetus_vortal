@@ -2,19 +2,20 @@ package co.com.cetus.portal.web.delegate;
 
 import java.util.List;
 
-import co.com.cetus.portal.web.util.ConstantView;
+import co.com.cetus.common.dto.AttributeDTO;
+import co.com.cetus.common.dto.LoginDTO;
+import co.com.cetus.common.dto.ResponseWSDTO;
+import co.com.cetus.common.exception.ServiceException;
+import co.com.cetus.common.util.UtilCommon;
 import co.com.cetus.portal.ejb.service.PortalServiceRemote;
+import co.com.cetus.portal.web.util.ConstantView;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
 import co.com.cetus.vortal.jpa.entity.Service;
-import co.com.cetus.common.dto.AttributeDTO;
-import co.com.cetus.common.dto.LoginDTO;
-import co.com.cetus.common.dto.ResponseWSDTO;
-import co.com.cetus.common.exception.ServiceException;
-import co.com.cetus.common.util.UtilCommon;
+import co.com.cetus.vortal.jpa.entity.Usuario;
 
 /**
  * The Class GeneralDelegate.
@@ -516,6 +517,14 @@ public class GeneralDelegate {
   public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws Exception {
     try {
       return portalService.reloadParameterComponent( pIdApp, idComponent, nameComponent );
+    } catch ( ServiceException e ) {
+      throw new Exception( e.getMessage() );
+    }
+  }
+  
+  public boolean createUser ( Usuario user ) throws Exception {
+    try {
+      return portalService.createUser( user );
     } catch ( ServiceException e ) {
       throw new Exception( e.getMessage() );
     }

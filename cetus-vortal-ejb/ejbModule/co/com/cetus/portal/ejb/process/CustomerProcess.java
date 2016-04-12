@@ -32,7 +32,6 @@ import javax.persistence.TypedQuery;
 import co.com.cetus.common.dto.ParameterDTO;
 import co.com.cetus.common.dto.ResponseWSDTO;
 import co.com.cetus.common.exception.ValidatorException;
-import co.com.cetus.common.mail.SendMail;
 import co.com.cetus.common.util.Converter;
 import co.com.cetus.common.util.UtilCommon;
 import co.com.cetus.portal.ejb.runnables.ThereadMailLocal;
@@ -124,7 +123,7 @@ public class CustomerProcess {
       Util.CETUS_CORE.info( "getUsuarioDTO ::> " + createUserRequestDTO.getUsuarioDTO() );
       usuarioDTONull( createUserRequestDTO.getUsuarioDTO() );
       userDto = createUserRequestDTO.getUsuarioDTO();
-      passwordTemp = generatePassword( userDto );
+      passwordTemp = UtilCommon.getRandomUUID( 10 );
       userDto.setPassword( UtilCommon.encriptarClave( passwordTemp ) );
       usuario = new Usuario();
       usuario.setAddress( userDto.getAddress() );
@@ -331,28 +330,6 @@ public class CustomerProcess {
     return lResponseWSDTO;
   }
   
-  /**
-   * </p> Generate password. </p>
-   *
-   * @param pDto the p dto
-   * @return el string
-   * @throws Exception the exception
-   * @author Andres Herrera Hdez - Cetus Technology
-   * @since cetus-vortal-ejb (24/08/2013)
-   */
-  public String generatePassword ( UserDTO pDto ) throws Exception {
-    String password = null;
-    int entero = 0;
-    try {
-      if ( pDto != null ) {
-        entero = ( int ) ( Math.random() * 1000 );
-        password = pDto.getLogin() + entero;
-      }
-    } catch ( Exception e ) {
-      throw e;
-    }
-    return password;
-  }
   
   /**
    * </p> Send email. </p>
@@ -364,75 +341,6 @@ public class CustomerProcess {
    * @author Andres Herrera Hdez - Cetus Technology
    * @since cetus-vortal-ejb (24/08/2013)
    */
-  private void sendEmail ( String login, String password, String email, int typeOp ) {
-    String lParamPORT = null;
-    String lParamHOST = null;
-    String lParamPASS = null;
-    String lParamFROM = null;
-    String lParamUSER = null;
-    String lParamSUBJECT = null;
-    String lParamHTML = null;
-    SendMail sendMail = null;
-    String[] arg = null;
-    String msgHtml = null;
-    try {
-      arg = new String[1];
-      lParamPORT = portalProcess.getValueParameter( ConstantBussines.Parameter.SMPT_PORT );
-      lParamHOST = portalProcess.getValueParameter( ConstantBussines.Parameter.SMTP_HOST );
-      lParamPASS = portalProcess.getValueParameter( ConstantBussines.Parameter.SMTP_PASS );
-      lParamFROM = portalProcess.getValueParameter( ConstantBussines.Parameter.SMTP_FROM );
-      lParamUSER = portalProcess.getValueParameter( ConstantBussines.Parameter.SMTP_USERNAME );
-      
-      switch ( typeOp ) {
-        case 1:
-          //CREATE USER
-          lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_CREATE_USER );
-          lParamHTML = portalProcess.getValueParameter( ConstantBussines.Parameter.HTML_EMAIL_NEW_USER );
-          if ( lParamHTML != null && !lParamHTML.isEmpty() && lParamHTML.contains( "{0}" ) && lParamHTML.contains( "{1}" ) ) {
-            msgHtml = lParamHTML.replace( "{0}", login ).replace( "{1}", password );
-          } else {
-            Util.CETUS_CORE.info( "El mensaje HTML no contiene los parametros necesarios {0} y {1}" );
-          }
-          break;
-        case 2:
-          //UPDATE USER
-          lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_UPDATE_USER );
-          lParamHTML = portalProcess.getValueParameter( ConstantBussines.Parameter.HTML_EMAIL_UPDATE_USER );
-          
-          if ( lParamHTML != null && !lParamHTML.isEmpty() && lParamHTML.contains( "{0}" ) ) {
-            msgHtml = lParamHTML.replace( "{0}", login );
-          } else {
-            Util.CETUS_CORE.info( "El mensaje HTML no contiene los parametros necesarios {0}" );
-          }
-          break;
-        case 3:
-          //DELETE USER
-          lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_DELETE_USER );
-          lParamHTML = portalProcess.getValueParameter( ConstantBussines.Parameter.HTML_EMAIL_DELETE_USER );
-          
-          if ( lParamHTML != null && !lParamHTML.isEmpty() && lParamHTML.contains( "{0}" ) ) {
-            msgHtml = lParamHTML.replace( "{0}", login );
-          } else {
-            Util.CETUS_CORE.info( "El mensaje HTML no contiene los parametros necesarios {0}" );
-          }
-          break;
-          
-        default:
-          break;
-      }
-      
-      if ( lParamFROM != null && lParamHOST != null && lParamPORT != null && lParamUSER != null && lParamPASS != null && msgHtml != null ) {
-        arg[0] = email;
-        sendMail = new SendMail( lParamFROM, lParamHOST, lParamPORT, lParamUSER, lParamPASS, lParamSUBJECT, msgHtml, arg, null );
-        sendMail.start();
-      } else {
-        Util.CETUS_CORE.info( "No se pudo enviar el correo por falta de parametros. Por favor revisar la entrada al proceso" );
-      }
-      
-    } catch ( Exception e ) {
-      Util.CETUS_CORE.error( "[UsuarioManagedBean.sendEmail]" + e.getMessage(), e );
-    }
-  }
   
   /**
    * Servicio para validar si un usuario tiene permiso para ejecutar el servicio enviado.

@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import co.com.cetus.common.dto.LoginDTO;
+import co.com.cetus.common.dto.ResponseWSDTO;
+import co.com.cetus.common.exception.ProcessException;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.Menu;
@@ -11,10 +14,6 @@ import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
 import co.com.cetus.vortal.jpa.entity.Service;
 import co.com.cetus.vortal.jpa.entity.Usuario;
-import co.com.cetus.common.dto.LoginDTO;
-import co.com.cetus.common.dto.ResponseWSDTO;
-import co.com.cetus.common.exception.ProcessException;
-import co.com.cetus.common.exception.ServiceException;
 
 @Local
 public interface PortalProcessLocal {
@@ -67,4 +66,6 @@ public interface PortalProcessLocal {
   public < E > ResponseWSDTO handleChangeApplicationComboBoxServlet ( int pIdApp ) throws ProcessException;
   
   public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ProcessException;
+  
+  public boolean createUser ( Usuario user ) throws ProcessException;
 }

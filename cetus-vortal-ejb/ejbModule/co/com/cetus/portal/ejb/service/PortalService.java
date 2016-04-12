@@ -19,6 +19,7 @@ import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
 import co.com.cetus.vortal.jpa.entity.Service;
+import co.com.cetus.vortal.jpa.entity.Usuario;
 import co.com.cetus.common.dto.AttributeDTO;
 import co.com.cetus.common.dto.LoginDTO;
 import co.com.cetus.common.dto.ResponseWSDTO;
@@ -393,5 +394,18 @@ public class PortalService implements PortalServiceRemote, PortalServiceLocal {
                                                                                                   ConstantBussines.Internalizacion.PORTAL_SERVICE ), e.getDelegate() );
     }
   }
+  
+  @WebMethod ( exclude = true )
+  @Override
+  public boolean createUser( Usuario user ) throws ServiceException {
+    try {
+      return portalProcess.createUser( user );
+    } catch ( ProcessException e ) {
+      throw new ServiceException( e.getMessage(), e.getStackTrace().toString(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO,
+                                                                                                  ConstantBussines.Internalizacion.PORTAL_SERVICE ), e.getDelegate() );
+    }
+  }
+  
+  
   
 }

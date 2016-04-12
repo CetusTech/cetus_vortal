@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -22,6 +23,7 @@ import co.com.cetus.common.util.UtilCommon;
 import co.com.cetus.messageservice.ejb.service.ReloadParameterRequestDTO;
 import co.com.cetus.portal.ejb.delegate.CetusControlDelegate;
 import co.com.cetus.portal.ejb.delegate.CetusMessageServiceDelegate;
+import co.com.cetus.portal.ejb.runnables.ThereadMailLocal;
 import co.com.cetus.portal.ejb.util.AppConstants;
 import co.com.cetus.portal.ejb.util.ConstantBussines;
 import co.com.cetus.portal.ejb.util.Util;
@@ -58,6 +60,9 @@ public class PortalProcess implements PortalProcessLocal {
   /** The converter. */
   private Converter     converter;
                         
+  @EJB ( name = "cetus-vortal-ear/GeneralProcess/local" )
+  private GeneralProcessLocal generalProcess;
+  
   /**
    * </p> Inits the. </p>
    *
@@ -818,5 +823,45 @@ public class PortalProcess implements PortalProcessLocal {
     }
     return result;
   }
-  
+
+  /**
+   * </p> Creates the user. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @param user the user
+   * @return true, si el proceso fue exitoso
+   * @throws ProcessException the process exception
+   * @since cetus-vortal-ejb (12/04/2016)
+   */
+  public boolean createUser ( Usuario user ) throws ProcessException {
+    boolean result = false;
+    String passTemp = "";
+    try {
+      if ( user != null ) {
+        passTemp = user.getPassword();
+        user.setPassword( UtilCommon.encriptarClave( passTemp ) );
+        user = generalProcess.create( user );
+        if ( user != null && user.getId() > 0 ) {
+          Util.CETUS_CORE.info( "Ususario Creado exitosamente " + user.getLogin() );
+          try {
+            Util.CETUS_CORE.info( "Preparado para enviar el email al " + user.getEmail() );
+            String[] parameters = new String[2];
+            parameters[0] = user.getLogin();
+            parameters[1] = passTemp;
+            String lParamSUBJECT = getValueParameter( ConstantBussines.Parameter.SUBJECT_CREATE_USER );
+            ThereadMailLocal mail = new ThereadMailLocal( lParamSUBJECT, user.getEmail(), null, ConstantBussines.Parameter.HTML_EMAIL_NEW_USER,
+                                                          parameters );
+            Thread hilo1 = new Thread( mail );
+            hilo1.start();
+          } catch ( Exception e ) {
+            Util.CETUS_CORE.error( "Error enviando el email al usuario " + user.getEmail(), e );
+          }
+        }
+      }
+    } catch ( Exception e ) {
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+    }
+    return result;
+  }
 }

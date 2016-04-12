@@ -11,12 +11,10 @@ import javax.faces.component.UIComponent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
+import co.com.cetus.common.util.ConstantCommon;
 import co.com.cetus.portal.web.util.ConstantView;
 import co.com.cetus.portal.web.util.Util;
 import co.com.cetus.vortal.jpa.entity.Usuario;
-import co.com.cetus.common.mail.SendMail;
-import co.com.cetus.common.util.ConstantCommon;
-import co.com.cetus.common.util.UtilCommon;
 
 /**
  * The Class UserManagedBean.
@@ -93,12 +91,11 @@ public class UserManagedBean extends GeneralManagedBean {
         addObject.setUsuarioCreacion( getUsuarioCreacion() );
         // Encryptar Clave de usuario md5
         pass = addObject.getPassword();
-        addObject.setPassword( UtilCommon.encriptarClave( pass ) );
+        addObject.setPassword( pass );
         addObject.setFechaCreacion( new Date() );
         addObject.setStatus( 1 );// 1 es ACTIVO
-        if ( this.delegate.create( addObject ) != null ) {
+        if ( this.delegate.createUser( addObject )  ) {
           this.initElement();
-          this.sendEmail( addObject.getLogin(), pass, addObject.getEmail() );
           lSuccessfull = true;
           addMessageInfo( null, ConstantView.SUCCESS_FULL,
                           Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_INSERT ) );
@@ -114,48 +111,7 @@ public class UserManagedBean extends GeneralManagedBean {
     return null;
   }
   
-  /**
-   * </p> Send email. </p>
-   *
-   * @param login the login
-   * @param password the password
-   * @param email the email
-   * @author Andres Herrera Hdez - Cetus Technology
-   * @since cetus-vortal-war (1/09/2013)
-   */
-  private void sendEmail ( String login, String password, String email ) {
-    String lParamPORT = null;
-    String lParamHOST = null;
-    String lParamPASS = null;
-    String lParamFROM = null;
-    String lParamUSER = null;
-    String lParamSUBJECT = null;
-    String lParamHTML = null;
-    SendMail sendMail = null;
-    String[] arg = null;
-    String msgHtml = null;
-    try {
-      lParamHOST = this.delegate.getValueParameter( ConstantView.Parameter.SMTP_HOST );
-      lParamSUBJECT = this.delegate.getValueParameter( ConstantView.Parameter.SUBJECT_CREATE_USER );
-      lParamPORT = this.delegate.getValueParameter( ConstantView.Parameter.SMPT_PORT );
-      lParamFROM = this.delegate.getValueParameter( ConstantView.Parameter.SMTP_FROM );
-      lParamPASS = this.delegate.getValueParameter( ConstantView.Parameter.SMTP_PASS );
-      lParamUSER = this.delegate.getValueParameter( ConstantView.Parameter.SMTP_USERNAME );
-      lParamHTML = this.delegate.getValueParameter( ConstantView.Parameter.HTML_EMAIL_NEW_USER );
-      
-      if ( lParamSUBJECT != null && lParamSUBJECT != null && lParamPORT != null && lParamFROM != null && lParamPASS != null && lParamUSER != null
-           && lParamHTML != null ) {
-        msgHtml = lParamHTML.replace( "{0}", login ).replace( "{1}", password );
-        arg = new String[1];
-        arg[0] = email;
-        sendMail = new SendMail( lParamFROM, lParamHOST, lParamPORT, lParamUSER, lParamPASS, lParamSUBJECT, msgHtml, arg, null );
-        sendMail.start();
-      }
-    } catch ( Exception e ) {
-      Util.CETUS_WAR.error( "[UsuarioManagedBean.sendEmail]" + e.getMessage(), e );
-    }
-    
-  }
+ 
   
   /* (non-Javadoc)
    * @see co.com.cetus.portal.web.bean.GeneralManagedBean#delete()
