@@ -66,6 +66,7 @@ public interface ConstantView {
     String NO_CONFIGURED_COMPONENT     = "no_configured_component";
     String LABEL_SELECT_SERVLET        = "select_servlet";
     String LABEL_SELECT_APPLICATION    = "select_register_applicaation";
+    String ERROR_NO_EXISTS_FILTER      = "ERROR_NO_EXISTS_FILTER";
   }
   
   public interface ColumnaEntityProperties {
@@ -75,6 +76,8 @@ public interface ConstantView {
     String USER_PROPERTIES_NEGOCIO        = "USER";
     String NAME_PROPERTIES_NEGOCIO        = "NAME";
     String ID_PROPERTIES_NEGOCIO          = "ID";
+    String DESCRIPTION_PROPERTIES_NEGOCIO = "DESCRIPTION";
+    String ID_APPLICATION_PROPERTIES_NEGOCIO = "ID_APPLICATION";
                                           
   }
   

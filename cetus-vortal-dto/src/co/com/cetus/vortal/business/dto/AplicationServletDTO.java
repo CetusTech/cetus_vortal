@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * The persistent class for the tb_aplication_servlet database table.
  * 
@@ -22,6 +23,8 @@ public class AplicationServletDTO implements Serializable {
   private AplicacionDTO     tbAplicacion;
   
   private List< MenuDTO >   tbMenus;
+  
+  private List< GeneralSearchDTO >      generalSearch;
   
   public AplicationServletDTO () {
   }
@@ -73,5 +76,15 @@ public class AplicationServletDTO implements Serializable {
   public void setTbMenus ( List< MenuDTO > tbMenus ) {
     this.tbMenus = tbMenus;
   }
+
+  public List< GeneralSearchDTO > getGeneralSearch () {
+    return generalSearch;
+  }
+
+  public void setGeneralSearch ( List< GeneralSearchDTO > generalSearch ) {
+    this.generalSearch = generalSearch;
+  }
+ 
+  
   
 }

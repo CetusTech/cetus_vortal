@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:loadBundle var="msg" basename="Message_es" />
+<h:head>
+	<h:outputStylesheet library="css" name="estilo.css" />
+	<h:outputScript library="js" name="common.js" />
+</h:head>
+<h:body>
+	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
+	<p:dialog modal="true" widgetVar="statusDialog" header="#{msg.loading}" draggable="false" closable="false">
+		<p:graphicImage value="#{msg.url_loading}" />
+	</p:dialog>
+	<h:form id="formContenido" prependId="false">
+		<p:outputPanel id="contenido" autoUpdate="false">
+			<p:messages id="men" showDetail="false" autoUpdate="true" />
+			<h:panelGrid id="crud" width="100%">
+				<ui:include src="/pages/admin_portal/general_search/list.xhtml" />
+			</h:panelGrid>
+		</p:outputPanel>
+	</h:form>
+	<ui:include src="/pages/admin_portal/general_search/dialog.xhtml" />
+</h:body>
+</html>

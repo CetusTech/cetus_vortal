@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <f:loadBundle var="msg" basename="Message_es" />
+
+  <p:dialog header="#{msg.detalled}" widgetVar="viewDialog" resizable="false" showEffect="clip" hideEffect="fold"
+    id="dialog" modal="true">
+    <ui:include src="/pages/admin_portal/general_search/view.xhtml" />
+  </p:dialog>
+
+  <h:form id="formConfirm" prependId="false">
+    <p:confirmDialog id="dialogDelete" appendToBody="true" message="#{msg.confirm_delete}"
+      header="#{msg.delete_register}" severity="alert" widgetVar="confirmDialogDelete">
+      <center>
+        <p:commandButton id="confirm" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
+          oncomplete="confirmDialogDelete.hide()" process="@this" action="#{componentManagedBean.delete}" />
+        <p:commandButton id="decline" value="#{msg.cancel}" onclick="confirmDialogDelete.hide()" type="button" />
+      </center>
+    </p:confirmDialog>
+  </h:form>
+
+
+  <p:dialog id="dialogAdd" modal="true" appendToBody="true" header="#{msg.add_register}" widgetVar="add"
+    resizable="false" showEffect="clip" hideEffect="fold" >
+    <ui:include src="/pages/admin_portal/general_search/add.xhtml"/>
+  </p:dialog>
+
+  <p:dialog id="dialogUpd" modal="true" appendToBody="true" header="#{msg.update}" widgetVar="update" resizable="false"
+    showEffect="clip" hideEffect="fold">
+  </p:dialog>
+
+  <h:form id="formConfirmAdd" prependId="false">
+    <p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.add}"
+      severity="alert" widgetVar="confirmation" visible="#{generalSearchMBean.showConfirmAdd}">
+      <center>
+        <p:commandButton id="confirmAdd" value="#{msg.accept}"
+          update=":formContenido:men :formContenido:list :formAdd:grid"
+          oncomplete="confirmation.hide(); add.hide();" actionListener="#{generalSearchMBean.add}"
+          process="@this" />
+        <p:commandButton id="declineRol" value="#{msg.cancel}" onclick="confirmation.hide();" type="button" />
+      </center>
+    </p:confirmDialog>
+  </h:form>
+</ui:composition>

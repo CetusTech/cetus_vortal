@@ -53,6 +53,9 @@ public class AplicationServlet implements Serializable {
   @OneToMany ( mappedBy = "tbAplicationServlet" )
   private List< Menu >      tbMenus;
   
+  @OneToMany ( mappedBy = "appSerId" )
+  private List< GeneralSearch >      generalSearch;
+  
   public AplicationServlet () {
   }
   
@@ -103,5 +106,14 @@ public class AplicationServlet implements Serializable {
   public void setTbMenus ( List< Menu > tbMenus ) {
     this.tbMenus = tbMenus;
   }
+
+  public List< GeneralSearch > getGeneralSearch () {
+    return generalSearch;
+  }
+
+  public void setGeneralSearch ( List< GeneralSearch > generalSearch ) {
+    this.generalSearch = generalSearch;
+  }
+  
   
 }

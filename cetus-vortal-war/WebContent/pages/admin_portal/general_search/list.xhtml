@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <f:loadBundle var="msg" basename="Message_es" />
+
+  <p:contextMenu for="list">
+    <p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search"
+      oncomplete="viewDialog.show()" action="#{generalSearchMBean.loadSelected}" />
+    <p:menuitem value="#{msg.delete}" update="list :formContenido:men" icon="ui-icon-close"
+      oncomplete="confirmDialogDelete.show()" action="#{generalSearchMBean.loadSelected}" />
+      
+      <p:menuitem value="#{msg.update}" update="list :formContenido:men" icon="ui-icon-close"
+      oncomplete="update.show()" action="#{generalSearchMBean.loadSelected}" />
+      
+  </p:contextMenu>
+
+  <p:dataTable id="list" var="object" paginator="true" rows="10"
+    rowStyleClass="#{index mod 2 == 0 ? null : 'row-color-2'}" rowIndexVar="index" paginatorPosition="bottom"
+    editable="true" rowsPerPageTemplate="#{msg.filter_datatable}"
+    currentPageReportTemplate="{currentPage} de {totalPages}"
+    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+    value="#{generalSearchMBean.listRegister}" rowKey="#{object.id}" selection="#{generalSearchMBean.selectedObject}"
+    resizableColumns="false" selectionMode="single" draggableColumns="true" emptyMessage="#{msg.empty_register}">
+
+    <f:facet name="header">
+      <h:outputLabel value="#{msg.list_register}" />
+    </f:facet>
+
+    <p:column sortBy="#{object.description}" filterBy="#{object.description}" filterMatchMode="contains">
+      <f:facet name="header">
+        <h:outputText value="#{msg.description}" />
+      </f:facet>
+      <h:outputText value="#{object.description}" />
+    </p:column>
+
+    <p:column sortBy="#{object.appSerId.tbAplicacion.nombre}" filterBy="#{object.appSerId.tbAplicacion.nombre}"
+      filterMatchMode="contains">
+      <f:facet name="header">
+        <h:outputText value="#{msg.app}" />
+      </f:facet>
+      <h:outputText value="#{object.appSerId.tbAplicacion.nombre}" />
+    </p:column>
+
+    <p:column sortBy="#{object.status}">
+      <f:facet name="header">
+        <h:outputText value="#{msg.status}" />
+      </f:facet>
+      <h:outputText value="#{object.status == 1 ? msg.active: msg.inactive}" />
+    </p:column>
+
+    <p:column sortBy="#{object.optionSearch}">
+      <f:facet name="header">
+        <h:outputText value="#{msg.option_search}" />
+      </f:facet>
+      <h:outputText value="#{object.optionSearch}" />
+    </p:column>
+
+    <f:facet name="footer">
+      <p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+        update=":formAdd:grid" />
+    </f:facet>
+
+  </p:dataTable>
+
+
+</ui:composition>

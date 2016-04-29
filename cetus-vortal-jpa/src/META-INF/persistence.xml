@@ -19,6 +19,8 @@
 		<class>co.com.cetus.vortal.jpa.entity.UserW</class>
 		<class>co.com.cetus.vortal.jpa.entity.Usuario</class>
 		<class>co.com.cetus.vortal.jpa.entity.UsuarioRol</class>
+		<class>co.com.cetus.vortal.jpa.entity.GeneralSearch</class>
+		<class>co.com.cetus.vortal.jpa.entity.FilterSearch</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 	</persistence-unit>
 </persistence>
