@@ -37,6 +37,10 @@ public class FilterSearch implements Serializable {
   public FilterSearch () {
   }
   
+  public FilterSearch (String filter) {
+    this.filter = filter;
+  }
+  
   public int getId () {
     return this.id;
   }

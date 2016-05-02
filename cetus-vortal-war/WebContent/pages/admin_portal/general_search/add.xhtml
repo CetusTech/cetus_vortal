@@ -27,7 +27,7 @@
           requiredMessage="#{msg.field_requiered}" style="width:200px">
           <f:selectItem itemValue="-1" itemLabel="#{msg.selected}" />
           <f:selectItems value="#{generalSearchMBean.listAppSer}" var="obj" itemValue="#{obj.id}"
-            itemLabel="#{obj.tbServlet.name} - #{obj.id}" />
+            itemLabel="#{obj.tbServlet.name}" />
           <p:ajax event="change" update="option_search_add" process="@this"
             listener="#{generalSearchMBean.changeServlet}" />
         </p:selectOneMenu>

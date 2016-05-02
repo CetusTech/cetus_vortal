@@ -13,7 +13,7 @@
 	</p:dialog>
 	<h:form id="formContenido" prependId="false">
 		<p:outputPanel id="contenido" autoUpdate="false">
-			<p:messages id="men" showDetail="false" autoUpdate="true" />
+            <p:messages id="men" globalOnly="true" showDetail="true" autoUpdate="true" />
 			<h:panelGrid id="crud" width="100%">
 				<ui:include src="/pages/admin_portal/general_search/list.xhtml" />
 			</h:panelGrid>
