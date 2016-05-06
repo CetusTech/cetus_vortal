@@ -10,6 +10,7 @@ import co.com.cetus.common.dto.ResponseWSDTO;
 import co.com.cetus.common.exception.ServiceException;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
+import co.com.cetus.vortal.jpa.entity.FilterSearch;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
@@ -259,5 +260,6 @@ public interface PortalServiceRemote {
   public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ServiceException;
 
   public boolean createUser ( Usuario user ) throws ServiceException;
-  
+
+  public List< FilterSearch > findFilterByGenSearch ( int idGeneralSearch ) throws ServiceException;
 }

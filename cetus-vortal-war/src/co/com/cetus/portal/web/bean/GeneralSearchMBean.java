@@ -8,8 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import org.primefaces.context.RequestContext;
-
 import co.com.cetus.common.dto.ResponseWSDTO;
 import co.com.cetus.common.util.ConstantCommon;
 import co.com.cetus.common.util.UtilCommon;
@@ -58,6 +56,7 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   private FilterSearch                 filter10         = null;
                                                         
   private boolean                      showConfirmAdd   = false;
+  private boolean                      showConfirmUpd   = false;
                                                         
   public GeneralSearchMBean () {
     addObject = new GeneralSearch();
@@ -98,12 +97,104 @@ public class GeneralSearchMBean extends GeneralManagedBean {
     }
   }
   
+  /**
+   * </p> Load selected. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @since cetus-vortal-war (3/05/2016)
+   */
   public void loadSelected () {
-    if ( selectedObject != null && selectedObject.getId() > 0 ) {
-      addObjectSession( this.selectedObject, "selectedObject" );
+    List< FilterSearch > listFilter = null;
+    try {
+      if ( selectedObject != null && selectedObject.getId() > 0 ) {
+        idApplication = selectedObject.getAppSerId().getTbAplicacion().getId();
+        idAppSer = selectedObject.getAppSerId().getId();
+        addObjectSession( idApplication, "idApplication" );
+        addObjectSession( idAppSer, "idAppSer" );
+        addObjectSession( this.selectedObject, "selectedObject" );
+        
+        changeAplication();
+        changeServlet();
+        
+        listFilter = this.delegate.findFilterByGenSearch( selectedObject.getId() );
+        if ( listFilter != null && listFilter.size() > 0 ) {
+          for ( FilterSearch filterSearch: listFilter ) {
+            if ( filterSearch.getFilter().equals( "filter1" ) ) {
+              filter1 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter2" ) ) {
+              filter2 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter3" ) ) {
+              filter3 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter4" ) ) {
+              filter4 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter5" ) ) {
+              filter5 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter6" ) ) {
+              filter6 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter7" ) ) {
+              filter7 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter8" ) ) {
+              filter8 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter9" ) ) {
+              filter9 = filterSearch;
+              continue;
+            }
+            if ( filterSearch.getFilter().equals( "filter10" ) ) {
+              filter10 = filterSearch;
+              continue;
+            }
+          }
+          addObjectSession( filter1, "filter1" );
+          addObjectSession( filter2, "filter2" );
+          addObjectSession( filter3, "filter3" );
+          addObjectSession( filter4, "filter4" );
+          addObjectSession( filter5, "filter5" );
+          addObjectSession( filter6, "filter6" );
+          addObjectSession( filter7, "filter7" );
+          addObjectSession( filter8, "filter8" );
+          addObjectSession( filter9, "filter9" );
+          addObjectSession( filter10, "filter10" );
+        }
+      }
+    } catch ( Exception e ) {
+      Util.CETUS_WAR.error( e.getMessage(), e );
     }
   }
   
+  public void loadSelectedDelete () {
+    try {
+      if ( selectedObject != null && selectedObject.getId() > 0 ) {
+        addObjectSession( this.selectedObject, "selectedObject" );
+        
+      }
+    } catch ( Exception e ) {
+      Util.CETUS_WAR.error( e.getMessage(), e );
+    }
+  }
+  
+  /**
+   * </p> Adds the. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @return el string
+   * @since cetus-vortal-war (3/05/2016)
+   */
   @Override
   public String add () {
     int idGeneralSearch = 0;
@@ -204,7 +295,7 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   
   public void loadAdd () {
     try {
-      if ( addObject != null && addObject.getDescription() != null && !addObject.getDescription().isEmpty() && idAppSer > 0 ) {
+      if ( addObject != null && !UtilCommon.isNullOrEmptyString( addObject.getDescription() ) && idAppSer > 0 ) {
         if ( UtilCommon.isNullOrEmptyString( filter1.getLabel() ) && UtilCommon.isNullOrEmptyString( filter2.getLabel() )
              && UtilCommon.isNullOrEmptyString( filter3.getLabel() ) && UtilCommon.isNullOrEmptyString( filter4.getLabel() )
              && UtilCommon.isNullOrEmptyString( filter5.getLabel() ) && UtilCommon.isNullOrEmptyString( filter6.getLabel() )
@@ -240,16 +331,16 @@ public class GeneralSearchMBean extends GeneralManagedBean {
       if ( selectedObject != null ) {
         if ( this.delegate.remove( selectedObject ) ) {
           this.initElement();
-          addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_DELETE ),
-                          ConstantView.SUCCESS_FULL );
+          addMessageInfo( null, ConstantView.SUCCESS_FULL,
+                          Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_DELETE ) );
         }
       } else {
-        addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_OBJECT_NULL ),
-                         ConstantView.ERROR );
+        addMessageError( null, ConstantView.ERROR,
+                         Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_OBJECT_NULL ) );
       }
     } catch ( Exception e ) {
-      addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_DELETE_REGISTER ),
-                       ConstantView.ERROR );
+      addMessageError( null, ConstantView.ERROR,
+                       Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_DELETE_REGISTER ) );
       Util.CETUS_WAR.error( e.getMessage(), e );
     }
     return null;
@@ -257,29 +348,49 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   
   @Override
   public String update () {
-    boolean lSuccessfull = false;
-    RequestContext context = null;
+    int idGeneralSearch = 0;
     try {
       
-      if ( selectedObject != null ) {
-        context = RequestContext.getCurrentInstance();
+      selectedObject = ( GeneralSearch ) getObjectSession( "selectedObject" );
+      if ( selectedObject != null && !UtilCommon.isNullOrEmptyString( selectedObject.getDescription() ) ) {
         selectedObject.setUserUpdate( getUsuarioCreacion() );
         selectedObject.setDateUpdate( new Date() );
-        
-        if ( this.delegate.edit( selectedObject ) ) {
+        selectedObject.setStatus( 1 );
+        selectedObject.setAppSerId( new AplicationServlet() );
+        selectedObject.getAppSerId().setId( ( int ) getObjectSession( "idAppSer" ) );
+        if ( delegate.edit( selectedObject ) ) {
+          idGeneralSearch = selectedObject.getId();
+          
+          Util.CETUS_WAR.info( "Inicia la actualizacion de los filtros..." );
+          Util.CETUS_WAR.info( "idGeneralSearch:" + idGeneralSearch );
+          
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter1" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter2" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter3" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter4" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter5" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter6" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter7" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter8" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter9" ), idGeneralSearch );
+          filterAddUpdDel( ( FilterSearch ) getObjectSession( "filter10" ), idGeneralSearch );
+          
+          Util.CETUS_WAR.info( "Finaliza la actualizacion de los filtros..." );
+          
           this.initElement();
-          lSuccessfull = true;
-          addMessageInfo( null, ConstantView.SUCCESS_FULL,
-                          Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_UPDATE ) );
-          cleanObjectSession( "selectedObject" );
+          addMessageInfo( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_UPDATE ),
+                          ConstantView.SUCCESS_FULL );
+          cleanObjectSession( "addObject" );
         }
+      } else {
+        addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_UPDATE_REGISTER ),
+                         ConstantView.ERROR );
       }
     } catch ( Exception e ) {
       addMessageError( null, ConstantView.ERROR,
                        Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_UPDATE_REGISTER ) );
       Util.CETUS_WAR.error( e.getMessage(), e );
     }
-    context.addCallbackParam( "lSuccessfull", lSuccessfull );
     return null;
   }
   
@@ -304,14 +415,21 @@ public class GeneralSearchMBean extends GeneralManagedBean {
     }
   }
   
+  /**
+   * </p> Change servlet. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @since cetus-vortal-war (3/05/2016)
+   */
   public void changeServlet () {
     List< Integer > list = new ArrayList< Integer >();
-    
     try {
       addObjectSession( idAppSer, "idAppSer" );
       if ( idAppSer > 0 ) {
         for ( GeneralSearch generalSearch: listRegister ) {
-          list.add( generalSearch.getOptionSearch() );
+          if ( generalSearch.getAppSerId().getId() == idAppSer ) {
+            list.add( generalSearch.getOptionSearch() );
+          }
         }
         
         listOptionSearch = new ArrayList< Integer >();
@@ -321,6 +439,12 @@ public class GeneralSearchMBean extends GeneralManagedBean {
         }
         
         listOptionSearch.removeAll( list );
+        
+        selectedObject = ( GeneralSearch ) getObjectSession( "selectedObject" );
+        if ( selectedObject != null && selectedObject.getId() > 0 ) {
+          listOptionSearch.add( selectedObject.getOptionSearch() );
+        }
+        
         addObjectSession( listOptionSearch, "listOptionSearch" );
         
       } else {
@@ -331,63 +455,41 @@ public class GeneralSearchMBean extends GeneralManagedBean {
     }
   }
   
-  //  public void editEvent ( RowEditEvent event ) {
-  //    UserW lSelectedObject = null;
-  //    boolean lSuccessfull = false;
-  //    RequestContext context = null;
-  //    try {
-  //      lSelectedObject = ( UserW ) event.getObject();
-  //      if ( lSelectedObject != null ) {
-  //        context = RequestContext.getCurrentInstance();
-  //        lSelectedObject.setUserUpdate( getUsuarioCreacion() );
-  //        lSelectedObject.setDateUpdate( new Date() );
-  //        lSelectedObject.setStatus( status ? 1 : 0 );
-  //        
-  //        if ( this.delegate.edit( lSelectedObject ) ) {
-  //          this.initElement();
-  //          lSuccessfull = true;
-  //          addMessageInfo( null,
-  //                          Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SUCCESFULL_UPDATE ),
-  //                          ConstantView.SUCCESS_FULL );
-  //          context.addCallbackParam( "lSuccessfull", lSuccessfull );
-  //        }
-  //      } else {
-  //        addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SELECT_APP ), ConstantView.ERROR );
-  //      }
-  //    } catch ( Exception e ) {
-  //      addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_UPDATE_REGISTER ),
-  //                       ConstantView.ERROR );
-  //      Util.CETUS_WAR.error( e.getMessage(), e );
-  //    }
-  //    
-  //  }
-  
+  /**
+   * </p> Load update. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @since cetus-vortal-war (3/05/2016)
+   */
   public void loadUpdate () {
-    //    RequestContext context = null;
-    //    List< Component > listCom = null;
-    //    try {
-    //      context = RequestContext.getCurrentInstance();
-    //      
-    //      if ( selectedObject != null && selectedObject. != null ) {
-    //        context.addCallbackParam( "lSelected", true );
-    //        addObjectSession( selectedObject, "selectedObject" );
-    //        
-    //        listCom = delegate.findAllComponentByApplication( selectedObject.getTbComponent().getTbAplicacion().getId() );
-    //        
-    //        listComponent = new ArrayList< SelectItem >();
-    //        if ( listCom != null ) {
-    //          for ( Component obj: listCom ) {
-    //            listComponent.add( new SelectItem( obj.getId(), obj.getName() ) );
-    //          }
-    //          addObjectSession( listComponent, "listComponent" );
-    //        }
-    //      } else {
-    //        context.addCallbackParam( "lSelected", false );
-    //        addMessageError( null, Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.SELECTED_PARAMETER ), null );
-    //      }
-    //    } catch ( Exception e ) {
-    //      Util.CETUS_WAR.error( e.getMessage(), e );
-    //    }
+    try {
+      if ( selectedObject != null && !UtilCommon.isNullOrEmptyString( selectedObject.getDescription() ) && idAppSer > 0 ) {
+        if ( UtilCommon.isNullOrEmptyString( filter1.getLabel() ) && UtilCommon.isNullOrEmptyString( filter2.getLabel() )
+             && UtilCommon.isNullOrEmptyString( filter3.getLabel() ) && UtilCommon.isNullOrEmptyString( filter4.getLabel() )
+             && UtilCommon.isNullOrEmptyString( filter5.getLabel() ) && UtilCommon.isNullOrEmptyString( filter6.getLabel() )
+             && UtilCommon.isNullOrEmptyString( filter7.getLabel() ) && UtilCommon.isNullOrEmptyString( filter8.getLabel() )
+             && UtilCommon.isNullOrEmptyString( filter9.getLabel() ) && UtilCommon.isNullOrEmptyString( filter10.getLabel() ) ) {
+          addMessageError( "msgUpd", Util.getProperty( ConstantView.NAME_BUNDLE_VIEW, ConstantView.Internalizacion.ERROR_NO_EXISTS_FILTER ), null );
+          showConfirmUpd = false;
+        } else {
+          addObjectSession( selectedObject, "selectedObject" );
+          addObjectSession( filter1, "filter1" );
+          addObjectSession( filter2, "filter2" );
+          addObjectSession( filter3, "filter3" );
+          addObjectSession( filter4, "filter4" );
+          addObjectSession( filter5, "filter5" );
+          addObjectSession( filter6, "filter6" );
+          addObjectSession( filter7, "filter7" );
+          addObjectSession( filter8, "filter8" );
+          addObjectSession( filter9, "filter9" );
+          addObjectSession( filter10, "filter10" );
+          
+          showConfirmUpd = true;
+        }
+      }
+    } catch ( Exception e ) {
+      Util.CETUS_WAR.error( e.getMessage(), e );
+    }
     
   }
   
@@ -400,6 +502,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public GeneralSearch getSelectedObject () {
+    GeneralSearch temp = ( GeneralSearch ) getObjectSession( "selectedObject" );
+    if ( temp != null ) {
+      selectedObject = temp;
+    }
     return selectedObject;
   }
   
@@ -428,6 +534,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter1 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter1" );
+    if ( temp != null ) {
+      filter1 = temp;
+    }
     return filter1;
   }
   
@@ -436,6 +546,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter2 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter2" );
+    if ( temp != null ) {
+      filter2 = temp;
+    }
     return filter2;
   }
   
@@ -444,6 +558,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter3 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter3" );
+    if ( temp != null ) {
+      filter3 = temp;
+    }
     return filter3;
   }
   
@@ -452,6 +570,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter4 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter4" );
+    if ( temp != null ) {
+      filter4 = temp;
+    }
     return filter4;
   }
   
@@ -460,6 +582,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter5 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter5" );
+    if ( temp != null ) {
+      filter5 = temp;
+    }
     return filter5;
   }
   
@@ -468,6 +594,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter6 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter6" );
+    if ( temp != null ) {
+      filter6 = temp;
+    }
     return filter6;
   }
   
@@ -476,6 +606,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter7 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter7" );
+    if ( temp != null ) {
+      filter7 = temp;
+    }
     return filter7;
   }
   
@@ -484,6 +618,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter8 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter8" );
+    if ( temp != null ) {
+      filter8 = temp;
+    }
     return filter8;
   }
   
@@ -492,6 +630,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter9 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter9" );
+    if ( temp != null ) {
+      filter9 = temp;
+    }
     return filter9;
   }
   
@@ -500,6 +642,10 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public FilterSearch getFilter10 () {
+    FilterSearch temp = ( FilterSearch ) getObjectSession( "filter10" );
+    if ( temp != null ) {
+      filter10 = temp;
+    }
     return filter10;
   }
   
@@ -516,6 +662,7 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public int getIdApplication () {
+    idApplication = getObjectSession( "idApplication" ) != null ? ( int ) getObjectSession( "idApplication" ) : 0;
     return idApplication;
   }
   
@@ -524,6 +671,7 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   }
   
   public int getIdAppSer () {
+    idAppSer = getObjectSession( "idAppSer" ) != null ? ( int ) getObjectSession( "idAppSer" ) : 0;
     return idAppSer;
   }
   
@@ -563,6 +711,14 @@ public class GeneralSearchMBean extends GeneralManagedBean {
   
   public void setShowConfirmAdd ( boolean showConfirmAdd ) {
     this.showConfirmAdd = showConfirmAdd;
+  }
+  
+  public boolean isShowConfirmUpd () {
+    return showConfirmUpd;
+  }
+  
+  public void setShowConfirmUpd ( boolean showConfirmUpd ) {
+    this.showConfirmUpd = showConfirmUpd;
   }
   
 }

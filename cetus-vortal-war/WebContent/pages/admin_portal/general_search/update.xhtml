@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <f:loadBundle var="msg" basename="Message_es" />
+  <h:form id="formUpdate" prependId="false" enctype="multipart/form-data">
+    <center>
+      <p:message for="btnUpdate" id="msgUpd" />
+      <h:panelGrid id="panelSearch" columns="6">
+        <p:outputLabel for="description_search_upd" value="#{msg.description}:" styleClass="resaltar_negro" />
+        <p:inputText id="description_search_upd" required="true" value="#{generalSearchMBean.selectedObject.description}"
+          style="width:250px" requiredMessage="#{msg.field_requiered}" />
+        <p:message id="description_search_msg_upd" for="description_search_upd" display="icon" />
+
+        <p:outputLabel value="#{msg.app}:" for="appUpd" styleClass="resaltar_negro" />
+        <p:selectOneMenu id="appUpd" value="#{generalSearchMBean.idApplication}" required="true"
+          requiredMessage="#{msg.field_requiered}" style="width:200px">
+          <f:selectItem itemValue="-1" itemLabel="#{msg.selected}" />
+          <f:selectItems value="#{generalSearchMBean.listApplication}" var="obj" itemValue="#{obj.id}"
+            itemLabel="#{obj.nombre}" />
+          <p:ajax event="change" update="servletUpd option_search_upd" process="@this"
+            listener="#{generalSearchMBean.changeAplication}" />
+        </p:selectOneMenu>
+        <p:message for="appUpd" id="appUpdMsg" />
+
+        <p:outputLabel value="#{msg.servlet}:" for="servletUpd" styleClass="resaltar_negro" />
+        <p:selectOneMenu id="servletUpd" value="#{generalSearchMBean.idAppSer}" required="true"
+          requiredMessage="#{msg.field_requiered}" style="width:200px">
+          <f:selectItem itemValue="-1" itemLabel="#{msg.selected}" />
+          <f:selectItems value="#{generalSearchMBean.listAppSer}" var="obj" itemValue="#{obj.id}"
+            itemLabel="#{obj.tbServlet.name}" />
+          <p:ajax event="change" update="option_search_upd" process="@this"
+            listener="#{generalSearchMBean.changeServlet}" />
+        </p:selectOneMenu>
+        <p:message for="servletUpd" id="servletUpdMsg" />
+
+
+        <p:outputLabel value="#{msg.option_search}:" for="option_search_upd" styleClass="resaltar_negro" />
+        <p:selectOneMenu id="option_search_upd" value="#{generalSearchMBean.selectedObject.optionSearch}" required="true"
+          requiredMessage="#{msg.field_requiered}" style="width:200px">
+          <f:selectItem itemValue="" itemLabel="#{msg.selected}" />
+          <f:selectItems value="#{generalSearchMBean.listOptionSearch}" var="obj" itemValue="#{obj}" itemLabel="#{obj}" />
+        </p:selectOneMenu>
+        <p:message for="option_search_upd" id="option_search_updMsg" />
+      </h:panelGrid>
+
+      <h:panelGrid id="pnlFilterUpd" columns="4">
+
+        <f:facet name="header">
+          <h:outputText value="#{msg.list_filter}" />
+        </f:facet>
+
+        <p:outputLabel for="filterUpd1" value="#{msg.filter1}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd1" value="#{generalSearchMBean.filter1.label}" />
+
+        <p:outputLabel for="filterUpd2" value="#{msg.filter2}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd2" value="#{generalSearchMBean.filter2.label}" />
+
+        <p:outputLabel for="filterUpd3" value="#{msg.filter3}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd3" value="#{generalSearchMBean.filter3.label}" />
+
+        <p:outputLabel for="filterUpd4" value="#{msg.filter4}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd4" value="#{generalSearchMBean.filter4.label}" />
+
+        <p:outputLabel for="filterUpd5" value="#{msg.filter5}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd5" value="#{generalSearchMBean.filter5.label}" />
+
+        <p:outputLabel for="filterUpd6" value="#{msg.filter6}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd6" value="#{generalSearchMBean.filter6.label}" />
+
+        <p:outputLabel for="filterUpd7" value="#{msg.filter7}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd7" value="#{generalSearchMBean.filter7.label}" />
+
+        <p:outputLabel for="filterUpd8" value="#{msg.filter8}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd8" value="#{generalSearchMBean.filter8.label}" />
+
+        <p:outputLabel for="filterUpd9" value="#{msg.filter9}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd9" value="#{generalSearchMBean.filter9.label}" />
+
+        <p:outputLabel for="filterUpd10" value="#{msg.filter10}:" styleClass="resaltar_negro" />
+        <p:inputText style="width:250px" maxlength="44" id="filterUpd10" value="#{generalSearchMBean.filter10.label}" />
+      </h:panelGrid>
+
+
+      <p:commandButton async="true" id="btnUpdate" value="#{msg.accept}" process="@form"
+        action="#{generalSearchMBean.loadUpdate}" icon="ui-icon-disk" update=":formConfirmUpd:confirmDialogUpd :formUpdate" />
+    </center>
+
+  </h:form>
+
+</ui:composition>

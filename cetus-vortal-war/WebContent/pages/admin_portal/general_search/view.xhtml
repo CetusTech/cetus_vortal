@@ -1,21 +1,82 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
-	<f:loadBundle var="msg" basename="Message_es" />
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <f:loadBundle var="msg" basename="Message_es" />
 
-	<p:panelGrid id="display" columns="2" cellpadding="4">
+  <p:panelGrid id="pnlSearchView" columns="4" style="width:100%" >
 
-		<h:outputText value="#{msg.create_user}:" styleClass="resaltar_negro"/>
-		<h:outputText value="#{generalSearchMBean.selectedObject.userCreation}" />
+    <f:facet name="header">
+      <h:outputText value="#{msg.option_search}" />
+    </f:facet>
 
-		<h:outputText value="#{msg.create_date}:" styleClass="resaltar_negro"/>
-		<h:outputText value="#{generalSearchMBean.selectedObject.dateCreation}" />
+    <h:outputText value="#{msg.description}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.description}" />
 
-		<h:outputText value="#{msg.user_update}:" styleClass="resaltar_negro"/>
-		<h:outputText value="#{generalSearchMBean.selectedObject.userUpdate}" />
+    <h:outputText value="#{msg.app}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.appSerId.tbAplicacion.nombre}" />
 
-		<h:outputText value="#{msg.date_update}:" styleClass="resaltar_negro"/>
-		<h:outputText value="#{generalSearchMBean.selectedObject.dateUpdate}" />
+    <h:outputText value="#{msg.servlet}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.appSerId.tbServlet.name}" />
 
-	</p:panelGrid>
+    <h:outputText value="#{msg.option_search}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.optionSearch}" />
+
+  </p:panelGrid>
+
+  <p:panelGrid id="pnlFilterView" columns="4" style="width:100%" >
+
+    <f:facet name="header">
+      <h:outputText value="#{msg.list_filter}" />
+    </f:facet>
+
+    <h:outputText value="#{msg.filter1}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter1.label}" />
+
+    <h:outputText value="#{msg.filter2}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter2.label}" />
+
+    <h:outputText value="#{msg.filter3}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter3.label}" />
+
+    <h:outputText value="#{msg.filter4}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter4.label}" />
+
+    <h:outputText value="#{msg.filter5}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter5.label}" />
+
+    <h:outputText value="#{msg.filter6}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter6.label}" />
+
+    <h:outputText value="#{msg.filter7}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter7.label}" />
+
+    <h:outputText value="#{msg.filter8}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter8.label}" />
+
+    <h:outputText value="#{msg.filter9}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter9.label}" />
+
+    <h:outputText value="#{msg.filter10}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.filter10.label}" />
+  </p:panelGrid>
+
+  <p:panelGrid id="display" columns="4" cellpadding="4" style="width:100%" >
+
+    <f:facet name="header">
+      <h:outputText value="#{msg.audit}" />
+    </f:facet>
+
+    <h:outputText value="#{msg.create_user}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.userCreation}" />
+
+    <h:outputText value="#{msg.create_date}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.dateCreation}" />
+
+    <h:outputText value="#{msg.user_update}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.userUpdate}" />
+
+    <h:outputText value="#{msg.date_update}:" styleClass="resaltar_negro" />
+    <h:outputText value="#{generalSearchMBean.selectedObject.dateUpdate}" />
+
+  </p:panelGrid>
 </ui:composition>

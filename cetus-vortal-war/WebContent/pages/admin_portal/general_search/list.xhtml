@@ -6,12 +6,14 @@
   <p:contextMenu for="list">
     <p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search"
       oncomplete="viewDialog.show()" action="#{generalSearchMBean.loadSelected}" />
-    <p:menuitem value="#{msg.delete}" update="list :formContenido:men" icon="ui-icon-close"
-      oncomplete="confirmDialogDelete.show()" action="#{generalSearchMBean.loadSelected}" />
-      
-      <p:menuitem value="#{msg.update}" update="list :formContenido:men" icon="ui-icon-close"
+
+    <p:menuitem value="#{msg.update}" update=":formUpdate:panelSearch :formUpdate:pnlFilterUpd" icon="ui-icon-pencil"
       oncomplete="update.show()" action="#{generalSearchMBean.loadSelected}" />
-      
+
+    <p:menuitem value="#{msg.delete}" update=":formContenido:men" icon="ui-icon-close"
+      oncomplete="confirmDialogDelete.show()" action="#{generalSearchMBean.loadSelectedDelete}" />
+
+
   </p:contextMenu>
 
   <p:dataTable id="list" var="object" paginator="true" rows="10"
@@ -58,6 +60,7 @@
     <f:facet name="footer">
       <p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
         update=":formAdd:grid" />
+
     </f:facet>
 
   </p:dataTable>

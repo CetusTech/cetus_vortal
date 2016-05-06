@@ -36,6 +36,7 @@ import co.com.cetus.vortal.business.dto.UsuarioDTO;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.AplicationServlet;
 import co.com.cetus.vortal.jpa.entity.Component;
+import co.com.cetus.vortal.jpa.entity.FilterSearch;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
@@ -865,5 +866,28 @@ public class PortalProcess implements PortalProcessLocal {
     return result;
   }
 
+  /* (non-Javadoc)
+   * @see co.com.cetus.portal.ejb.process.PortalProcessLocal#findFilterByGenSearch(int)
+   */
+  public List< FilterSearch > findFilterByGenSearch ( int idGeneralSearch ) throws ProcessException {
+    TypedQuery< FilterSearch > query = null;
+    List< FilterSearch > list = null;
+    try {
+      query = em.createNamedQuery( "FilterSearch.findFilterByGenSearch", FilterSearch.class );
+      query.setParameter( "idGeneralSearch", idGeneralSearch );
+      
+      list = query.getResultList();
+      
+    } catch ( NoResultException e ) {
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+    } catch ( Exception e ) {
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+    }
+    
+    return list;
+  }
+  
   
 }

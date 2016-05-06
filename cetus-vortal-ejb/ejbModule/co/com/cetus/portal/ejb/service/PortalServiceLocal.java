@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import co.com.cetus.vortal.jpa.entity.Component;
+import co.com.cetus.vortal.jpa.entity.FilterSearch;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Service;
 import co.com.cetus.vortal.jpa.entity.Usuario;
@@ -215,4 +216,6 @@ public interface PortalServiceLocal {
   public boolean reloadParameterComponent ( int pIdApp, int idComponent, String nameComponent ) throws ServiceException;
   
   public boolean createUser ( Usuario user ) throws ServiceException;
+  
+  public List< FilterSearch > findFilterByGenSearch ( int idGeneralSearch ) throws ServiceException;
 }
