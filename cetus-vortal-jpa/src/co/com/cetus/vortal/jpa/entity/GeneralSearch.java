@@ -13,7 +13,10 @@ import java.util.List;
  */
 @Entity
 @Table ( name = "TB_GENERAL_SEARCH" )
-@NamedQuery ( name = "GeneralSearch.findAll", query = "SELECT g FROM GeneralSearch g" )
+@NamedQueries ( {
+  @NamedQuery ( name = "GeneralSearch.findAll", query = "SELECT g FROM GeneralSearch g" ),
+  @NamedQuery ( name = "GeneralSearch.findGenSearchByApp", query = "SELECT g FROM GeneralSearch g where g.appSerId.tbAplicacion.id = :idApp" )
+})
 public class GeneralSearch implements Serializable {
   private static final long serialVersionUID = 1L;
                                              
@@ -123,5 +126,15 @@ public class GeneralSearch implements Serializable {
   public void setOptionSearch ( int optionSearch ) {
     this.optionSearch = optionSearch;
   }
+
+  public List< FilterSearch > getFilters () {
+    return filters;
+  }
+
+  public void setFilters ( List< FilterSearch > filters ) {
+    this.filters = filters;
+  }
+  
+  
   
 }

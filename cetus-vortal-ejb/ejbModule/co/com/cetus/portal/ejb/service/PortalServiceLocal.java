@@ -9,11 +9,13 @@ import javax.ejb.Local;
 
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.FilterSearch;
+import co.com.cetus.vortal.jpa.entity.GeneralSearch;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Service;
 import co.com.cetus.vortal.jpa.entity.Usuario;
 import co.com.cetus.common.dto.AttributeDTO;
 import co.com.cetus.common.dto.ResponseWSDTO;
+import co.com.cetus.common.exception.ProcessException;
 import co.com.cetus.common.exception.ServiceException;
 
 /**
@@ -218,4 +220,6 @@ public interface PortalServiceLocal {
   public boolean createUser ( Usuario user ) throws ServiceException;
   
   public List< FilterSearch > findFilterByGenSearch ( int idGeneralSearch ) throws ServiceException;
+  
+  public List< GeneralSearch > findGenSearchByApp ( int idApp ) throws ServiceException;
 }

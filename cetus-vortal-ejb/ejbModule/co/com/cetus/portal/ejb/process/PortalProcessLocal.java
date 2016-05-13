@@ -10,6 +10,7 @@ import co.com.cetus.common.exception.ProcessException;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.FilterSearch;
+import co.com.cetus.vortal.jpa.entity.GeneralSearch;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
@@ -71,4 +72,6 @@ public interface PortalProcessLocal {
   public boolean createUser ( Usuario user ) throws ProcessException;
   
   public List< FilterSearch > findFilterByGenSearch ( int idGeneralSearch ) throws ProcessException;
+  
+  public List< GeneralSearch > findGenSearchByApp ( int idApp ) throws ProcessException;
 }

@@ -12,6 +12,7 @@ import co.com.cetus.portal.web.util.ConstantView;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.FilterSearch;
+import co.com.cetus.vortal.jpa.entity.GeneralSearch;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
@@ -538,5 +539,15 @@ public class GeneralDelegate {
       throw new Exception( e.getMessage() );
     }
   }
+  
+  public List< GeneralSearch > findGenSearchByApp ( int idApp ) throws Exception {
+    try {
+      return portalService.findGenSearchByApp( idApp );
+    } catch ( ServiceException e ) {
+      throw new Exception( e.getMessage() );
+    }
+  }
+
+  
   
 }

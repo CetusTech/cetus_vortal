@@ -301,3 +301,14 @@ body {
 .center_lay {
 	top: 100px;
 }
+
+.select_general_gearch {
+	border: 1px solid #c5dbec !important;
+	background: #F7FCFF !important;
+	font-weight: bold !important;
+	color: #2e6e9e !important;
+	height: 25px !important;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}

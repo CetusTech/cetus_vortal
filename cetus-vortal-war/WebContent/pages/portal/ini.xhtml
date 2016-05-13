@@ -34,8 +34,20 @@
 
   </ui:define>
   <ui:define name="content">
+
     <p:growl id="growl" showDetail="true" life="3000" />
     <h:form id="formContenido2" prependId="false" style="height: 100%;">
+      <p:panel rendered="#{portalManagedBean.showGeneralSearch}" style="text-align: right;">
+        <h:selectOneMenu id="selGenSearch" value="#{portalManagedBean.filterSelected}" styleClass="select_general_gearch">
+          <f:selectItems value="#{portalManagedBean.listFilter}" />
+        </h:selectOneMenu>
+        <p:inputText id="inputSearch" value="#{portalManagedBean.inputSearch}" required="true"/>
+        <p:commandButton value="#{msg.btn_search}" update="contenido" process="@form"
+          action="#{portalManagedBean.generalSearch}" />
+      </p:panel>
+
+
+
       <p:outputPanel id="contenido" autoUpdate="false">
         <iframe align="top" style="height: 100%;" src="#{portalManagedBean.page}" frameborder="0" width="100%" />
       </p:outputPanel>

@@ -37,6 +37,7 @@ import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.AplicationServlet;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.FilterSearch;
+import co.com.cetus.vortal.jpa.entity.GeneralSearch;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
@@ -889,5 +890,34 @@ public class PortalProcess implements PortalProcessLocal {
     return list;
   }
   
+  
+  /**
+   * </p> Find gen search by app. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @param idApp the id app
+   * @return el list
+   * @throws ProcessException the process exception
+   * @since cetus-vortal-ejb (11/05/2016)
+   */
+  public List< GeneralSearch > findGenSearchByApp ( int idApp ) throws ProcessException {
+    TypedQuery< GeneralSearch > query = null;
+    List< GeneralSearch > list = null;
+    try {
+      query = em.createNamedQuery( "GeneralSearch.findGenSearchByApp", GeneralSearch.class );
+      query.setParameter( "idApp", idApp );
+      
+      list = query.getResultList();
+      
+    } catch ( NoResultException e ) {
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+    } catch ( Exception e ) {
+      throw new ProcessException( e.getMessage(),
+                                  Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );
+    }
+    
+    return list;
+  }
   
 }

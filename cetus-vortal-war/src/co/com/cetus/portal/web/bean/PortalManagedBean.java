@@ -1,12 +1,16 @@
 package co.com.cetus.portal.web.bean;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.event.NodeSelectEvent;
@@ -23,6 +27,8 @@ import co.com.cetus.portal.web.util.ConstantView;
 import co.com.cetus.portal.web.util.Util;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.AplicationServlet;
+import co.com.cetus.vortal.jpa.entity.FilterSearch;
+import co.com.cetus.vortal.jpa.entity.GeneralSearch;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Servlet;
 
@@ -37,26 +43,34 @@ import co.com.cetus.vortal.jpa.entity.Servlet;
 public class PortalManagedBean extends GeneralManagedBean {
   
   /** The Constant serialVersionUID. */
-  private static final long      serialVersionUID = 5852872097452516214L;
-  
+  private static final long               serialVersionUID = 5852872097452516214L;
+                                                           
   /** The principal. */
-  private UsuarioPortalPrincipal principal        = null;
-  
+  private UsuarioPortalPrincipal          principal        = null;
+                                                           
   /** The page. */
-  private String                 page;
-  
+  private String                          page;
+                                          
   /** The root. */
-  private DefaultTreeNode        root;
-  
+  private DefaultTreeNode                 root;
+                                          
   /** The selected node. */
-  private TreeNode               selectedNode;
-  
+  private TreeNode                        selectedNode;
+                                          
   /** The acronimo. */
-  private String                 acronimo;
-  
+  private String                          acronimo;
+                                          
   /** The aplicacion. */
-  private Aplicacion             aplicacion;
-  
+  private Aplicacion                      aplicacion;
+                                          
+  private boolean                         showGeneralSearch;
+                                          
+  private List< SelectItem >              listFilter;
+  private String                          filterSelected;
+  private String                          inputSearch;
+                                          
+  private HashMap< String, FilterSearch > mapFilterSearch;
+                                          
   /**
    * </p> Instancia un nuevo portal managed bean. </p>
    *
@@ -124,6 +138,7 @@ public class PortalManagedBean extends GeneralManagedBean {
   public void init () {
     this.inicializarUsuario();
     root = this.generarTree( null, null, null );
+    loadGeneralSearch();
   }
   
   /**
@@ -325,7 +340,7 @@ public class PortalManagedBean extends GeneralManagedBean {
                 
                 if ( servlet.getParameter().contains( "parameters" ) && servlet.getParameter().contains( "token" ) ) {
                   
-                  token = UtilCommon.getRandomUUID(16);
+                  token = UtilCommon.getRandomUUID( 16 );
                   Encriptor encriptor = EncriptorFactory.createEncriptor( EncriptorType.AES128 );
                   
                   params = new StringBuilder();
@@ -338,11 +353,10 @@ public class PortalManagedBean extends GeneralManagedBean {
                   params.append( menu.getUrl() );
                   
                   Util.CETUS_WAR.debug( "params ----> " + params.toString() );
-                                    
-                  parameters = servlet.getParameter();
-                  parameters = parameters.replace( "$1", URLEncoder.encode(encriptor.getValueEncripted( params.toString(), token ), "UTF-8") );
-                  parameters = parameters.replace( "$2", URLEncoder.encode( encriptor.getValueEncripted( token, null ), "UTF-8") );
                   
+                  parameters = servlet.getParameter();
+                  parameters = parameters.replace( "$1", URLEncoder.encode( encriptor.getValueEncripted( params.toString(), token ), "UTF-8" ) );
+                  parameters = parameters.replace( "$2", URLEncoder.encode( encriptor.getValueEncripted( token, null ), "UTF-8" ) );
                   
                   //Concatenar la url del servidor de la aplicacion el nombre del contexto y los parametros del servlet
                   urlPage = new StringBuffer();
@@ -390,12 +404,149 @@ public class PortalManagedBean extends GeneralManagedBean {
     return false;
   }
   
+  /**
+   * </p> Load general search. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @since cetus-vortal-war (11/05/2016)
+   */
+  @SuppressWarnings ( "unchecked" )
+  private void loadGeneralSearch () {
+    String idAppSeleted = null;
+    List< GeneralSearch > listGeneralSearch;
+    SelectItem[] selectItems = null;
+    int i = 0;
+    List< FilterSearch > filters = null;
+    try {
+      listGeneralSearch = ( List< GeneralSearch > ) getObjectSession( "listGeneralSearch" );
+      if ( listGeneralSearch == null || listGeneralSearch.size() == 0 ) {
+        idAppSeleted = ( String ) getObjectSession( "idApp" );
+        int idApp = Integer.parseInt( ( String ) ( idAppSeleted != null && !idAppSeleted.isEmpty() ? idAppSeleted : -1 ) );
+        listGeneralSearch = delegate.findGenSearchByApp( idApp );
+        if ( listGeneralSearch == null || listGeneralSearch.size() == 0 ) {
+          listGeneralSearch = new ArrayList< >();
+        } else {
+          showGeneralSearch = true;
+          listFilter = new ArrayList< SelectItem >();
+          mapFilterSearch = new HashMap< >();
+          for ( GeneralSearch generalSearch: listGeneralSearch ) {
+            SelectItemGroup grupo = new SelectItemGroup( generalSearch.getDescription() );
+            filters = delegate.findFilterByGenSearch( generalSearch.getId() );
+            if ( filters != null && filters.size() > 0 ) {
+              selectItems = new SelectItem[filters.size()];
+              i = 0;
+              for ( FilterSearch filterSearch: filters ) {
+                selectItems[i] = new SelectItem( String.valueOf( filterSearch.getId() ), filterSearch.getLabel() );
+                i++;
+                mapFilterSearch.put( String.valueOf( filterSearch.getId() ), filterSearch );
+              }
+              grupo.setSelectItems( selectItems );
+              listFilter.add( grupo );
+              
+            }
+          }
+          addObjectSession( listFilter, "listFilter" );
+          addObjectSession( mapFilterSearch, "mapFilterSearch" );
+        }
+        addObjectSession( listGeneralSearch, "listGeneralSearch" );
+      } else {
+        showGeneralSearch = true;
+      }
+      
+      addObjectSession( showGeneralSearch, "showGeneralSearch" );
+      
+    } catch ( Exception e ) {
+      Util.CETUS_WAR.error( e.getMessage(), e );
+    }
+  }
+  
+  /**
+   * </p> General search. </p>
+   *
+   * @author Jose David Salcedo M. - Cetus Technology
+   * @since cetus-vortal-war (12/05/2016)
+   */
+  @SuppressWarnings ( "unchecked" )
+  public void generalSearch () {
+    FilterSearch filterSearch = null;
+    String parameters = null;
+    Servlet servlet = null;
+    Aplicacion aplicacion = null;
+    StringBuffer urlPage = null;
+    String token = null;
+    StringBuilder params = null;
+    try {
+      Util.CETUS_WAR.info( "filterSelected: " + filterSelected );
+      Util.CETUS_WAR.info( "inputSearch: " + inputSearch );
+      this.page = ConstantView.ViewPage.PAGE_WELCOME;
+      if ( !UtilCommon.isNullOrEmptyString( inputSearch ) && !UtilCommon.isNullOrEmptyString( filterSelected ) && validarUsuario() ) {
+        mapFilterSearch = ( HashMap< String, FilterSearch > ) getObjectSession( "mapFilterSearch" );
+        if ( mapFilterSearch != null && mapFilterSearch.containsKey( filterSelected ) ) {
+          filterSearch = mapFilterSearch.get( filterSelected );
+          aplicacion = filterSearch.getGeneralSearch().getAppSerId().getTbAplicacion();
+          servlet = filterSearch.getGeneralSearch().getAppSerId().getTbServlet();
+          
+          if ( servlet != null && aplicacion != null && !UtilCommon.isNullOrEmptyString( servlet.getParameter() )
+               && !UtilCommon.isNullOrEmptyString( aplicacion.getUrlServer() ) ) {
+               
+            if ( servlet.getParameter().contains( "?" ) ) {
+              // los parametros que se enviaran son los siguientes
+              // parameters -> Este parametro identifica la cadena de parametros separados por | (encriptado)
+              // token -> identificador aleatorio (encriptado)                
+              
+              if ( servlet.getParameter().contains( "parameters" ) && servlet.getParameter().contains( "token" ) ) {
+                
+                token = UtilCommon.getRandomUUID( 16 );
+                Encriptor encriptor = EncriptorFactory.createEncriptor( EncriptorType.AES128 );
+                
+                params = new StringBuilder();
+                params.append( getPrincipal().getUserGeneralDTO().getUser().getLogin() );
+                params.append( ConstantCommon.PARAMETRES_SEPARATOR );
+                params.append( filterSearch.getGeneralSearch().getOptionSearch() );
+                params.append( ConstantCommon.PARAMETRES_SEPARATOR );
+                params.append( filterSearch.getFilter() );
+                params.append( ConstantCommon.PARAMETRES_SEPARATOR );
+                params.append( inputSearch );
+                params.append( ConstantCommon.PARAMETRES_SEPARATOR );
+                params.append( ConstantCommon.ACRONYM_GENERAL_SEARCH );
+                
+                Util.CETUS_WAR.debug( "params ----> " + params.toString() );
+                
+                parameters = servlet.getParameter();
+                parameters = parameters.replace( "$1", URLEncoder.encode( encriptor.getValueEncripted( params.toString(), token ), "UTF-8" ) );
+                parameters = parameters.replace( "$2", URLEncoder.encode( encriptor.getValueEncripted( token, null ), "UTF-8" ) );
+                
+                //Concatenar la url del servidor de la aplicacion el nombre del contexto y los parametros del servlet
+                urlPage = new StringBuffer();
+                urlPage.append( aplicacion.getUrlServer() );
+                urlPage.append( ConstantView.BARRA_INCLINADA );
+                urlPage.append( servlet.getName() );
+                urlPage.append( parameters );
+                
+                Util.CETUS_WAR.debug( "URL DEL MENU ----> " + urlPage.toString() );
+                
+                //Establecer la pagina que debe pintar
+                this.page = urlPage.toString();
+                
+                //Si se utiliza el objeto de la arquitectura propuesta SelectObject se debe limpiar antes de cargar el nuevo menu
+                cleanObjectSession( "selectedObject" );
+              }
+            }
+          }
+        }
+      }
+      
+    } catch ( Exception e ) {
+      Util.CETUS_WAR.error( e.getMessage(), e );
+    }
+  }
+  
   /* (non-Javadoc)
    * @see co.com.cetus.portal.web.bean.GeneralManagedBean#initElement()
    */
   @Override
   public void initElement () {
-    
+  
   }
   
   /* (non-Javadoc)
@@ -440,6 +591,43 @@ public class PortalManagedBean extends GeneralManagedBean {
   
   public void setAplicacion ( Aplicacion aplicacion ) {
     this.aplicacion = aplicacion;
+  }
+  
+  public boolean isShowGeneralSearch () {
+    return showGeneralSearch;
+  }
+  
+  public void setShowGeneralSearch ( boolean showGeneralSearch ) {
+    this.showGeneralSearch = showGeneralSearch;
+  }
+  
+  @SuppressWarnings ( "unchecked" )
+  public List< SelectItem > getListFilter () {
+    listFilter = ( List< SelectItem > ) getObjectSession( "listFilter" );
+    if ( listFilter == null ) {
+      listFilter = new ArrayList< >();
+    }
+    return listFilter;
+  }
+  
+  public void setListFilter ( List< SelectItem > listFilter ) {
+    this.listFilter = listFilter;
+  }
+  
+  public String getFilterSelected () {
+    return filterSelected;
+  }
+  
+  public void setFilterSelected ( String filterSelected ) {
+    this.filterSelected = filterSelected;
+  }
+  
+  public String getInputSearch () {
+    return inputSearch;
+  }
+  
+  public void setInputSearch ( String inputSearch ) {
+    this.inputSearch = inputSearch;
   }
   
 }

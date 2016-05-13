@@ -12,7 +12,7 @@ import java.util.Date;
 @Table ( name = "tb_filter_search" )
 @NamedQueries ( {
                   @NamedQuery ( name = "FilterSearch.findAll", query = "SELECT f FROM FilterSearch f" ),
-                  @NamedQuery ( name = "FilterSearch.findFilterByGenSearch", query = "SELECT f FROM FilterSearch f where f.generalSearch.id = :idGeneralSearch" )
+                  @NamedQuery ( name = "FilterSearch.findFilterByGenSearch", query = "SELECT f FROM FilterSearch f where f.generalSearch.id = :idGeneralSearch ORDER BY f.filter" )
 })
 public class FilterSearch implements Serializable {
   private static final long serialVersionUID = 1L;

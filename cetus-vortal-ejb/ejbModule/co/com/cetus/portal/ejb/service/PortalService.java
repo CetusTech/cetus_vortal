@@ -16,6 +16,7 @@ import co.com.cetus.portal.ejb.util.Util;
 import co.com.cetus.vortal.jpa.entity.Aplicacion;
 import co.com.cetus.vortal.jpa.entity.Component;
 import co.com.cetus.vortal.jpa.entity.FilterSearch;
+import co.com.cetus.vortal.jpa.entity.GeneralSearch;
 import co.com.cetus.vortal.jpa.entity.Menu;
 import co.com.cetus.vortal.jpa.entity.Parametro;
 import co.com.cetus.vortal.jpa.entity.Rol;
@@ -417,5 +418,17 @@ public class PortalService implements PortalServiceRemote, PortalServiceLocal {
                                                                                                   ConstantBussines.Internalizacion.PORTAL_SERVICE ), e.getDelegate() );
     }
   }  
+  
+  
+  @WebMethod ( exclude = true )
+  @Override
+  public List< GeneralSearch > findGenSearchByApp ( int idApp ) throws ServiceException {
+    try {
+      return portalProcess.findGenSearchByApp( idApp );
+    } catch ( ProcessException e ) {
+      throw new ServiceException( e.getMessage(), e.getStackTrace().toString(), Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO,
+                                                                                                  ConstantBussines.Internalizacion.PORTAL_SERVICE ), e.getDelegate() );
+    }
+  } 
   
 }
