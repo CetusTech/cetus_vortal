@@ -10,6 +10,7 @@ import javax.faces.bean.RequestScoped;
 
 import co.com.cetus.common.dto.ResponseWSDTO;
 import co.com.cetus.common.util.ConstantCommon;
+import co.com.cetus.common.util.EFilterSearch;
 import co.com.cetus.common.util.UtilCommon;
 import co.com.cetus.portal.web.util.ConstantView;
 import co.com.cetus.portal.web.util.Util;
@@ -65,16 +66,16 @@ public class GeneralSearchMBean extends GeneralManagedBean {
     selectedObject.getAppSerId().setTbAplicacion( new Aplicacion() );
     selectedObject.getAppSerId().setTbServlet( new Servlet() );
     
-    filter1 = new FilterSearch( "filter1" );
-    filter2 = new FilterSearch( "filter2" );
-    filter3 = new FilterSearch( "filter3" );
-    filter4 = new FilterSearch( "filter4" );
-    filter5 = new FilterSearch( "filter5" );
-    filter6 = new FilterSearch( "filter6" );
-    filter7 = new FilterSearch( "filter7" );
-    filter8 = new FilterSearch( "filter8" );
-    filter9 = new FilterSearch( "filter9" );
-    filter10 = new FilterSearch( "filter10" );
+    filter1 = new FilterSearch( EFilterSearch.FILTER1.getValue() );
+    filter2 = new FilterSearch( EFilterSearch.FILTER2.getValue() );
+    filter3 = new FilterSearch( EFilterSearch.FILTER3.getValue() );
+    filter4 = new FilterSearch( EFilterSearch.FILTER4.getValue() );
+    filter5 = new FilterSearch( EFilterSearch.FILTER5.getValue() );
+    filter6 = new FilterSearch( EFilterSearch.FILTER6.getValue() );
+    filter7 = new FilterSearch( EFilterSearch.FILTER7.getValue() );
+    filter8 = new FilterSearch( EFilterSearch.FILTER8.getValue() );
+    filter9 = new FilterSearch( EFilterSearch.FILTER9.getValue() );
+    filter10 = new FilterSearch( EFilterSearch.FILTER10.getValue() );
     
   }
   
@@ -119,43 +120,43 @@ public class GeneralSearchMBean extends GeneralManagedBean {
         listFilter = this.delegate.findFilterByGenSearch( selectedObject.getId() );
         if ( listFilter != null && listFilter.size() > 0 ) {
           for ( FilterSearch filterSearch: listFilter ) {
-            if ( filterSearch.getFilter().equals( "filter1" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER1.getValue() ) ) {
               filter1 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter2" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER2.getValue() ) ) {
               filter2 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter3" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER3.getValue() ) ) {
               filter3 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter4" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER4.getValue() ) ) {
               filter4 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter5" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER5.getValue() ) ) {
               filter5 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter6" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER6.getValue() ) ) {
               filter6 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter7" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER7.getValue() ) ) {
               filter7 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter8" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER8.getValue() ) ) {
               filter8 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter9" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER9.getValue() ) ) {
               filter9 = filterSearch;
               continue;
             }
-            if ( filterSearch.getFilter().equals( "filter10" ) ) {
+            if ( filterSearch.getFilter().equals( EFilterSearch.FILTER10.getValue() ) ) {
               filter10 = filterSearch;
               continue;
             }
