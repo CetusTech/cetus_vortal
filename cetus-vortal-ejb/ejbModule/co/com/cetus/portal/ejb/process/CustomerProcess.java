@@ -31,7 +31,9 @@ import javax.persistence.TypedQuery;
 
 import co.com.cetus.common.dto.ParameterDTO;
 import co.com.cetus.common.dto.ResponseWSDTO;
+import co.com.cetus.common.exception.ProcessException;
 import co.com.cetus.common.exception.ValidatorException;
+import co.com.cetus.common.util.ConstantCommon;
 import co.com.cetus.common.util.Converter;
 import co.com.cetus.common.util.UtilCommon;
 import co.com.cetus.portal.ejb.runnables.ThereadMailLocal;
@@ -162,7 +164,7 @@ public class CustomerProcess {
         converter.convertEntityToDto( lEntityT, userDto, false );
         response.setUsuarioDTO( userDto );
         try {
-          Util.CETUS_CORE.info( "PREPARADO PARA ENVIAR EL MAIL AL " + userDto.getEmail() );
+          Util.CETUS_CORE.debug( "##### ENVIO DE CORREO #########" );
           parameters = new String[2];
           parameters[0] = userDto.getLogin();
           parameters[1] = passwordTemp;
@@ -170,6 +172,7 @@ public class CustomerProcess {
           mail = new ThereadMailLocal( lParamSUBJECT, usuario.getEmail(), null, ConstantBussines.Parameter.HTML_EMAIL_NEW_USER, parameters );
           hilo1 = new Thread( mail );
           hilo1.start();
+          Util.CETUS_CORE.debug( "##### FIN DE CORREO #########" );
         } catch ( Exception e ) {
           Util.CETUS_CORE.error( "Error ::> " + e.getMessage(), e );
         }
@@ -212,6 +215,7 @@ public class CustomerProcess {
       usuario.setId( deleteUserRequestDTO.getIdUsuario() );
       usuario.setLogin( deleteUserRequestDTO.getLogin() );
       usuario = portalProcess.findByLogin( usuario.getLogin() );
+      
       if ( usuario != null ) {
         converter.convertDtoToEntity( userDto, usuario );
         //Eliminar los roles a la fecha y hacer lo que diga la lista de roles si trae insertar y si no no hace nada
@@ -225,12 +229,14 @@ public class CustomerProcess {
         String lParamSUBJECT = null;
         
         try {
+          Util.CETUS_CORE.debug( "##### ENVIO DE CORREO #########" );
           parameters = new String[1];
           parameters[0] = usuario.getLogin();
           lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_DELETE_USER );
           mail = new ThereadMailLocal( lParamSUBJECT, usuario.getEmail(), null, ConstantBussines.Parameter.HTML_EMAIL_DELETE_USER, parameters );
           hilo1 = new Thread( mail );
           hilo1.start();
+          Util.CETUS_CORE.debug( "##### FIN DE CORREO #########" );
         } catch ( Exception e ) {
           Util.CETUS_CORE.error( "Error ::> " + e.getMessage(), e );
         }
@@ -241,6 +247,15 @@ public class CustomerProcess {
     } catch ( ValidatorException ve ) {
       lResponseWSDTO = createMessageWRONG_PARAMETERS_WS();
       lResponseWSDTO.setMessage( ve.getMessage() );
+    } catch ( ProcessException e ) {
+      if ( e.getCodeError() != null ) {
+        if ( e.getCodeError().equals( ConstantCommon.WSResponse.TYPE_NORESULT ) ) {
+          lResponseWSDTO = createMessageNORESULT_WS();
+        }
+      } else {
+        lResponseWSDTO = createMessageFAILURE_WS();
+        lResponseWSDTO.setMessage( lResponseWSDTO.getMessage() + "-" + e.getMessage() );
+      }
     } catch ( Exception e ) {
       lResponseWSDTO = createMessageFAILURE_WS();
       lResponseWSDTO.setMessage( lResponseWSDTO.getMessage() + "-" + e.getMessage() );
@@ -310,12 +325,14 @@ public class CustomerProcess {
       String[] parameters = null;
       String lParamSUBJECT = null;
       try {
+        Util.CETUS_CORE.debug( "##### ENVIO DE CORREO #########" );
         parameters = new String[1];
         parameters[0] = usuario.getLogin();
         lParamSUBJECT = portalProcess.getValueParameter( ConstantBussines.Parameter.SUBJECT_UPDATE_USER );
         mail = new ThereadMailLocal( lParamSUBJECT, usuario.getEmail(), null, ConstantBussines.Parameter.HTML_EMAIL_UPDATE_USER, parameters );
         hilo1 = new Thread( mail );
         hilo1.start();
+        Util.CETUS_CORE.debug( "##### FIN DE CORREO #########" );
       } catch ( Exception e ) {
         Util.CETUS_CORE.error( "Error ::> " + e.getMessage(), e );
       }
@@ -323,9 +340,16 @@ public class CustomerProcess {
     } catch ( ValidatorException ve ) {
       lResponseWSDTO = createMessageWRONG_PARAMETERS_WS();
       lResponseWSDTO.setMessage( ve.getMessage() );
-    } catch ( Exception e ) {
-      lResponseWSDTO = createMessageFAILURE_WS();
-      lResponseWSDTO.setMessage( lResponseWSDTO.getMessage() + "-" + e.getMessage() );
+    } catch ( ProcessException e ) {
+      if ( e.getCodeError() != null ) {
+        if ( e.getCodeError().equals( ConstantCommon.WSResponse.TYPE_NORESULT ) ) {
+          lResponseWSDTO = createMessageNORESULT_WS();
+        }
+      } else {
+        lResponseWSDTO = createMessageFAILURE_WS();
+        lResponseWSDTO.setMessage( lResponseWSDTO.getMessage() + "-" + e.getMessage() );
+      }
+      
     }
     return lResponseWSDTO;
   }

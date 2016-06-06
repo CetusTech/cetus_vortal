@@ -45,6 +45,7 @@ import co.com.cetus.vortal.jpa.entity.RolMenu;
 import co.com.cetus.vortal.jpa.entity.Service;
 import co.com.cetus.vortal.jpa.entity.Usuario;
 import co.com.cetus.vortal.jpa.entity.UsuarioRol;
+import co.com.cetus.common.util.ConstantCommon.WSResponse;
 
 /**
  * The Class PortalProcess.
@@ -555,11 +556,9 @@ public class PortalProcess implements PortalProcessLocal {
     try {
       query = em.createNamedQuery( "Usuario.findByLogin", Usuario.class );
       query.setParameter( "login", pLogin );
-      
       if ( query.getMaxResults() > 0 ) {
         usuario = query.getSingleResult();
       }
-      
     } catch ( NoResultException e ) {
       throw new ProcessException( e.getMessage(),
                                   Util.getProperty( ConstantBussines.NAME_BUNDLE_NEGOCIO, ConstantBussines.Internalizacion.PORTAL_PROCESS ), null );

@@ -17,6 +17,7 @@ import co.com.cetus.vortal.jpa.entity.Rol;
 import co.com.cetus.vortal.jpa.entity.Service;
 import co.com.cetus.vortal.jpa.entity.Usuario;
 
+
 @Local
 public interface PortalProcessLocal {
   public ResponseWSDTO authenticationUser ( LoginDTO obj ) throws ProcessException;
