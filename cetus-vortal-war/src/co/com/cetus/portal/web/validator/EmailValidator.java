@@ -48,7 +48,7 @@ public class EmailValidator implements Validator {
     if ( !matcher.matches() ) {
       
       FacesMessage msg =
-                         new FacesMessage( "E-mail Fallo la Validación.",
+                         new FacesMessage( "E-mail Fallo la Validaci\u00F3n.",
                                            "Formato Invalido del Correo Electr\u00f3nico." );
       msg.setSeverity( FacesMessage.SEVERITY_ERROR );
       throw new ValidatorException( msg );
