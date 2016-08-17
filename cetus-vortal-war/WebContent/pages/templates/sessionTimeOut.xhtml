@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition>
-	<p:idleMonitor onactive="sessionTimeOutDialog.show();"
+	<p:idleMonitor onactive="PF('sessionTimeOutDialog').show();"
 		timeout="#{session.maxInactiveInterval * 1000}" />
 	<p:dialog header="#{msg['error.sessionTimeOut.header']}"
 		widgetVar="sessionTimeOutDialog" modal="true" fixedCenter="true"

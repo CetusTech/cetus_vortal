@@ -15,8 +15,8 @@
 				<p:commandButton id="confirmAccount" value="#{msg.yes}"
 					actionListener="#{modifyAccountManagedBean.storeChangedProfile}" binding="#{modifyAccountManagedBean.btnConfirm}"
 					update=":formAccountMod:msgConfirmDialogAccount :formAccountMod"
-					oncomplete="confirmationAccount.hide(); modAccountDialg.hide()" process="@this" />
-				<p:commandButton id="declineno" value="#{msg.no}" onclick="confirmationAccount.hide()" type="button" />
+					oncomplete="PF('confirmationAccount').hide(); PF('modAccountDialg').hide()" process="@this" />
+				<p:commandButton id="declineno" value="#{msg.no}" onclick="PF('confirmationAccount').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>

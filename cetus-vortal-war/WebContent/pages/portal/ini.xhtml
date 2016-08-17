@@ -12,7 +12,7 @@
     <ui:include src="/pages/portal/header.xhtml" />
   </ui:define>
   <ui:define name="left">
-    <p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval * 1000}" />
+    <p:idleMonitor onactive="PF('sessionTimeOutDialog').show();" timeout="#{session.maxInactiveInterval * 1000}" />
     <p:dialog header="#{msg.session_expired}" widgetVar="sessionTimeOutDialog" appendToBody="true" modal="true"
       fixedCenter="true" closable="false" width="400" visible="false">
       <form action="#{facesContext.externalContext.requestContextPath}/">
@@ -22,14 +22,16 @@
     </p:dialog>
     <h:form id="form2" prependId="false">
       <p:growl id="messages" showDetail="true" />
+      <p:panel header="#{msg.functionalities}"  styleClass="row_border_white">
       <p:tree value="#{portalManagedBean.root}" var="node" dynamic="true" cache="true" selectionMode="single"
-        selection="#{portalManagedBean.selectedNode}">
+        selection="#{portalManagedBean.selectedNode}" styleClass="row_border_white">
         <p:ajax event="select" update=":formContenido2:contenido" process="@form" async="false"
           listener="#{portalManagedBean.onNodeSelect}" />
         <p:treeNode collapsedIcon="ui-icon-folder-collapsed" expandedIcon="ui-icon-folder-open">
           <h:outputText value="#{node.nombre}" />
         </p:treeNode>
       </p:tree>
+      </p:panel>
     </h:form>
 
   </ui:define>
@@ -37,19 +39,19 @@
 
     <p:growl id="growl" showDetail="true" life="3000" />
     <h:form id="formContenido2" prependId="false" style="height: 100%;">
+
       <p:panel rendered="#{portalManagedBean.showGeneralSearch}" style="text-align: right;">
-        <h:selectOneMenu id="selGenSearch" value="#{portalManagedBean.filterSelected}" styleClass="select_general_gearch">
+        <h:selectOneMenu id="selGenSearch" value="#{portalManagedBean.filterSelected}"
+          styleClass="select_general_gearch">
           <f:selectItems value="#{portalManagedBean.listFilter}" />
         </h:selectOneMenu>
-        <p:inputText id="inputSearch" value="#{portalManagedBean.inputSearch}" required="true"/>
+        <p:inputText id="inputSearch" value="#{portalManagedBean.inputSearch}" required="true" />
         <p:commandButton value="#{msg.btn_search}" update="contenido" process="@form"
           action="#{portalManagedBean.generalSearch}" />
       </p:panel>
 
-
-
-      <p:outputPanel id="contenido" autoUpdate="false">
-        <iframe align="top" style="height: 100%;" src="#{portalManagedBean.page}" frameborder="0" width="100%" />
+      <p:outputPanel id="contenido" autoUpdate="false" style="height: 100%; width:100%">
+        <iframe align="top" height="100%" src="#{portalManagedBean.page}" frameborder="0" width="100%" />
       </p:outputPanel>
     </h:form>
     <ui:include src="/pages/portal/dialog.xhtml" />

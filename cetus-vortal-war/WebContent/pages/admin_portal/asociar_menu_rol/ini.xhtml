@@ -7,7 +7,7 @@
 	<h:outputScript library="js" name="common.js" />
 </h:head>
 <h:body>
-	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
+	<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
 	<p:dialog modal="true" widgetVar="statusDialog" header="#{msg.loading}" draggable="false" closable="false">
 		<p:graphicImage value="#{msg.url_loading}" />
 	</p:dialog>

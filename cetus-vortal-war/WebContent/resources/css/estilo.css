@@ -312,3 +312,10 @@ body {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
+
+
+.row_border_white {
+	border-color:white !important;
+	border-style: solid !important;
+	border-width:0px !important;
+}

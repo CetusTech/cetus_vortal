@@ -8,7 +8,8 @@ function handleCompleteAdd(xhr, status, args) {
 	} else {
 		// Si es verdadero cerrar dialog
 		if (args.validate) {
-			confirmation.show();
+			//confirmation.show();
+			PF('confirmation').show();
 		}
 	}
 }
@@ -22,7 +23,8 @@ function handleCompleteAccountMod(xhr, status, args) {
 	} else {
 		// Si es verdadero cerrar dialog
 		if (args.validate) {
-			confirmationAccount.show();
+			//confirmationAccount.show();
+			PF('confirmationAccount').show();
 		}
 	}
 }
@@ -33,7 +35,8 @@ function handleLoginRequestAdd(xhr, status, args) {
 			times : 4
 		}, 10);
 	} else {
-		add.show();
+		//add.show();
+		PF('add').show();
 	}
 }
 
@@ -41,7 +44,8 @@ function handleSelectedRow(xhr, status, args) {
 	if (args.validationFailed || !args.lSelected) {
 
 	} else {
-		update.show();
+		//update.show();
+		PF('update').show();
 	}
 }
 
@@ -59,12 +63,14 @@ function handleDialogAdd(xhr, status, args) {
 			times : 4
 		}, 10);
 	} else {
-		confirmation.show();
+		//confirmation.show();
+		PF('confirmation').show();
 	}
 }
 
 function handleAddRow(xhr, status, args) {
 	if (args.lSuccessfull) {
-		add.hide();
+//		add.hide();
+		PF('add').hide();
 	}
 }

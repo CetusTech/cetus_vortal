@@ -4,8 +4,8 @@
 
 
 	<p:contextMenu for="list">
-		<p:menuitem value="#{msg.view}" update=":dialog" icon="ui-icon-search" oncomplete="carDialog.show()" />
-		<p:menuitem value="#{msg.delete}" update="list" icon="ui-icon-close" oncomplete="confirmDialogDelete.show()" />
+		<p:menuitem value="#{msg.view}" update=":dialog" icon="ui-icon-search" oncomplete="PF('carDialog').show()" />
+		<p:menuitem value="#{msg.delete}" update="list" icon="ui-icon-close" oncomplete="PF('confirmDialogDelete').show()" />
 	</p:contextMenu>
 
 
@@ -21,7 +21,7 @@
 		</f:facet>
 
 
-		<p:column sortBy="#{object.tbAplicationServlet.tbAplicacion.nombre}"
+		<p:column width="20%" sortBy="#{object.tbAplicationServlet.tbAplicacion.nombre}"
 			filterBy="#{object.tbAplicationServlet.tbAplicacion.nombre}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.app}" />
@@ -29,7 +29,7 @@
 			<h:outputText value="#{object.tbAplicationServlet.tbAplicacion.nombre}" />
 		</p:column>
 
-		<p:column sortBy="#{object.tbMenu.nombre}" filterBy="#{object.tbMenu.nombre}" filterMatchMode="contains">
+		<p:column width="20%" sortBy="#{object.tbMenu.nombre}" filterBy="#{object.tbMenu.nombre}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.menu_padre}" />
 			</f:facet>
@@ -40,14 +40,14 @@
 		</p:column>
 
 
-		<p:column sortBy="#{object.nombre}" filterBy="#{object.nombre}" filterMatchMode="contains">
+		<p:column width="20%" sortBy="#{object.nombre}" filterBy="#{object.nombre}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.name}" />
 			</f:facet>
 			<h:outputText value="#{object.nombre}" />
 		</p:column>
 
-		<p:column sortBy="#{object.url}" filterBy="#{object.url}" filterMatchMode="contains">
+		<p:column width="40%" sortBy="#{object.url}" filterBy="#{object.url}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.url_menu}" />
 			</f:facet>
@@ -56,7 +56,7 @@
 
 
 		<f:facet name="footer">
-			<p:commandButton id="addButton" icon="ui-icon-plusthick" title="#{msg.add}" process="@this" oncomplete="add.show()"
+			<p:commandButton id="addButton" icon="ui-icon-plusthick" title="#{msg.add}" process="@this" oncomplete="PF('add').show()"
 				update=":formAdd_Menu:grid_Menu" value="#{msg.add}" />
 
 			<p:commandButton id="updateButton" icon="ui-icon-pencil" title="#{msg.update}" process="@form" update=":dialogUpdate"

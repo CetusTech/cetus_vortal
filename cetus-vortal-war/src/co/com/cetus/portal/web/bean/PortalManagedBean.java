@@ -137,8 +137,17 @@ public class PortalManagedBean extends GeneralManagedBean {
   @PostConstruct
   public void init () {
     this.inicializarUsuario();
+    cleanObjectSessionInit();
     root = this.generarTree( null, null, null );
     loadGeneralSearch();
+  }
+  
+  private void cleanObjectSessionInit(){
+    try {
+      cleanObjectSession( "selectedObject" );
+    } catch ( Exception e ) {
+      Util.CETUS_WAR.error( "Error: " + e.getMessage(), e );
+    }
   }
   
   /**

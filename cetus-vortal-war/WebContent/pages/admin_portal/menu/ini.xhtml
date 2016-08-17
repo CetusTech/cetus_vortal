@@ -13,7 +13,7 @@
 		
 		function handleAddRow(xhr, status, args) {
 			if (args.lSuccessfull) {
-				add.hide();
+				PF('add').hide();
 			}
 		}
 		
@@ -23,14 +23,14 @@
 					times : 4
 				}, 10);
 			} else {
-				confirmDialogAdd.show();
+				PF('confirmDialogAdd').show();
 			}
 		}
 
 	</h:outputScript>
 </h:head>
 <h:body>
-	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
+	<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
 	<p:dialog modal="true" widgetVar="statusDialog" header="#{msg.loading}" draggable="false" closable="false">
 		<p:graphicImage value="#{msg.url_loading}" />
 	</p:dialog>

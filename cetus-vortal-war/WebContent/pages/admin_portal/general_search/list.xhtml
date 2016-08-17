@@ -5,13 +5,13 @@
 
   <p:contextMenu for="list">
     <p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search"
-      oncomplete="viewDialog.show()" action="#{generalSearchMBean.loadSelected}" />
+      oncomplete="PF('viewDialog').show()" action="#{generalSearchMBean.loadSelected}" />
 
     <p:menuitem value="#{msg.update}" update=":formUpdate:panelSearch :formUpdate:pnlFilterUpd" icon="ui-icon-pencil"
-      oncomplete="update.show()" action="#{generalSearchMBean.loadSelected}" />
+      oncomplete="PF('update').show()" action="#{generalSearchMBean.loadSelected}" />
 
     <p:menuitem value="#{msg.delete}" update=":formContenido:men" icon="ui-icon-close"
-      oncomplete="confirmDialogDelete.show()" action="#{generalSearchMBean.loadSelectedDelete}" />
+      oncomplete="PF('confirmDialogDelete').show()" action="#{generalSearchMBean.loadSelectedDelete}" />
 
 
   </p:contextMenu>
@@ -58,7 +58,7 @@
     </p:column>
 
     <f:facet name="footer">
-      <p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+      <p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="PF('add').show()"
         update=":formAdd:grid" />
 
     </f:facet>

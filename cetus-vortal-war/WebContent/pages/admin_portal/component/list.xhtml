@@ -4,7 +4,7 @@
 	<f:loadBundle var="msg" basename="Message_es" />
 
 	<p:contextMenu for="list">
-		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search" oncomplete="viewDialog.show()"
+		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search" oncomplete="PF('viewDialog').show()"
 			action="#{componentManagedBean.loadSelected}" />
 		
 	</p:contextMenu>
@@ -22,7 +22,7 @@
 			<h:outputLabel value="#{msg.list_register}" />
 		</f:facet>
 
-		<p:column sortBy="#{object.name}" filterBy="#{object.name}" filterMatchMode="contains">
+		<p:column width="45%" sortBy="#{object.name}" filterBy="#{object.name}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.name}" />
 			</f:facet>
@@ -36,7 +36,7 @@
 			</p:cellEditor>
 		</p:column>
 
-		<p:column sortBy="#{object.description}" filterBy="#{object.description}" filterMatchMode="contains">
+		<p:column width="45%" sortBy="#{object.description}" filterBy="#{object.description}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.description}" />
 			</f:facet>
@@ -50,12 +50,12 @@
 			</p:cellEditor>
 		</p:column>
 
-		<p:column headerText="#{msg.update}" style="width:50px">
+		<p:column width="10%" headerText="#{msg.update}" >
 			<p:rowEditor />
 		</p:column>
 
 		<f:facet name="footer">
-			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="PF('add').show()"
 				update=":formAdd:grid" />
 
 			<p:commandButton id="reload_parameter" value="#{msg.reload_parameter}" icon="ui-icon-refresh" update=":formConfirmReload:dialogReload"

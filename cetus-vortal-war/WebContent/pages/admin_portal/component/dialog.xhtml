@@ -6,7 +6,7 @@
 	<h:outputScript>
 		function handleReeloadSelected(xhr, status, args) {
 			if (args.lSuccessfull) {
-				confirmDialogReload.show();
+				PF('confirmDialogReload').show();
 			}
 		}
 	</h:outputScript>
@@ -22,8 +22,8 @@
 			severity="alert" widgetVar="confirmDialogDelete">
 			<center>
 				<p:commandButton id="confirm" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
-					oncomplete="confirmDialogDelete.hide()" process="@this" action="#{componentManagedBean.delete}" />
-				<p:commandButton id="decline" value="#{msg.cancel}" onclick="confirmDialogDelete.hide()" type="button" />
+					oncomplete="PF('confirmDialogDelete').hide()" process="@this" action="#{componentManagedBean.delete}" />
+				<p:commandButton id="decline" value="#{msg.cancel}" onclick="PF('confirmDialogDelete').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>
@@ -33,8 +33,8 @@
 			severity="alert" widgetVar="confirmDialogReload">
 			<center>
 				<p:commandButton id="confirmReload" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
-					oncomplete="confirmDialogReload.hide()" process="@this" action="#{componentManagedBean.reloadParameter}" />
-				<p:commandButton id="declineReload" value="#{msg.cancel}" onclick="confirmDialogReload.hide()" type="button" />
+					oncomplete="PF('confirmDialogReload').hide()" process="@this" action="#{componentManagedBean.reloadParameter}" />
+				<p:commandButton id="declineReload" value="#{msg.cancel}" onclick="PF('confirmDialogReload').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>
@@ -43,5 +43,16 @@
 		resizable="false" showEffect="clip" hideEffect="fold">
 		<ui:include src="#{msg.url_component_add}" />
 	</p:dialog>
+  
+      <p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.add}"
+      severity="alert" widgetVar="confirmation">
+      <center>
+        <p:commandButton id="confirmRol" value="#{msg.accept}"
+          update=":formContenido:men :formContenido:list :dialog :formConfirm :dialogAdd grid msgAdd"
+          oncomplete="PF('confirmation').hide(); handleAddRow(xhr, status, args)" actionListener="#{componentManagedBean.add}"
+          process="@this" />
+        <p:commandButton id="declineRol" value="#{msg.cancel}" onclick="PF('confirmation').hide();" type="button" />
+      </center>
+    </p:confirmDialog>
 
 </ui:composition>

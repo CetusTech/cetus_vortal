@@ -14,8 +14,8 @@
 			severity="alert" widgetVar="confirmDialogDelete">
 			<center>
 				<p:commandButton id="confirm" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
-					oncomplete="confirmDialogDelete.hide()" process="@this" action="#{serviceManagedBean.delete}" />
-				<p:commandButton id="decline" value="#{msg.cancel}" onclick="confirmDialogDelete.hide()" type="button" />
+					oncomplete="PF('confirmDialogDelete').hide()" process="@this" action="#{serviceManagedBean.delete}" />
+				<p:commandButton id="decline" value="#{msg.cancel}" onclick="PF('confirmDialogDelete').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>

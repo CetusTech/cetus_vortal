@@ -9,7 +9,7 @@
 					times : 4
 				}, 10);
 			} else {
-				confirmation.show();
+				PF('confirmation').show();
 			}
 		}
 	</h:outputScript>
@@ -83,9 +83,9 @@
 			<center>
 				<p:commandButton id="confirmRol" value="#{msg.accept}"
 					update=":formContenido grid_user msgAdd :formContenido:contenido grid_user"
-					oncomplete="confirmation.hide(); handleAddRow(xhr, status, args)" actionListener="#{userManagedBean.add}"
+					oncomplete="PF('confirmation').hide(); handleAddRow(xhr, status, args)" actionListener="#{userManagedBean.add}"
 					process="@form" />
-				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="confirmation.hide();" type="button" />
+				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="PF('confirmation').hide();" type="button" />
 			</center>
 		</p:confirmDialog>
 

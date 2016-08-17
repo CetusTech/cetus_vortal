@@ -5,9 +5,9 @@
 
 	<p:contextMenu for="list">
 		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search"
-			oncomplete="viewDialog.show()" action="#{servletMBean.loadSelected}" />
+			oncomplete="PF('viewDialog').show()" action="#{servletMBean.loadSelected}" />
 		<p:menuitem value="#{msg.delete}" update="list :formContenido:men" icon="ui-icon-close"
-			oncomplete="confirmDialogDelete.show()" action="#{servletMBean.loadSelected}" />
+			oncomplete="PF('confirmDialogDelete').show()" action="#{servletMBean.loadSelected}" />
 	</p:contextMenu>
 
 	<p:dataTable id="list" var="object" paginator="true" rows="5"
@@ -24,7 +24,7 @@
 			<h:outputLabel value="#{msg.list_register}" />
 		</f:facet>
 
-		<p:column sortBy="#{object.name}" filterBy="#{object.name}" filterMatchMode="contains">
+		<p:column width="20%" sortBy="#{object.name}" filterBy="#{object.name}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.name}" />
 			</f:facet>
@@ -38,7 +38,7 @@
 			</p:cellEditor>
 		</p:column>
 
-		<p:column sortBy="#{object.parameter}" filterBy="#{object.description}" filterMatchMode="contains">
+		<p:column width="20%" sortBy="#{object.parameter}" filterBy="#{object.description}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.parameter}" />
 			</f:facet>
@@ -53,7 +53,7 @@
 			</p:cellEditor>
 		</p:column>
 
-		<p:column sortBy="#{object.description}" filterBy="#{object.description}" filterMatchMode="contains">
+		<p:column width="35%" sortBy="#{object.description}" filterBy="#{object.description}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.description}" />
 			</f:facet>
@@ -67,7 +67,7 @@
 			</p:cellEditor>
 		</p:column>
 
-		<p:column sortBy="#{object.status}" filterBy="#{object.status}" filterMatchMode="contains">
+		<p:column width="15%" sortBy="#{object.status}" filterBy="#{object.status}" filterMatchMode="contains">
 			<f:facet name="header">
 				<h:outputText value="#{msg.status}" />
 			</f:facet>
@@ -87,12 +87,12 @@
 			</p:cellEditor>
 		</p:column>
 
-		<p:column headerText="#{msg.update}" style="width:50px">
+		<p:column headerText="#{msg.update}" width="10%">
 			<p:rowEditor />
 		</p:column>
 
 		<f:facet name="footer">
-			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="PF('add').show()"
 				update=":formAdd:grid" />
 		</f:facet>
 

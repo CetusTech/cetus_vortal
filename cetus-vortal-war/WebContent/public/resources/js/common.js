@@ -5,7 +5,7 @@ function handleLoginRequestAdd(xhr, status, args) {
 			times : 4
 		}, 10);
 	} else {
-		add.hide();
+		PF('add').hide();
 	}
 }
 

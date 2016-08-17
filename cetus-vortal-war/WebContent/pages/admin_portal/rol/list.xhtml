@@ -4,8 +4,8 @@
 	<f:loadBundle var="msg" basename="Message_es" />
 
 	<p:contextMenu for="list">
-		<p:menuitem value="#{msg.view}" update=":dialog" icon="ui-icon-search" oncomplete="carDialog.show()" />
-		<p:menuitem value="#{msg.delete}" update="list" icon="ui-icon-close" oncomplete="confirmDialogDelete.show()" />
+		<p:menuitem value="#{msg.view}" update=":dialog" icon="ui-icon-search" oncomplete="PF('carDialog').show()" />
+		<p:menuitem value="#{msg.delete}" update="list" icon="ui-icon-close" oncomplete="PF('confirmDialogDelete').show()" />
 	</p:contextMenu>
 
 	<p:dataTable id="list" var="object" paginator="true" rows="10"
@@ -40,11 +40,11 @@
 		</p:column>
 
 
-		<p:column headerText="Options" style="width:50px">
+		<p:column headerText="#{msg.update}" style="width:60px">
 			<p:rowEditor />
 		</p:column>
 		<f:facet name="footer">
-			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()" />
+			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="PF('add').show()" />
 		</f:facet>
 
 	</p:dataTable>

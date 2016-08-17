@@ -4,10 +4,10 @@
 	<f:loadBundle var="msg" basename="Message_es" />
 
 	<p:contextMenu for="list">
-		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search" oncomplete="viewDialog.show()"
+		<p:menuitem value="#{msg.view}" update=":formContenido:men :dialog" icon="ui-icon-search" oncomplete="PF('viewDialog').show()"
 			action="#{permissionManagedBean.loadSelected}" />
 		<p:menuitem value="#{msg.delete}" update="list :formContenido:men" icon="ui-icon-close"
-			oncomplete="confirmDialogDelete.show()" action="#{permissionManagedBean.loadSelected}" />
+			oncomplete="PF('confirmDialogDelete').show()" action="#{permissionManagedBean.loadSelected}" />
 
 	</p:contextMenu>
 
@@ -45,7 +45,7 @@
 		</p:column>
 
 		<f:facet name="footer">
-			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="add.show()"
+			<p:commandButton id="addButton" value="#{msg.add}" icon="ui-icon-circle-plus" oncomplete="PF('add').show()"
 				update=":formAdd:grid" />
 
 			<p:commandButton id="updateButton" icon="ui-icon-pencil" title="#{msg.update}" process="@form" update=":dialogUpdate"

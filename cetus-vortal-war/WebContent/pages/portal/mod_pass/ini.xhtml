@@ -10,8 +10,8 @@
 				<p:commandButton id="confirm" value="#{msg.yes}" actionListener="#{modifyPasswordManagedBean.storeNewPassword}"
 					binding="#{modifyPasswordManagedBean.btnConfirm}"
 					update=":formContenido1:msgConfirmDialog :formContenido1:contenido1"
-					oncomplete="confirmation.hide();modPassDialg.hide()" process="@this" />
-				<p:commandButton id="decline" value="#{msg.no}" onclick="confirmation.hide()" type="button" />
+					oncomplete="PF('confirmation').hide(); PF('modPassDialg').hide()" process="@this" />
+				<p:commandButton id="decline" value="#{msg.no}" onclick="PF('confirmation').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>

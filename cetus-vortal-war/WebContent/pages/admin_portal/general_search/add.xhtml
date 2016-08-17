@@ -6,7 +6,7 @@
     <center>
       <p:message for="submitButton2" id="msgAdd" />
       <h:panelGrid id="grid" columns="6">
-        <p:outputLabel for="description_search" value="#{msg.description}:" styleClass="resaltar_negro" />
+        <p:outputLabel for="description_search" value="#{msg.name_search}:" styleClass="resaltar_negro" />
         <p:inputText id="description_search" required="true" value="#{generalSearchMBean.addObject.description}"
           style="width:250px" requiredMessage="#{msg.field_requiered}" maxlength="30" />
         <p:message id="description_search_msg" for="description_search" display="icon" />
@@ -46,7 +46,7 @@
       <h:panelGrid id="pnlFilter" columns="4">
 
         <f:facet name="header">
-          <h:outputText value="#{msg.list_filter}" />
+          <h:outputText value="#{msg.label_filters}" />
         </f:facet>
 
         <p:outputLabel for="filter1" value="#{msg.filter1}:" styleClass="resaltar_negro" />

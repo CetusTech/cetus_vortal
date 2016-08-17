@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+  xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:pe="http://primefaces.org/ui/extensions">
 
 <f:loadBundle var="msg" basename="Message_es" />
 <h:head>
@@ -13,21 +14,20 @@
 
 <h:body>
 
-  <p:layout fullPage="true">
-    <p:layoutUnit position="north" resizable="false" closable="false" collapsible="false" styleClass="header_style"> 
+<pe:layout fullPage="true" >
+    <pe:layoutPane position="north" styleClass="header_style">  
       <ui:insert name="top" />
-    </p:layoutUnit>
-    <p:layoutUnit position="west" size="300" header="#{msg.functionalities}" resizable="true" minSize="250"
-      maxSize="350" closable="false" collapsible="true">
+    </pe:layoutPane>
+    <pe:layoutPane position="west" size="300" > 
       <ui:insert name="left" />
-    </p:layoutUnit>
+    </pe:layoutPane>
 
-    <p:layoutUnit position="center" id="pnlCenterVortal" styleClass="center_lay">
+    <pe:layoutPane position="center" id="pnlCenterVortal" styleClass="center_lay">
       <ui:insert name="content" />
-    </p:layoutUnit>
+    </pe:layoutPane>
 
 
-  </p:layout>
+  </pe:layout>
 
 </h:body>
 

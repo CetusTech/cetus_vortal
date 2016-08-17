@@ -13,21 +13,21 @@
 				}, 10);
 			} else {
 				if (args.lSuccessfullVal) {
-					confirmation.show();
+					PF('confirmation').show();
 				}
 			}
 		}
 		
 		function handleAddRow(xhr, status, args) {
 			if (args.lSuccessfull) {
-				add.hide();
-				confirmation.hide();
+				PF('add').hide();
+				PF('confirmation').hide();
 			}
 		}
 	</h:outputScript>
 </h:head>
 <h:body>
-	<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
+	<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
 	<p:dialog modal="true" widgetVar="statusDialog" header="#{msg.loading}" draggable="false" closable="false">
 		<p:graphicImage value="#{msg.url_loading}" />
 	</p:dialog>

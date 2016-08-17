@@ -14,8 +14,8 @@
 			severity="alert" widgetVar="confirmDialogDelete">
 			<center>
 				<p:commandButton id="confirm" value="#{msg.accept}" update=":formContenido:men :formContenido:list"
-					oncomplete="confirmDialogDelete.hide()" process="@this" action="#{permissionManagedBean.delete}" />
-				<p:commandButton id="decline" value="#{msg.cancel}" onclick="confirmDialogDelete.hide()" type="button" />
+					oncomplete="PF('confirmDialogDelete').hide()" process="@this" action="#{permissionManagedBean.delete}" />
+				<p:commandButton id="decline" value="#{msg.cancel}" onclick="PF('confirmDialogDelete').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>
@@ -25,8 +25,8 @@
 			severity="alert" widgetVar="confirmDialogUpdate">
 			<center>
 				<p:commandButton id="confirmUpdate" value="#{msg.accept}" update=":formContenido:contenido"
-					oncomplete="confirmDialogUpdate.hide();update.hide()" process="@this" action="#{permissionManagedBean.update}" />
-				<p:commandButton id="declineUpdate" value="#{msg.cancel}" onclick="confirmDialogUpdate.hide()" type="button" />
+					oncomplete="PF('confirmDialogUpdate').hide(); PF('update').hide()" process="@this" action="#{permissionManagedBean.update}" />
+				<p:commandButton id="declineUpdate" value="#{msg.cancel}" onclick="PF('confirmDialogUpdate').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>
@@ -41,5 +41,16 @@
 		resizable="false" showEffect="clip" hideEffect="fold">
 		<ui:include src="#{msg.url_permission_update}" />
 	</p:dialog>
+
+<p:confirmDialog id="confirmDialog" message="#{msg.confirm_operation}" appendToBody="true" header="#{msg.add}"
+      severity="alert" widgetVar="confirmation">
+      <center>
+        <p:commandButton id="confirmRol" value="#{msg.accept}"
+          update=":formContenido:men :formContenido:list :dialog :formConfirm :dialogAdd grid msgAdd"
+          oncomplete="PF('confirmation').hide(); handleAddRow(xhr, status, args)" actionListener="#{permissionManagedBean.add}"
+          process="@this" />
+        <p:commandButton id="declineRol" value="#{msg.cancel}" onclick="PF('confirmation').hide();" type="button" />
+      </center>
+    </p:confirmDialog>
 
 </ui:composition>

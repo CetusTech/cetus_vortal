@@ -13,8 +13,8 @@
 			severity="alert" widgetVar="confirmDialogDelete">
 			<center>
 				<p:commandButton id="confirm" value="#{msg.accept}" update=":formContenido:contenido"
-					oncomplete="confirmDialogDelete.hide()" process="@this" action="#{menuManagedBean.delete}" />
-				<p:commandButton id="decline" value="#{msg.cancel}" onclick="confirmDialogDelete.hide()" type="button" />
+					oncomplete="PF('confirmDialogDelete').hide()" process="@this" action="#{menuManagedBean.delete}" />
+				<p:commandButton id="decline" value="#{msg.cancel}" onclick="PF('confirmDialogDelete').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>
@@ -25,8 +25,8 @@
 			severity="alert" widgetVar="confirmDialogAdd">
 			<center>
 				<p:commandButton id="confirmAdd" value="#{msg.accept}" update=":formContenido:contenido"
-					oncomplete="confirmDialogAdd.hide();handleAddRow(xhr, status, args)" process="@this" action="#{menuManagedBean.add}" />
-				<p:commandButton id="declineAdd" value="#{msg.cancel}" onclick="confirmDialogAdd.hide()" type="button" />
+					oncomplete="PF('confirmDialogAdd').hide(); handleAddRow(xhr, status, args)" process="@this" action="#{menuManagedBean.add}" />
+				<p:commandButton id="declineAdd" value="#{msg.cancel}" onclick="PF('confirmDialogAdd').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>
@@ -38,8 +38,8 @@
 			severity="alert" widgetVar="confirmDialogUpdate">
 			<center>
 				<p:commandButton id="confirmUpdate" value="#{msg.accept}" update=":formContenido:contenido"
-					oncomplete="confirmDialogUpdate.hide();update.hide()" process="@this" action="#{menuManagedBean.update}" />
-				<p:commandButton id="declineUpdate" value="#{msg.cancel}" onclick="confirmDialogUpdate.hide()" type="button" />
+					oncomplete="PF('confirmDialogUpdate').hide(); PF('update').hide()" process="@this" action="#{menuManagedBean.update}" />
+				<p:commandButton id="declineUpdate" value="#{msg.cancel}" onclick="PF('confirmDialogUpdate').hide()" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>

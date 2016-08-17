@@ -23,13 +23,13 @@
     <p:overlayPanel for="userData" hideEffect="fade" appendToBody="true" dynamic="true">
       <h:panelGrid columns="2" border="0" width="100%" cellpadding="5" style="border-style:none" cellspacing="5">
         <h:graphicImage value="/resources/images/edit_male_user_32.png" width="32" height="32" />
-        <h:outputLink id="modifyAccount" value="javascript:void(0)" onclick="modPassDialg.show();" icon="ui-icon-person"
+        <h:outputLink id="modifyAccount" value="javascript:void(0)" onclick="PF('modPassDialg').show();" icon="ui-icon-person"
           styleClass="linkTitulo" update=":modPass" type="button">
 
           <h:outputLabel value="#{msg.modify_password}" />
         </h:outputLink>
         <h:graphicImage value="/resources/images/change_key.png" width="32" height="32" />
-        <h:outputLink id="modifyPass" value="javascript:void(0)" onclick="modAccountDialg.show();" icon="ui-icon-person"
+        <h:outputLink id="modifyPass" value="javascript:void(0)" onclick="PF('modAccountDialg').show();" icon="ui-icon-person"
           styleClass="linkTitulo" update=":modAccount" type="button">
 
           <h:outputLabel value="#{msg.modidy_account}" />

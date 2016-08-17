@@ -10,13 +10,13 @@
 					times : 4
 				}, 10);
 			} else {
-				confirmDialogAdd.show();
+				PF('confirmDialogAdd').show();
 			}
 		}
 		
 		function handleAddRow(xhr, status, args) {
 			if (args.lSuccessfull) {
-				add.hide();
+				PF('add').hide();
 			}
 		}
 		
@@ -43,9 +43,9 @@
 			severity="alert" widgetVar="confirmDialogAdd">
 			<center>
 				<p:commandButton id="confirmRol" value="#{msg.accept}" update=":formContenido grid_Rol msgAddRol"
-					oncomplete="confirmDialogAdd.hide(); handleAddRow(xhr, status, args)" actionListener="#{rolManagedBean.add}"
+					oncomplete="PF('confirmDialogAdd').hide(); handleAddRow(xhr, status, args)" actionListener="#{rolManagedBean.add}"
 					process="@this" />
-				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="confirmDialogAdd.hide();" type="button" />
+				<p:commandButton id="declineRol" value="#{msg.cancel}" onclick="PF('confirmDialogAdd').hide();" type="button" />
 			</center>
 		</p:confirmDialog>
 	</h:form>
