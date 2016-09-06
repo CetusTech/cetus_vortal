@@ -5,7 +5,7 @@
 	 -->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
   xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets"
-  template="/pages/templates/portalTemplate.xhtml">
+  template="/pages/templates/portalTemplate.xhtml" xmlns:pe="http://primefaces.org/ui/extensions">
 
   <h:outputStylesheet library="css" name="estilo.css" />
   <ui:define name="top">
@@ -22,15 +22,22 @@
     </p:dialog>
     <h:form id="form2" prependId="false">
       <p:growl id="messages" showDetail="true" />
-      <p:panel header="#{msg.functionalities}"  styleClass="row_border_white">
-      <p:tree value="#{portalManagedBean.root}" var="node" dynamic="true" cache="true" selectionMode="single"
-        selection="#{portalManagedBean.selectedNode}" styleClass="row_border_white">
-        <p:ajax event="select" update=":formContenido2:contenido" process="@form" async="false"
-          listener="#{portalManagedBean.onNodeSelect}" />
-        <p:treeNode collapsedIcon="ui-icon-folder-collapsed" expandedIcon="ui-icon-folder-open">
-          <h:outputText value="#{node.nombre}" />
-        </p:treeNode>
-      </p:tree>
+      <p:panel header="#{msg.functionalities}" styleClass="row_border_white">
+        <p:tree value="#{portalManagedBean.root}" var="node" dynamic="true" cache="true" selectionMode="single"
+          selection="#{portalManagedBean.selectedNode}" styleClass="row_border_white">
+          <p:ajax event="select" update=":formContenido2:contenido" process="@form" async="false"
+            listener="#{portalManagedBean.onNodeSelect}" />
+          <p:treeNode type="gfather" expandedIcon="ui-icon-gfather-tree" collapsedIcon="ui-icon-gfather-tree">
+            <h:outputText value="#{node.nombre} " />
+          </p:treeNode>
+          <p:treeNode type="father" expandedIcon="ui-icon-father-tree" collapsedIcon="ui-icon-father-tree">
+            <h:outputText value="#{node.nombre} " />
+          </p:treeNode>
+          <p:treeNode type="son" expandedIcon="ui-icon-son-tree" collapsedIcon="ui-icon-son-tree">
+            <h:outputText value="#{node.nombre} " />
+          </p:treeNode>
+
+        </p:tree>
       </p:panel>
     </h:form>
 
@@ -39,20 +46,22 @@
 
     <p:growl id="growl" showDetail="true" life="3000" />
     <h:form id="formContenido2" prependId="false" style="height: 100%;">
-
-      <p:panel rendered="#{portalManagedBean.showGeneralSearch}" style="text-align: right;">
-        <h:selectOneMenu id="selGenSearch" value="#{portalManagedBean.filterSelected}"
-          styleClass="select_general_gearch">
-          <f:selectItems value="#{portalManagedBean.listFilter}" />
-        </h:selectOneMenu>
-        <p:inputText id="inputSearch" value="#{portalManagedBean.inputSearch}" required="true" />
-        <p:commandButton value="#{msg.btn_search}" update="contenido" process="@form"
-          action="#{portalManagedBean.generalSearch}" />
-      </p:panel>
-
-      <p:outputPanel id="contenido" autoUpdate="false" style="height: 100%; width:100%">
-        <iframe align="top" height="100%" src="#{portalManagedBean.page}" frameborder="0" width="100%" />
-      </p:outputPanel>
+      <pe:layoutPane position="north" rendered="#{portalManagedBean.showGeneralSearch}" resizable="false">
+        <div align="right">
+          <h:selectOneMenu id="selGenSearch" value="#{portalManagedBean.filterSelected}"
+            styleClass="select_general_gearch">
+            <f:selectItems value="#{portalManagedBean.listFilter}" />
+          </h:selectOneMenu>
+          <p:inputText id="inputSearch" value="#{portalManagedBean.inputSearch}" required="true" />
+          <p:commandButton value="#{msg.btn_search}" update="contenido" process="@form"
+            action="#{portalManagedBean.generalSearch}" />
+        </div>
+      </pe:layoutPane>
+      <pe:layoutPane position="center">
+        <p:outputPanel id="contenido" autoUpdate="false" style="height: 100%; width:100%">
+          <iframe align="top" height="100%" src="#{portalManagedBean.page}" frameborder="0" width="100%" />
+        </p:outputPanel>
+      </pe:layoutPane>
     </h:form>
     <ui:include src="/pages/portal/dialog.xhtml" />
   </ui:define>

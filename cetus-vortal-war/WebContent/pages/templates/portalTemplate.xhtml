@@ -15,14 +15,14 @@
 <h:body>
 
 <pe:layout fullPage="true" >
-    <pe:layoutPane position="north" styleClass="header_style">  
+    <pe:layoutPane position="north" styleClass="header_style" resizable="false">  
       <ui:insert name="top" />
     </pe:layoutPane>
-    <pe:layoutPane position="west" size="300" > 
+    <pe:layoutPane position="west" size="300" resizable="true"> 
       <ui:insert name="left" />
     </pe:layoutPane>
 
-    <pe:layoutPane position="center" id="pnlCenterVortal" styleClass="center_lay">
+    <pe:layoutPane position="center" id="pnlCenterVortal" styleClass="center_lay" resizable="true">
       <ui:insert name="content" />
     </pe:layoutPane>
 

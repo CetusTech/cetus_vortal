@@ -319,3 +319,23 @@ body {
 	border-style: solid !important;
 	border-width:0px !important;
 }
+
+.ui-icon-gfather-tree {
+	background: url("gfather.png.xhtml?ln=images") !important;
+	
+	height: 16px !important;
+	width: 16px !important;
+}
+
+
+.ui-icon-father-tree {
+	background: url("father.png.xhtml?ln=images") !important;
+	height: 16px !important;
+	width: 16px !important;
+}
+
+.ui-icon-son-tree {
+	background: url("son.png.xhtml?ln=images") !important;
+	height: 16px !important;
+	width: 16px !important;
+}

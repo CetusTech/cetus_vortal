@@ -270,7 +270,7 @@ public class PortalManagedBean extends GeneralManagedBean {
           
           if ( nodoMenuObj.getTbMenu() == null ) {
             // El nodo es hijo de la raiz del arbol
-            nodeAux = new DefaultTreeNode( nodoMenuObj, root );
+            nodeAux = new DefaultTreeNode("gfather", nodoMenuObj, root );
             nodeAux.setExpanded( true );
             
             listNodoChild = this.delegate.findAllMenuByIdPadre( nodoMenuObj.getId(), pLogin, pIdAplicacion );
@@ -284,12 +284,13 @@ public class PortalManagedBean extends GeneralManagedBean {
           if ( pPadre != null ) {
             if ( nodoMenuObj.getTbMenu().getId() == pPadre.getId() ) {
               // El nodo de turno es hijo del nodo padre
-              nodeAux = new DefaultTreeNode( nodoMenuObj, pRoot );
+              nodeAux = new DefaultTreeNode("son", nodoMenuObj, pRoot );
               
               listNodoChild = this.delegate.findAllMenuByIdPadre( nodoMenuObj.getId(), pLogin, pIdAplicacion );
               
               if ( listNodoChild != null
                    && !listNodoChild.isEmpty() ) {
+                nodeAux.setType( "father" );
                 // Tiene Hijos el Nodo debe llamar al metodo
                 // recursivamente
                 generateNode( ( DefaultTreeNode ) nodeAux, nodoMenuObj, listNodoChild, pIdAplicacion, pLogin );
