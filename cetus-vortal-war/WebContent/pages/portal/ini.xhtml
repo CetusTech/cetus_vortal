@@ -24,7 +24,7 @@
       <p:growl id="messages" showDetail="true" />
       <p:panel header="#{msg.functionalities}" styleClass="row_border_white">
         <p:tree value="#{portalManagedBean.root}" var="node" dynamic="true" cache="true" selectionMode="single"
-          selection="#{portalManagedBean.selectedNode}" styleClass="row_border_white">
+          selection="#{portalManagedBean.selectedNode}" styleClass="row_border_white" animate="true" >
           <p:ajax event="select" update=":formContenido2:contenido" process="@form" async="false"
             listener="#{portalManagedBean.onNodeSelect}" />
           <p:treeNode type="gfather" expandedIcon="ui-icon-gfather-tree" collapsedIcon="ui-icon-gfather-tree">
